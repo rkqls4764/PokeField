@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/302/",
+  "collected_at": "2026-10-21T02:45:28.969439+00:00",
+  "response": {
+    "id": 302,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "alomomola",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/594/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

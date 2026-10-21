@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/169/",
+  "collected_at": "2026-10-21T02:45:17.607915+00:00",
+  "response": {
+    "id": 169,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "zangoose",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/335/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/24/",
+  "collected_at": "2026-10-21T02:39:07.406045+00:00",
+  "response": {
+    "id": 24,
+    "name": "legends-arceus",
+    "order": 26,
+    "generation": {
+      "name": "generation-viii",
+      "url": "https://pokeapi.co/api/v2/generation/8/"
+    },
+    "move_learn_methods": [],
+    "pokedexes": [
+      {
+        "name": "hisui",
+        "url": "https://pokeapi.co/api/v2/pokedex/30/"
+      }
+    ],
+    "regions": [
+      {
+        "name": "hisui",
+        "url": "https://pokeapi.co/api/v2/region/9/"
+      }
+    ],
+    "versions": [
+      {
+        "name": "legends-arceus",
+        "url": "https://pokeapi.co/api/v2/version/39/"
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/520/",
+  "collected_at": "2026-10-21T02:45:48.435291+00:00",
+  "response": {
+    "id": 520,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "sandy-shocks",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/989/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

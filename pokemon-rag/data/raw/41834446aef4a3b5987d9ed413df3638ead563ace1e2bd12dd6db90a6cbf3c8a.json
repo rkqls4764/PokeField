@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/519/",
+  "collected_at": "2026-10-21T02:45:48.294345+00:00",
+  "response": {
+    "id": 519,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "slither-wing",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/988/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

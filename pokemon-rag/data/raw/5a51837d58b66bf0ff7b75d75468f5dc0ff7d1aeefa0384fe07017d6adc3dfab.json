@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/199/",
+  "collected_at": "2026-10-21T02:45:20.225636+00:00",
+  "response": {
+    "id": 199,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "groudon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/383/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

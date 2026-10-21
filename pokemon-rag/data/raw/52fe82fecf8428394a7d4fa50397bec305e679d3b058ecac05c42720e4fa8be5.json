@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/196/",
+  "collected_at": "2026-10-21T02:45:19.966238+00:00",
+  "response": {
+    "id": 196,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "latias",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/380/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

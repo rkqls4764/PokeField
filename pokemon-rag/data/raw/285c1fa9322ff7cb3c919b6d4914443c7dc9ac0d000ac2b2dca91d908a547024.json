@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/172/",
+  "collected_at": "2026-10-21T02:45:17.902599+00:00",
+  "response": {
+    "id": 172,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "solrock",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/338/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

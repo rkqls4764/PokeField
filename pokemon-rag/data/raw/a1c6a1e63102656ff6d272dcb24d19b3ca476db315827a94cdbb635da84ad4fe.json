@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/315/",
+  "collected_at": "2026-10-21T02:45:30.103949+00:00",
+  "response": {
+    "id": 315,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "druddigon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/621/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

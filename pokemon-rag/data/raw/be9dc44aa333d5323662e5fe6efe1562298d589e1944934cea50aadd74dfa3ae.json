@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/63/",
+  "collected_at": "2026-10-21T02:45:51.797183+00:00",
+  "response": {
+    "id": 63,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "tauros",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/128/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

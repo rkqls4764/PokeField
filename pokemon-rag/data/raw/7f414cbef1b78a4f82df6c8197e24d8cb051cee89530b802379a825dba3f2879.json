@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/78/",
+  "collected_at": "2026-10-21T02:45:53.159019+00:00",
+  "response": {
+    "id": 78,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "mew",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/151/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

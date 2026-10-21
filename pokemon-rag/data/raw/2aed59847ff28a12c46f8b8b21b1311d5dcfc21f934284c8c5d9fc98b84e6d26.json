@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/422/",
+  "collected_at": "2026-10-21T02:45:39.707587+00:00",
+  "response": {
+    "id": 422,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "magearna",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/801/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

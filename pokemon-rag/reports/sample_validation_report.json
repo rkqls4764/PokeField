@@ -1,0 +1,46 @@
+{
+  "validated_at": "2026-10-21T02:40:33.454746+00:00",
+  "scope": "sample",
+  "collection_complete": false,
+  "validation_passed": true,
+  "file_record_counts": {
+    "pokemon_evolutions.jsonl": 11,
+    "pokemon_forms.jsonl": 27,
+    "pokemon_generations.jsonl": 116,
+    "pokemon_moves.jsonl": 10111,
+    "pokemon_species.jsonl": 5,
+    "pokemon_varieties.jsonl": 27,
+    "generations.json": 9,
+    "version_groups.json": 32
+  },
+  "species_count": 5,
+  "variety_count": 27,
+  "form_count": 27,
+  "generation_counts": {
+    "1": 5,
+    "2": 5,
+    "3": 5,
+    "4": 5,
+    "5": 5,
+    "6": 14,
+    "7": 23,
+    "8": 27,
+    "9": 27
+  },
+  "missing_korean_names": [],
+  "errors": [],
+  "regressions": {
+    "clefairy_type": "passed",
+    "gengar_ability": "passed"
+  },
+  "api_failures": [],
+  "unknown_first_generation": [],
+  "unverified_history_records": 0,
+  "unknown_game_presence_records": 116,
+  "limitations": [
+    "History follows API sparse patches; no independent game database audit.",
+    "Generation records describe mechanics, not confirmed game availability.",
+    "Evolution conditions are not assigned to game versions.",
+    "External wiki documents and ChromaDB indexing are deferred."
+  ]
+}

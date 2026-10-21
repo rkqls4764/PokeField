@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/373/",
+  "collected_at": "2026-10-21T02:45:35.232507+00:00",
+  "response": {
+    "id": 373,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "volcanion",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/721/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

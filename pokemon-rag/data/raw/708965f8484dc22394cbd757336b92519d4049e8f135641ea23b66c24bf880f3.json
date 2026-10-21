@@ -1,0 +1,36 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/27/",
+  "collected_at": "2026-10-21T02:39:07.639248+00:00",
+  "response": {
+    "id": 27,
+    "name": "the-indigo-disk",
+    "order": 29,
+    "generation": {
+      "name": "generation-ix",
+      "url": "https://pokeapi.co/api/v2/generation/9/"
+    },
+    "move_learn_methods": [],
+    "pokedexes": [
+      {
+        "name": "blueberry",
+        "url": "https://pokeapi.co/api/v2/pokedex/33/"
+      }
+    ],
+    "regions": [
+      {
+        "name": "paldea",
+        "url": "https://pokeapi.co/api/v2/region/10/"
+      }
+    ],
+    "versions": [
+      {
+        "name": "the-indigo-disk-scarlet",
+        "url": "https://pokeapi.co/api/v2/version/43/"
+      },
+      {
+        "name": "the-indigo-disk-violet",
+        "url": "https://pokeapi.co/api/v2/version/53/"
+      }
+    ]
+  }
+}

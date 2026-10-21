@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/62/",
+  "collected_at": "2026-10-21T02:45:51.786056+00:00",
+  "response": {
+    "id": 62,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "pinsir",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/127/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

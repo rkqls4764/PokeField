@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/464/",
+  "collected_at": "2026-10-21T02:45:43.365594+00:00",
+  "response": {
+    "id": 464,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "arctovish",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/883/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

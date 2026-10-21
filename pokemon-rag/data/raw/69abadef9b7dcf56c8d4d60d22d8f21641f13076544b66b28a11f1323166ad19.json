@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/473/",
+  "collected_at": "2026-10-21T02:45:44.150423+00:00",
+  "response": {
+    "id": 473,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "regidrago",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/895/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/194/",
+  "collected_at": "2026-10-21T02:45:19.811750+00:00",
+  "response": {
+    "id": 194,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "regice",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/378/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

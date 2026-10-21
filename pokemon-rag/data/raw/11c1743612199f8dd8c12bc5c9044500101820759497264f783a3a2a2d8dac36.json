@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/507/",
+  "collected_at": "2026-10-21T02:45:47.256042+00:00",
+  "response": {
+    "id": 507,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "orthworm",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/968/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

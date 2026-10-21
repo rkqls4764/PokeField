@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/372/",
+  "collected_at": "2026-10-21T02:45:35.174430+00:00",
+  "response": {
+    "id": 372,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "hoopa",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/720/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

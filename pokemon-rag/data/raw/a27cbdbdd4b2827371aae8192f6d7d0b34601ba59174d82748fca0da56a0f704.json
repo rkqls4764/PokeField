@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/361/",
+  "collected_at": "2026-10-21T02:45:34.251548+00:00",
+  "response": {
+    "id": 361,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "carbink",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/703/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

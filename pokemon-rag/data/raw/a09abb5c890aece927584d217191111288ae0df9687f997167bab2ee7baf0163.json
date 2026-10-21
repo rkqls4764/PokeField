@@ -1,0 +1,31 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/12/",
+  "collected_at": "2026-10-21T02:39:06.477498+00:00",
+  "response": {
+    "id": 12,
+    "name": "colosseum",
+    "order": 9,
+    "generation": {
+      "name": "generation-iii",
+      "url": "https://pokeapi.co/api/v2/generation/3/"
+    },
+    "move_learn_methods": [
+      {
+        "name": "level-up",
+        "url": "https://pokeapi.co/api/v2/move-learn-method/1/"
+      },
+      {
+        "name": "machine",
+        "url": "https://pokeapi.co/api/v2/move-learn-method/4/"
+      }
+    ],
+    "pokedexes": [],
+    "regions": [],
+    "versions": [
+      {
+        "name": "colosseum",
+        "url": "https://pokeapi.co/api/v2/version/19/"
+      }
+    ]
+  }
+}

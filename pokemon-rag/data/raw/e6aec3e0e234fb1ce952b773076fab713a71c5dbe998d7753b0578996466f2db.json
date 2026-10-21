@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/398/",
+  "collected_at": "2026-10-21T02:45:37.459440+00:00",
+  "response": {
+    "id": 398,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "pyukumuku",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/771/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

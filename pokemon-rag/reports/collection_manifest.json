@@ -1,0 +1,13 @@
+{
+  "started_at": "2026-10-21T02:39:03.821033+00:00",
+  "scope": "all",
+  "expected": {
+    "generation": 9,
+    "version-group": 32,
+    "pokemon-species": 1025
+  },
+  "completed_at": "2026-10-21T02:45:54.987741+00:00",
+  "failures": [],
+  "collected_species": 1025,
+  "collected_pokemon": 1351
+}

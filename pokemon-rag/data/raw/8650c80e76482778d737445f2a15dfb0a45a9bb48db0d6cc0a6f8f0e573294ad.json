@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/535/",
+  "collected_at": "2026-10-21T02:45:49.763851+00:00",
+  "response": {
+    "id": 535,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "koraidon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1007/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

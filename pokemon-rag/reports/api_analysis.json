@@ -1,0 +1,443 @@
+{
+  "analyzed_at": "2026-10-21T02:46:31.583960+00:00",
+  "documentation": "https://pokeapi.co/docs/v2",
+  "history_semantics": "Inclusive last generation; sparse stat-name/ability-slot patches; type list replacement.",
+  "observations": [
+    "Pikachu past_stats contains generation-I special and generation-V defense/special-defense.",
+    "Clefairy past_types changes normal through V to fairy from VI.",
+    "Gengar ability slot 1 is levitate through VI, cursed-body from VII.",
+    "Form version_group is metadata evidence of introduction, not game availability."
+  ],
+  "samples": {
+    "pokemon/35": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon/35/",
+      "collected_at": "2026-10-21T02:41:46.310029+00:00",
+      "fields": [
+        "abilities",
+        "base_experience",
+        "cries",
+        "forms",
+        "game_indices",
+        "height",
+        "held_items",
+        "id",
+        "is_default",
+        "location_area_encounters",
+        "moves",
+        "name",
+        "order",
+        "past_abilities",
+        "past_stats",
+        "past_types",
+        "species",
+        "sprites",
+        "stats",
+        "types",
+        "weight"
+      ],
+      "history": {
+        "past_stats": [
+          {
+            "generation": {
+              "name": "generation-i",
+              "url": "https://pokeapi.co/api/v2/generation/1/"
+            },
+            "stats": [
+              {
+                "base_stat": 60,
+                "effort": 0,
+                "stat": {
+                  "name": "special",
+                  "url": "https://pokeapi.co/api/v2/stat/9/"
+                }
+              }
+            ]
+          }
+        ],
+        "past_types": [
+          {
+            "generation": {
+              "name": "generation-v",
+              "url": "https://pokeapi.co/api/v2/generation/5/"
+            },
+            "types": [
+              {
+                "slot": 1,
+                "type": {
+                  "name": "normal",
+                  "url": "https://pokeapi.co/api/v2/type/1/"
+                }
+              }
+            ]
+          }
+        ],
+        "past_abilities": [
+          {
+            "generation": {
+              "name": "generation-iii",
+              "url": "https://pokeapi.co/api/v2/generation/3/"
+            },
+            "abilities": [
+              {
+                "is_hidden": false,
+                "slot": 2,
+                "ability": null
+              }
+            ]
+          },
+          {
+            "generation": {
+              "name": "generation-iv",
+              "url": "https://pokeapi.co/api/v2/generation/4/"
+            },
+            "abilities": [
+              {
+                "is_hidden": true,
+                "slot": 3,
+                "ability": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "pokemon/94": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon/94/",
+      "collected_at": "2026-10-21T02:42:57.012369+00:00",
+      "fields": [
+        "abilities",
+        "base_experience",
+        "cries",
+        "forms",
+        "game_indices",
+        "height",
+        "held_items",
+        "id",
+        "is_default",
+        "location_area_encounters",
+        "moves",
+        "name",
+        "order",
+        "past_abilities",
+        "past_stats",
+        "past_types",
+        "species",
+        "sprites",
+        "stats",
+        "types",
+        "weight"
+      ],
+      "history": {
+        "past_stats": [
+          {
+            "generation": {
+              "name": "generation-i",
+              "url": "https://pokeapi.co/api/v2/generation/1/"
+            },
+            "stats": [
+              {
+                "base_stat": 130,
+                "effort": 0,
+                "stat": {
+                  "name": "special",
+                  "url": "https://pokeapi.co/api/v2/stat/9/"
+                }
+              }
+            ]
+          }
+        ],
+        "past_types": [],
+        "past_abilities": [
+          {
+            "generation": {
+              "name": "generation-vi",
+              "url": "https://pokeapi.co/api/v2/generation/6/"
+            },
+            "abilities": [
+              {
+                "is_hidden": false,
+                "slot": 1,
+                "ability": {
+                  "name": "levitate",
+                  "url": "https://pokeapi.co/api/v2/ability/26/"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "pokemon/10091": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon/10091/",
+      "collected_at": "2026-10-21T02:40:48.832143+00:00",
+      "fields": [
+        "abilities",
+        "base_experience",
+        "cries",
+        "forms",
+        "game_indices",
+        "height",
+        "held_items",
+        "id",
+        "is_default",
+        "location_area_encounters",
+        "moves",
+        "name",
+        "order",
+        "past_abilities",
+        "past_stats",
+        "past_types",
+        "species",
+        "sprites",
+        "stats",
+        "types",
+        "weight"
+      ],
+      "history": {
+        "past_stats": [],
+        "past_types": [],
+        "past_abilities": []
+      }
+    },
+    "pokemon/25": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon/25/",
+      "collected_at": "2026-10-21T02:41:32.032602+00:00",
+      "fields": [
+        "abilities",
+        "base_experience",
+        "cries",
+        "forms",
+        "game_indices",
+        "height",
+        "held_items",
+        "id",
+        "is_default",
+        "location_area_encounters",
+        "moves",
+        "name",
+        "order",
+        "past_abilities",
+        "past_stats",
+        "past_types",
+        "species",
+        "sprites",
+        "stats",
+        "types",
+        "weight"
+      ],
+      "history": {
+        "past_stats": [
+          {
+            "generation": {
+              "name": "generation-i",
+              "url": "https://pokeapi.co/api/v2/generation/1/"
+            },
+            "stats": [
+              {
+                "base_stat": 50,
+                "effort": 0,
+                "stat": {
+                  "name": "special",
+                  "url": "https://pokeapi.co/api/v2/stat/9/"
+                }
+              }
+            ]
+          },
+          {
+            "generation": {
+              "name": "generation-v",
+              "url": "https://pokeapi.co/api/v2/generation/5/"
+            },
+            "stats": [
+              {
+                "base_stat": 30,
+                "effort": 0,
+                "stat": {
+                  "name": "defense",
+                  "url": "https://pokeapi.co/api/v2/stat/3/"
+                }
+              },
+              {
+                "base_stat": 40,
+                "effort": 0,
+                "stat": {
+                  "name": "special-defense",
+                  "url": "https://pokeapi.co/api/v2/stat/5/"
+                }
+              }
+            ]
+          }
+        ],
+        "past_types": [],
+        "past_abilities": [
+          {
+            "generation": {
+              "name": "generation-iv",
+              "url": "https://pokeapi.co/api/v2/generation/4/"
+            },
+            "abilities": [
+              {
+                "is_hidden": true,
+                "slot": 3,
+                "ability": null
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "pokemon/10034": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon/10034/",
+      "collected_at": "2026-10-21T02:40:42.726809+00:00",
+      "fields": [
+        "abilities",
+        "base_experience",
+        "cries",
+        "forms",
+        "game_indices",
+        "height",
+        "held_items",
+        "id",
+        "is_default",
+        "location_area_encounters",
+        "moves",
+        "name",
+        "order",
+        "past_abilities",
+        "past_stats",
+        "past_types",
+        "species",
+        "sprites",
+        "stats",
+        "types",
+        "weight"
+      ],
+      "history": {
+        "past_stats": [],
+        "past_types": [],
+        "past_abilities": []
+      }
+    },
+    "pokemon-species/25": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon-species/25/",
+      "collected_at": "2026-10-21T02:39:29.553379+00:00",
+      "fields": [
+        "base_happiness",
+        "capture_rate",
+        "color",
+        "egg_groups",
+        "evolution_chain",
+        "evolves_from_species",
+        "flavor_text_entries",
+        "form_descriptions",
+        "forms_switchable",
+        "gender_rate",
+        "genera",
+        "generation",
+        "growth_rate",
+        "habitat",
+        "has_gender_differences",
+        "hatch_counter",
+        "id",
+        "is_baby",
+        "is_legendary",
+        "is_mythical",
+        "name",
+        "names",
+        "order",
+        "pal_park_encounters",
+        "pokedex_numbers",
+        "shape",
+        "varieties"
+      ],
+      "history": {}
+    },
+    "generation/1": {
+      "source_url": "https://pokeapi.co/api/v2/generation/1/",
+      "collected_at": "2026-10-21T02:39:04.681069+00:00",
+      "fields": [
+        "abilities",
+        "id",
+        "main_region",
+        "moves",
+        "name",
+        "names",
+        "pokemon_species",
+        "types",
+        "version_groups"
+      ],
+      "history": {}
+    },
+    "version-group/1": {
+      "source_url": "https://pokeapi.co/api/v2/version-group/1/",
+      "collected_at": "2026-10-21T02:39:06.138837+00:00",
+      "fields": [
+        "generation",
+        "id",
+        "move_learn_methods",
+        "name",
+        "order",
+        "pokedexes",
+        "regions",
+        "versions"
+      ],
+      "history": {}
+    },
+    "pokemon-form/10034": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon-form/10034/",
+      "collected_at": "2026-10-21T02:43:05.842964+00:00",
+      "fields": [
+        "flavor_text_entries",
+        "form_name",
+        "form_names",
+        "form_order",
+        "id",
+        "is_battle_only",
+        "is_default",
+        "is_mega",
+        "name",
+        "names",
+        "order",
+        "pokemon",
+        "sprites",
+        "trigger_conditions",
+        "types",
+        "version_group"
+      ],
+      "history": {}
+    },
+    "pokemon-form/25": {
+      "source_url": "https://pokeapi.co/api/v2/pokemon-form/25/",
+      "collected_at": "2026-10-21T02:44:03.309174+00:00",
+      "fields": [
+        "flavor_text_entries",
+        "form_name",
+        "form_names",
+        "form_order",
+        "id",
+        "is_battle_only",
+        "is_default",
+        "is_mega",
+        "name",
+        "names",
+        "order",
+        "pokemon",
+        "sprites",
+        "trigger_conditions",
+        "types",
+        "version_group"
+      ],
+      "history": {}
+    },
+    "evolution-chain/10": {
+      "source_url": "https://pokeapi.co/api/v2/evolution-chain/10/",
+      "collected_at": "2026-10-21T02:45:11.552524+00:00",
+      "fields": [
+        "baby_trigger_item",
+        "chain",
+        "id"
+      ],
+      "history": {}
+    }
+  }
+}

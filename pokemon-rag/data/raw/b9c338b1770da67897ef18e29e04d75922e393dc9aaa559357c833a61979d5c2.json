@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/189/",
+  "collected_at": "2026-10-21T02:45:19.329634+00:00",
+  "response": {
+    "id": 189,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "relicanth",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/369/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/193/",
+  "collected_at": "2026-10-21T02:45:19.711244+00:00",
+  "response": {
+    "id": 193,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "regirock",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/377/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

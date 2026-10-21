@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/536/",
+  "collected_at": "2026-10-21T02:45:49.839595+00:00",
+  "response": {
+    "id": 536,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "miraidon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1008/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

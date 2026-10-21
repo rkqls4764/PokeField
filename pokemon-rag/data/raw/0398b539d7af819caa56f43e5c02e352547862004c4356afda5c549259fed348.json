@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/521/",
+  "collected_at": "2026-10-21T02:45:48.511976+00:00",
+  "response": {
+    "id": 521,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "iron-treads",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/990/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/171/",
+  "collected_at": "2026-10-21T02:45:17.820323+00:00",
+  "response": {
+    "id": 171,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "lunatone",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/337/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

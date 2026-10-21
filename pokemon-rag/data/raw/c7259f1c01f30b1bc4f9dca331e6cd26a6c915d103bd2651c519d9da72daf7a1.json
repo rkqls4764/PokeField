@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/421/",
+  "collected_at": "2026-10-21T02:45:39.635573+00:00",
+  "response": {
+    "id": 421,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "necrozma",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/800/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

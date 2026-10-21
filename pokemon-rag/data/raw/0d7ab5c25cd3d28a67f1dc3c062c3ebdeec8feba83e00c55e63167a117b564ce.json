@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/416/",
+  "collected_at": "2026-10-21T02:45:39.091907+00:00",
+  "response": {
+    "id": 416,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "pheromosa",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/795/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

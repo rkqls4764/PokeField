@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/503/",
+  "collected_at": "2026-10-21T02:45:46.922758+00:00",
+  "response": {
+    "id": 503,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "bombirdier",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/962/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

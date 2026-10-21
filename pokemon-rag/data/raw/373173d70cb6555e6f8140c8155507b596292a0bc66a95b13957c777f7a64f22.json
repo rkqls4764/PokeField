@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/459/",
+  "collected_at": "2026-10-21T02:45:42.877883+00:00",
+  "response": {
+    "id": 459,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "morpeko",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/877/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/31/",
+  "collected_at": "2026-10-21T02:39:08.043362+00:00",
+  "response": {
+    "id": 31,
+    "name": "mega-dimension",
+    "order": 31,
+    "generation": {
+      "name": "generation-ix",
+      "url": "https://pokeapi.co/api/v2/generation/9/"
+    },
+    "move_learn_methods": [],
+    "pokedexes": [
+      {
+        "name": "hyperspace",
+        "url": "https://pokeapi.co/api/v2/pokedex/35/"
+      }
+    ],
+    "regions": [],
+    "versions": [
+      {
+        "name": "mega-dimension",
+        "url": "https://pokeapi.co/api/v2/version/48/"
+      }
+    ]
+  }
+}

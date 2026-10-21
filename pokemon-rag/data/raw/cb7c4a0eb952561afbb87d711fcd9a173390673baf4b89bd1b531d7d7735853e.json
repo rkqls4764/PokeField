@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/108/",
+  "collected_at": "2026-10-21T02:45:12.254763+00:00",
+  "response": {
+    "id": 108,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "heracross",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/214/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

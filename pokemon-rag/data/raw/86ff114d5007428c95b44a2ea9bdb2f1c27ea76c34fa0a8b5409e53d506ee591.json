@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/404/",
+  "collected_at": "2026-10-21T02:45:38.084189+00:00",
+  "response": {
+    "id": 404,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "mimikyu",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/778/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

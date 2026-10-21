@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/426/",
+  "collected_at": "2026-10-21T02:45:40.003419+00:00",
+  "response": {
+    "id": 426,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "blacephalon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/806/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

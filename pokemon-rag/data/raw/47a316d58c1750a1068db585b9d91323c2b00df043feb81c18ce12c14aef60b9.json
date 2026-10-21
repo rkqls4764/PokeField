@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/65/",
+  "collected_at": "2026-10-21T02:45:51.959497+00:00",
+  "response": {
+    "id": 65,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "lapras",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/131/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

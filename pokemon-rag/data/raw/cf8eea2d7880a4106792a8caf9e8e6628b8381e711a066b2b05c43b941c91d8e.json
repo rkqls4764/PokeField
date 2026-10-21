@@ -1,0 +1,31 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/30/",
+  "collected_at": "2026-10-21T02:39:07.956193+00:00",
+  "response": {
+    "id": 30,
+    "name": "legends-za",
+    "order": 30,
+    "generation": {
+      "name": "generation-ix",
+      "url": "https://pokeapi.co/api/v2/generation/9/"
+    },
+    "move_learn_methods": [],
+    "pokedexes": [
+      {
+        "name": "lumiose-city",
+        "url": "https://pokeapi.co/api/v2/pokedex/34/"
+      },
+      {
+        "name": "hyperspace",
+        "url": "https://pokeapi.co/api/v2/pokedex/35/"
+      }
+    ],
+    "regions": [],
+    "versions": [
+      {
+        "name": "legends-za",
+        "url": "https://pokeapi.co/api/v2/version/47/"
+      }
+    ]
+  }
+}

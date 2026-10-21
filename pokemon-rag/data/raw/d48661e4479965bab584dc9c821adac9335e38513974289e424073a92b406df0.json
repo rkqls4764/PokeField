@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/183/",
+  "collected_at": "2026-10-21T02:45:18.859139+00:00",
+  "response": {
+    "id": 183,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "tropius",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/357/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/456/",
+  "collected_at": "2026-10-21T02:45:42.614438+00:00",
+  "response": {
+    "id": 456,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "stonjourner",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/874/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

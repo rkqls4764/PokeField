@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/516/",
+  "collected_at": "2026-10-21T02:45:48.064937+00:00",
+  "response": {
+    "id": 516,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "scream-tail",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/985/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

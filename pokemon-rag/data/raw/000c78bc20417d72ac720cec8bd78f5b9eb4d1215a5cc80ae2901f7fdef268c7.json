@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/411/",
+  "collected_at": "2026-10-21T02:45:38.721893+00:00",
+  "response": {
+    "id": 411,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "tapu-bulu",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/787/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

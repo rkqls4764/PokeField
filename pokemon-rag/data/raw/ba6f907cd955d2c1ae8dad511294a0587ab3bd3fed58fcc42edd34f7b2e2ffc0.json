@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/329/",
+  "collected_at": "2026-10-21T02:45:31.301817+00:00",
+  "response": {
+    "id": 329,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "thundurus",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/642/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/417/",
+  "collected_at": "2026-10-21T02:45:39.218825+00:00",
+  "response": {
+    "id": 417,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "xurkitree",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/796/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

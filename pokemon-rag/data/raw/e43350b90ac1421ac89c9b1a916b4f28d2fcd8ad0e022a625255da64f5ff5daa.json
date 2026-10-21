@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/537/",
+  "collected_at": "2026-10-21T02:45:49.932700+00:00",
+  "response": {
+    "id": 537,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "walking-wake",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1009/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

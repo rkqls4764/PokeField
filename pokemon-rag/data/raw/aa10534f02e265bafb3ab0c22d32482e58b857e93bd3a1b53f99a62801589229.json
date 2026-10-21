@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/425/",
+  "collected_at": "2026-10-21T02:45:39.951451+00:00",
+  "response": {
+    "id": 425,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "stakataka",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/805/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

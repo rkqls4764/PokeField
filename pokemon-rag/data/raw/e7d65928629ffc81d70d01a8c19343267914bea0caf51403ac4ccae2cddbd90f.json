@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/462/",
+  "collected_at": "2026-10-21T02:45:43.202604+00:00",
+  "response": {
+    "id": 462,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "arctozolt",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/881/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

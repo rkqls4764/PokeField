@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/170/",
+  "collected_at": "2026-10-21T02:45:17.753228+00:00",
+  "response": {
+    "id": 170,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "seviper",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/336/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

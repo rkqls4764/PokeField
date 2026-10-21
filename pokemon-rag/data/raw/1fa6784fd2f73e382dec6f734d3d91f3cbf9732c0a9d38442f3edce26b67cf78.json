@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/533/",
+  "collected_at": "2026-10-21T02:45:49.573295+00:00",
+  "response": {
+    "id": 533,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "roaring-moon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1005/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/474/",
+  "collected_at": "2026-10-21T02:45:44.241087+00:00",
+  "response": {
+    "id": 474,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "glastrier",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/896/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

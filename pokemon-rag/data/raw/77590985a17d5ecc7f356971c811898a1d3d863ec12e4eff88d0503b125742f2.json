@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/547/",
+  "collected_at": "2026-10-21T02:45:50.837150+00:00",
+  "response": {
+    "id": 547,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "iron-boulder",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1022/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

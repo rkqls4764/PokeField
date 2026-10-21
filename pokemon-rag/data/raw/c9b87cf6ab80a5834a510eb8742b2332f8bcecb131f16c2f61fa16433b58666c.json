@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/163/",
+  "collected_at": "2026-10-21T02:45:17.113407+00:00",
+  "response": {
+    "id": 163,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "torkoal",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/324/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/13/",
+  "collected_at": "2026-10-21T02:39:06.401255+00:00",
+  "response": {
+    "id": 13,
+    "name": "xd",
+    "order": 10,
+    "generation": {
+      "name": "generation-iii",
+      "url": "https://pokeapi.co/api/v2/generation/3/"
+    },
+    "move_learn_methods": [
+      {
+        "name": "level-up",
+        "url": "https://pokeapi.co/api/v2/move-learn-method/1/"
+      },
+      {
+        "name": "tutor",
+        "url": "https://pokeapi.co/api/v2/move-learn-method/3/"
+      },
+      {
+        "name": "machine",
+        "url": "https://pokeapi.co/api/v2/move-learn-method/4/"
+      }
+    ],
+    "pokedexes": [],
+    "regions": [],
+    "versions": [
+      {
+        "name": "xd",
+        "url": "https://pokeapi.co/api/v2/version/20/"
+      }
+    ]
+  }
+}

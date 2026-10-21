@@ -1,0 +1,44 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/version-group/25/",
+  "collected_at": "2026-10-21T02:39:07.490443+00:00",
+  "response": {
+    "id": 25,
+    "name": "scarlet-violet",
+    "order": 27,
+    "generation": {
+      "name": "generation-ix",
+      "url": "https://pokeapi.co/api/v2/generation/9/"
+    },
+    "move_learn_methods": [],
+    "pokedexes": [
+      {
+        "name": "paldea",
+        "url": "https://pokeapi.co/api/v2/pokedex/31/"
+      },
+      {
+        "name": "kitakami",
+        "url": "https://pokeapi.co/api/v2/pokedex/32/"
+      },
+      {
+        "name": "blueberry",
+        "url": "https://pokeapi.co/api/v2/pokedex/33/"
+      }
+    ],
+    "regions": [
+      {
+        "name": "paldea",
+        "url": "https://pokeapi.co/api/v2/region/10/"
+      }
+    ],
+    "versions": [
+      {
+        "name": "scarlet",
+        "url": "https://pokeapi.co/api/v2/version/40/"
+      },
+      {
+        "name": "violet",
+        "url": "https://pokeapi.co/api/v2/version/41/"
+      }
+    ]
+  }
+}

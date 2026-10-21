@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/544/",
+  "collected_at": "2026-10-21T02:45:50.608652+00:00",
+  "response": {
+    "id": 544,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "gouging-fire",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1020/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

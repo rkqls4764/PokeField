@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/313/",
+  "collected_at": "2026-10-21T02:45:29.944047+00:00",
+  "response": {
+    "id": 313,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "stunfisk",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/618/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

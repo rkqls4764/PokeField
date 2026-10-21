@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/427/",
+  "collected_at": "2026-10-21T02:45:40.091499+00:00",
+  "response": {
+    "id": 427,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "zeraora",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/807/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

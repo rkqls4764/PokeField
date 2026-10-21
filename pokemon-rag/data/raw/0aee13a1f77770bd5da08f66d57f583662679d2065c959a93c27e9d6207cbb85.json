@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/255/",
+  "collected_at": "2026-10-21T02:45:24.665033+00:00",
+  "response": {
+    "id": 255,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "victini",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/494/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

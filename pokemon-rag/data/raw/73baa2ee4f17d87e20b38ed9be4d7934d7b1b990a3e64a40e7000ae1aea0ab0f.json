@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/252/",
+  "collected_at": "2026-10-21T02:45:24.403774+00:00",
+  "response": {
+    "id": 252,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "darkrai",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/491/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

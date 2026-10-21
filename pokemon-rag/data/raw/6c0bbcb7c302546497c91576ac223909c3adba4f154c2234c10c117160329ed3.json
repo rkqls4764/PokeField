@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/73/",
+  "collected_at": "2026-10-21T02:45:52.729996+00:00",
+  "response": {
+    "id": 73,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "articuno",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/144/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

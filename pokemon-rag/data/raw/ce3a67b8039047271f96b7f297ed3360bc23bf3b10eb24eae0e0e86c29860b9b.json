@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/150/",
+  "collected_at": "2026-10-21T02:45:15.996600+00:00",
+  "response": {
+    "id": 150,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "mawile",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/303/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

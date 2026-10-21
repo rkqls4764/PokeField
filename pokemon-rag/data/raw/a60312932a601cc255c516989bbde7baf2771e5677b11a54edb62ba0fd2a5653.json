@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/517/",
+  "collected_at": "2026-10-21T02:45:48.187987+00:00",
+  "response": {
+    "id": 517,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "brute-bonnet",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/986/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

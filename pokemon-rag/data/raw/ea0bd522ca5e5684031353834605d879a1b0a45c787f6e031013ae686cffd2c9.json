@@ -1,0 +1,111 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/pokemon-species/?offset=1000&limit=25",
+  "collected_at": "2026-10-21T02:39:13.318546+00:00",
+  "response": {
+    "count": 1025,
+    "next": null,
+    "previous": "https://pokeapi.co/api/v2/pokemon-species/?offset=975&limit=25",
+    "results": [
+      {
+        "name": "wo-chien",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1001/"
+      },
+      {
+        "name": "chien-pao",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1002/"
+      },
+      {
+        "name": "ting-lu",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1003/"
+      },
+      {
+        "name": "chi-yu",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1004/"
+      },
+      {
+        "name": "roaring-moon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1005/"
+      },
+      {
+        "name": "iron-valiant",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1006/"
+      },
+      {
+        "name": "koraidon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1007/"
+      },
+      {
+        "name": "miraidon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1008/"
+      },
+      {
+        "name": "walking-wake",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1009/"
+      },
+      {
+        "name": "iron-leaves",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1010/"
+      },
+      {
+        "name": "dipplin",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1011/"
+      },
+      {
+        "name": "poltchageist",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1012/"
+      },
+      {
+        "name": "sinistcha",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1013/"
+      },
+      {
+        "name": "okidogi",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1014/"
+      },
+      {
+        "name": "munkidori",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1015/"
+      },
+      {
+        "name": "fezandipiti",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1016/"
+      },
+      {
+        "name": "ogerpon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1017/"
+      },
+      {
+        "name": "archaludon",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1018/"
+      },
+      {
+        "name": "hydrapple",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1019/"
+      },
+      {
+        "name": "gouging-fire",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1020/"
+      },
+      {
+        "name": "raging-bolt",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1021/"
+      },
+      {
+        "name": "iron-boulder",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1022/"
+      },
+      {
+        "name": "iron-crown",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1023/"
+      },
+      {
+        "name": "terapagos",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1024/"
+      },
+      {
+        "name": "pecharunt",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1025/"
+      }
+    ]
+  }
+}

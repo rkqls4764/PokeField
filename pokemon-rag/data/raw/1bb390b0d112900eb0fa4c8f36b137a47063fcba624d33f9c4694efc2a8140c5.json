@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/522/",
+  "collected_at": "2026-10-21T02:45:48.612181+00:00",
+  "response": {
+    "id": 522,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "iron-bundle",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/991/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

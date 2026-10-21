@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/529/",
+  "collected_at": "2026-10-21T02:45:49.182426+00:00",
+  "response": {
+    "id": 529,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "wo-chien",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1001/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

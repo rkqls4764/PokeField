@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/531/",
+  "collected_at": "2026-10-21T02:45:49.428745+00:00",
+  "response": {
+    "id": 531,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "ting-lu",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1003/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

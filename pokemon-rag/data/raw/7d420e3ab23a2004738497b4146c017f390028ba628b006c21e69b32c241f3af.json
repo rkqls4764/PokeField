@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/248/",
+  "collected_at": "2026-10-21T02:45:24.119078+00:00",
+  "response": {
+    "id": 248,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "giratina",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/487/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

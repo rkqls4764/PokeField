@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/384/",
+  "collected_at": "2026-10-21T02:45:36.197958+00:00",
+  "response": {
+    "id": 384,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "wishiwashi",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/746/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

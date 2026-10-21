@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/325/",
+  "collected_at": "2026-10-21T02:45:30.995367+00:00",
+  "response": {
+    "id": 325,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "cobalion",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/638/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

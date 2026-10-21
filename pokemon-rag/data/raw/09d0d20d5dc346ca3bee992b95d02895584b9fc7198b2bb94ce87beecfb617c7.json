@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/532/",
+  "collected_at": "2026-10-21T02:45:49.557288+00:00",
+  "response": {
+    "id": 532,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "chi-yu",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/1004/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

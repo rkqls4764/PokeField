@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/117/",
+  "collected_at": "2026-10-21T02:45:13.080401+00:00",
+  "response": {
+    "id": 117,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "skarmory",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/227/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

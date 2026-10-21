@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/249/",
+  "collected_at": "2026-10-21T02:45:24.175930+00:00",
+  "response": {
+    "id": 249,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "cresselia",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/488/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}

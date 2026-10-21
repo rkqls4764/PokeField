@@ -1,0 +1,17 @@
+{
+  "source_url": "https://pokeapi.co/api/v2/evolution-chain/369/",
+  "collected_at": "2026-10-21T02:45:34.864530+00:00",
+  "response": {
+    "id": 369,
+    "baby_trigger_item": null,
+    "chain": {
+      "is_baby": false,
+      "species": {
+        "name": "yveltal",
+        "url": "https://pokeapi.co/api/v2/pokemon-species/717/"
+      },
+      "evolution_details": [],
+      "evolves_to": []
+    }
+  }
+}
