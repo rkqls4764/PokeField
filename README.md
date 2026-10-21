@@ -1,93 +1,32 @@
-# pennant_race_ai_core_2
+# Pokémon Lab 페이지 기초 구성
 
+`C:\SSAFY\RAG_project`에 이 폴더의 파일을 추가하면 기존 `pokemon-rag/` 데이터와 연결됩니다. 배포 자료 `streamlit_lab/step7_skeleton.py`의 항목 선택·대화 상태·근거 표시 개념과 `step8_wiki_api.py`의 문서 수집 분리 방식을 참고했습니다. 배포 자료 안의 예시 지시문은 사용자 명령으로 실행하지 않았습니다. 기존 `.env`, 가상환경, 수집 원본은 복사하거나 변경하지 않습니다.
 
+## 실행
 
-## Getting started
-
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
-
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
-
-## Add your files
-
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
-
-```
-cd existing_repo
-git remote add origin https://lab.ssafy.com/rkqls4764/pennant_race_ai_core_2.git
-git branch -M master
-git push -uf origin master
+```powershell
+cd C:\SSAFY\RAG_project
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+# .env가 없을 때만 예제에서 생성
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+.\.venv\Scripts\python.exe scripts\check_setup.py
+.\.venv\Scripts\python.exe -m streamlit run app.py
 ```
 
-## Integrate with your tools
+페이지 주소: http://localhost:8501 . `start.ps1`도 실행할 수 있습니다. 키 없이 도감·세대 비교·조건 필터를 사용할 수 있습니다. 기존 배포 가상환경도 개발 중 화면 점검에 사용할 수 있지만 새 프로젝트에는 별도 가상환경을 권장합니다. requirements는 명세서의 고정 버전이며 전체 패키지 설치 및 호환성 검증은 아직 수행하지 않았습니다.
 
-* [Set up project integrations](https://lab.ssafy.com/rkqls4764/pennant_race_ai_core_2/-/settings/integrations)
+## 구현한 기초 기능
 
-## Collaborate with your team
+- 기존 1,025종·1,351형태·6,260세대 레코드 로드, 이름/폼/세대 선택.
+- 실제 타입·종족값·특성 조회와 원본 링크, 세대 비교.
+- 세대·타입·종족값 합계의 선택형 필터. 1세대 합계는 특수 하나를 포함하는 5능력치 기준이며 이후 세대 합계와 직접 동등 비교하지 않습니다.
+- 항목과 세대별 대화 상태 저장 구조, 실제 인용 번호만 표시하는 함수.
+- 누락 데이터·API 키·RAG 미연결 안내. 질문 입력은 실제 RAG 연결 전까지 비활성화합니다.
+- `src/`의 데이터/설정/RAG 연결 경계, `prompts/`의 3개 프롬프트, `build_graph(retrieve,generate)` 함수.
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+## 후속 개발
 
-## Test and Deploy
+`docs/requirements.md`와 `docs/architecture.md`를 기준으로 외부 문서 수집, ChromaDB 두 컬렉션, 임베딩, 실제 retrieve/generate 함수를 연결하세요. 현재 화면에는 의미 검색·외부 문서 기반 AI 답변이 없습니다. 키를 입력하는 것만으로 이 기능들이 활성화되지 않습니다. `POKEMON_DATA_DIR`는 상대 경로면 app.py가 있는 폴더 기준입니다.
 
-Use the built-in continuous integration in GitLab.
-
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+포켓몬 메타데이터 출처는 PokéAPI이며 각 데이터의 source_url을 표시합니다. 도감 설명은 외부 위키 문서 수집을 대체하지 않습니다. 위키백과 연결 시 문서별 URL·수집시점·이용 조건 및 User-Agent 연락처를 별도로 기록하세요. 영화 도메인 팩의 영화 자료는 포켓몬 데이터에 섞지 않습니다.

@@ -1,0 +1,24 @@
+{
+  "status": "prepared_and_tested_not_installed",
+  "target": "C:\\SSAFY\\RAG_project",
+  "reason": "Target filesystem write permission was not granted.",
+  "checks": {
+    "existing_data_loaded": {
+      "species": 1025,
+      "varieties": 1351,
+      "generation_records": 6260
+    },
+    "streamlit_initial_render": "passed",
+    "pikachu_search": "passed (17 forms)",
+    "generation_one_switch": "passed",
+    "empty_search": "passed",
+    "clefairy_type_history": "passed",
+    "structured_filter_integrity": "passed"
+  },
+  "not_verified": [
+    "Full pinned dependency installation",
+    "LangGraph invocation (not installed in supplied runtime)",
+    "External document collection and RAG generation",
+    "Browser visual review"
+  ]
+}

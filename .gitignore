@@ -1,0 +1,7 @@
+.env
+.venv/
+.local/
+__pycache__/
+*.pyc
+pokemon-rag/data/raw/
+data/external/
