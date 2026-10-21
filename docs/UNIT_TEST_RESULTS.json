@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-10-21T07:14:10.611270+00:00",
+  "runner": "python -m unittest discover -s tests -v",
+  "run": 23,
+  "passed": 23,
+  "failed": 0,
+  "tests": [
+    "CoreTests.test_actual_catalog_counts",
+    "CoreTests.test_history_and_korean_abilities",
+    "CoreTests.test_duplicate_index_skips_embedding",
+    "CoreTests.test_filter_numeric_and_type",
+    "CoreTests.test_relative_conditions",
+    "CoreTests.test_unknown_generation_rejected",
+    "CoreTests.test_missing_gen_one_special_stats_not_recommended",
+    "CoreTests.test_citation_validation",
+    "CoreTests.test_graph_comparison",
+    "CoreTests.test_species_filter_excludes_unrelated_docs",
+    "CoreTests.test_unknown_citation_blocks_answer",
+    "CoreTests.test_actual_langgraph_nodes",
+    "CoreTests.test_no_fabricated_answer_without_evidence",
+    "CoreTests.test_inline_valid_citation_is_normalized",
+    "CoreTests.test_wrong_species_name_is_rejected",
+    "CoreTests.test_explicit_low_minimum_is_not_raised",
+    "CoreTests.test_evolution_profile_uses_actual_data",
+    "CoreTests.test_natural_search_rejects_outside_candidate",
+    "CoreTests.test_natural_no_invented_minimum",
+    "CoreTests.test_natural_preserves_valid_candidate",
+    "CoreTests.test_missing_index_explained",
+    "DocumentTests.test_own_document_cannot_be_rejected_by_model",
+    "DocumentTests.test_chunk_replacement_removes_stale"
+  ],
+  "scope": "real Chroma and JSONL with mock LLM/embedding; actual paid API runs are reported separately"
+}

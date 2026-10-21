@@ -30,3 +30,8 @@ if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 `docs/requirements.md`와 `docs/architecture.md`를 기준으로 외부 문서 수집, ChromaDB 두 컬렉션, 임베딩, 실제 retrieve/generate 함수를 연결하세요. 현재 화면에는 의미 검색·외부 문서 기반 AI 답변이 없습니다. 키를 입력하는 것만으로 이 기능들이 활성화되지 않습니다. `POKEMON_DATA_DIR`는 상대 경로면 app.py가 있는 폴더 기준입니다.
 
 포켓몬 메타데이터 출처는 PokéAPI이며 각 데이터의 source_url을 표시합니다. 도감 설명은 외부 위키 문서 수집을 대체하지 않습니다. 위키백과 연결 시 문서별 URL·수집시점·이용 조건 및 User-Agent 연락처를 별도로 기록하세요. 영화 도메인 팩의 영화 자료는 포켓몬 데이터에 섞지 않습니다.
+
+
+## AI chatbot / RAG update
+
+AI chat, cited sources, natural-language Pokemon search and indexing commands are described in [docs/RAG_IMPLEMENTATION.md](docs/RAG_IMPLEMENTATION.md). Latest verification: docs/RAG_VERIFICATION.json.
