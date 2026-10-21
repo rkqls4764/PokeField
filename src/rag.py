@@ -12,6 +12,7 @@ class RagState(TypedDict,total=False):
     answer:str
     warnings:list[str]
     history:list[dict]
+    comparison:dict
 
 def citation_numbers(answer):
     return {int(n) for group in re.findall(r'\[근거\s*([\d,\s]+)\]',answer) for n in group.split(',') if n.strip().isdigit()}
@@ -55,7 +56,7 @@ class RagService:
             if found: sources.extend(found)
         if '진화' in question: sources.append(self.catalog.profile_source(row['species_id']))
         warnings=[]
-        if self.settings.auto_collect and self.documents:
+        if not state.get('comparison') and self.settings.auto_collect and self.documents:
             try: self.documents.collect(row['species_id'],question)
             except ServiceError as e: warnings.append(str(e))
         external=self.store.search_docs(question,row['species_id'],self.settings.top_k)
@@ -65,6 +66,15 @@ class RagService:
         for s in sources:
             if s['species_id']!=row['species_id']: continue
             unique.setdefault(s['id'],s)
+        comparison=state.get('comparison')
+        if comparison:
+            from .generation_compare import comparison_snapshot
+            expected={f'pokemon:{pid}:gen:{g}' for g in (comparison['before_generation'],comparison['after_generation'])}
+            if not expected.issubset(unique):
+                raise ServiceError('비교 대상 두 세대의 메타데이터 근거가 모두 필요합니다. 기존 색인 상태를 확인하세요.')
+            for s in unique.values():
+                if s['id'] in expected:
+                    s['text']=comparison_snapshot(comparison,s['generation'])
         numbered=[dict(s,number=i) for i,s in enumerate(unique.values(),1)]
         return {'sources':numbered,'warnings':warnings}
     def generate(self,state):
@@ -72,8 +82,16 @@ class RagService:
         if not sources: return {'answer':'문서에서 확인되지 않습니다.'}
         # Previous messages are conversational context, never evidence.
         history=[{'role':m['role'],'content':m['content'][:800]} for m in state.get('history',[])[-4:]]
-        result=self.llm.structured(prompt('generate_answer.txt'),{'question':state['question'],'selected_pokemon_id':state['pokemon_id'],'selected_generation':state['generation'],'conversation_context_not_evidence':history,'evidence':[{'number':s['number'],'title':s['title'],'source_type':s['source_type'],'text':s['text']} for s in sources]},Answer,'generate_answer',cache=False)
+        instructions=prompt('generate_answer.txt'); schema=Answer
+        payload={'question':state['question'],'selected_pokemon_id':state['pokemon_id'],'selected_generation':state['generation'],'conversation_context_not_evidence':history,'evidence':[{'number':s['number'],'title':s['title'],'source_type':s['source_type'],'text':s['text']} for s in sources]}
+        comparison=state.get('comparison')
+        if comparison:
+            from .generation_compare import COMPARISON_INSTRUCTIONS,ComparisonAnswer
+            instructions+=COMPARISON_INSTRUCTIONS; schema=ComparisonAnswer
+            payload['python_comparison']={'before_generation':comparison['before_generation'],'after_generation':comparison['after_generation'],'fields':[f for f in comparison['fields'] if f['status']!='unchanged']}
+        result=self.llm.structured(instructions,payload,schema,'generate_answer',cache=False)
         lines=[]
+        reason_found=False
         for claim in result.claims:
             if not set(claim.citations).issubset(set(range(1,len(sources)+1))):
                 raise ServiceError('답변의 근거 번호가 실제 문서와 일치하지 않아 답변을 표시하지 않았습니다.')
@@ -81,11 +99,23 @@ class RagService:
             if not inline.issubset(set(claim.citations)):
                 raise ServiceError('본문과 구조화 응답의 근거 번호가 일치하지 않아 표시하지 않았습니다.')
             text=re.sub(r'\[근거\s*[\d,\s]+\]','',claim.text).strip()
+            if comparison:
+                from .generation_compare import CAUSAL,reason_quote
+                if claim.kind=='reason' or CAUSAL.search(text):
+                    verified=reason_quote(claim,sources)
+                    if verified:
+                        quote,number=verified
+                        lines.append(f'외부 문서에 명시된 변경 이유: “{quote}” [근거 {number}]')
+                        reason_found=True
+                    continue
+                required={f'pokemon:{state["pokemon_id"]}:gen:{g}' for g in (comparison['before_generation'],comparison['after_generation'])}
+                if not required.issubset({sources[i-1]['id'] for i in claim.citations}): continue
             evidence='\n'.join(sources[i-1]['text'] for i in claim.citations)
             unsupported=[s['name_ko'] for s in self.catalog.species.values() if s.get('name_ko') and s['name_ko'] in text and s['name_ko'] not in evidence]
             if unsupported: raise ServiceError('답변에 해당 근거에서 확인되지 않는 포켓몬 이름이 포함되어 표시하지 않았습니다. 다시 질문해 주세요.')
             lines.append(text+' '+''.join(f'[근거 {i}]' for i in dict.fromkeys(claim.citations)))
         if result.not_found or not lines: lines.append('질문하신 정보의 일부 또는 전부가 제공된 문서에서 확인되지 않습니다.')
+        if comparison and not reason_found: lines.append('변경 이유는 검색된 외부 문서에서 확인되지 않습니다. 이유를 추측하지 않습니다.')
         answer='\n\n'.join(lines)
         if not validate_citations(answer,sources): raise ServiceError('답변 근거 검증에 실패했습니다.')
         return {'answer':answer}

@@ -16,7 +16,18 @@ class Selection(BaseModel):
     selected_ids:list[int]=Field(max_length=5)
 
 def prompt(name): return (Path(__file__).resolve().parents[1]/'prompts'/name).read_text(encoding='utf-8')
-def own_title(title,name): return re.sub(r'\s|\(포켓몬\)','',title)==re.sub(r'\s','',name)
+
+def own_title(title, name):
+    # 공백 제거
+    normalized_title = re.sub(r'\s+', '', title)
+    normalized_name = re.sub(r'\s+', '', name)
+
+    # 포켓몬 이름 또는 포켓몬 전용 문서 제목
+    return normalized_title in {
+        normalized_name,
+        f'{normalized_name}(포켓몬)'
+    }
+
 
 class DocumentService:
     lock=threading.Lock(); last=0.0
@@ -69,11 +80,42 @@ class DocumentService:
             results=self.request({'action':'query','list':'search','srsearch':query,'srlimit':4})['query'].get('search',[])
             for r in results:
                 candidates[r['pageid']]={'id':r['pageid'],'title':r['title'],'snippet':html.unescape(re.sub('<[^>]+>','',r.get('snippet','')))}
-        direct=self.request({'action':'query','prop':'info|pageprops','titles':name+'|'+name+' (포켓몬)','redirects':1})
-        for page in direct['query'].get('pages',[]):
-            if not page.get('missing') and 'disambiguation' not in page.get('pageprops',{}) and own_title(page['title'],name):
-                candidates[page['pageid']]={'id':page['pageid'],'title':page['title'],'snippet':'선택 포켓몬 자체 제목의 문서'}
-        own={i for i,c in candidates.items() if own_title(c['title'],name)}
+        
+        # 선택한 포켓몬 자체 문서를 별도로 확인
+        direct = self.request({
+            'action': 'query',
+            'prop': 'info|pageprops',
+            'titles': name + '|' + name + ' (포켓몬)',
+            'redirects': 1
+        })
+
+        own = set()
+
+        for page in direct['query'].get('pages', []):
+            # 존재하지 않는 문서는 제외
+            if page.get('missing'):
+                continue
+
+            # 동음이의어 문서는 자체 문서로 인정하지 않음
+            if 'disambiguation' in page.get('pageprops', {}):
+                continue
+
+            # 포켓몬 이름과 문서 제목 일치 여부 확인
+            if not own_title(page['title'], name):
+                continue
+
+            page_id = page['pageid']
+
+            # 검증된 자체 문서 ID 별도 저장
+            own.add(page_id)
+
+            # 검색 후보에도 반드시 포함
+            candidates[page_id] = {
+                'id': page_id,
+                'title': page['title'],
+                'snippet': '선택 포켓몬 자체 제목의 문서'
+            }
+
         selected=self.llm.structured(prompt('select_documents.txt'),{'name':name,'question':question,'candidates':list(candidates.values())},Selection,'select_documents') if candidates else Selection(selected_ids=[])
         chosen=own|({i for i in selected.selected_ids if i in candidates})
         docs=[]; rejected=[]; own_collected=False
@@ -81,13 +123,40 @@ class DocumentService:
             data=self.request({'action':'query','prop':'extracts|info|revisions','pageids':page_id,'explaintext':1,'inprop':'url','rvprop':'ids|timestamp','redirects':1})
             pages=data['query'].get('pages',[])
             if not pages or pages[0].get('missing'): continue
-            page=pages[0]; text=page.get('extract','').strip(); is_own=page_id in own or own_title(page['title'],name)
-            # Every accepted document must explicitly mention the selected entity.
-            if not text or name not in text or '포켓몬' not in text:
-                rejected.append({'page_id':page_id,'reason':'본문에서 관련 포켓몬을 확인하지 못함'}); continue
+            
+            page = pages[0]
+            text = page.get('extract', '').strip()
+
+            # 직접 조회하여 검증된 자체 문서인지 확인
+            is_own = page_id in own
+
+            # 1. 본문이 없으면 수집 불가
+            if not text:
+                rejected.append({
+                    'page_id': page_id,
+                    'reason': '본문 없음'
+                })
+                continue
+
+            # 2. 자체 문서는 키워드 제외 조건을 적용하지 않음
+            if not is_own:
+                if name not in text or '포켓몬' not in text:
+                    rejected.append({
+                        'page_id': page_id,
+                        'reason': '관련성 부족'
+                    })
+                    continue
+
             revision=(page.get('revisions') or [{}])[0]
             doc={'page_id':page['pageid'],'title':page['title'],'text':text,'source_url':page.get('fullurl',''),'source_type':'external_document','species_id':species_id,'collected_at':now(),'license':info['text'],'license_url':info['url'],'revision_id':revision.get('revid'),'revision_timestamp':revision.get('timestamp'),'is_own_document':is_own,'policy_urls':POLICY_URLS}
-            if not doc['source_url']: continue
+            
+            if not doc['source_url']:
+                rejected.append({
+                    'page_id': page_id,
+                    'reason': '원문 URL 없음'
+                })
+                continue
+
             path=self.settings.runtime_dir/'documents'/f'{species_id}_{page["pageid"]}.json'
             write_json(path,doc); docs.append(str(path)); own_collected|=is_own
         manifest={'species_id':species_id,'name':name,'queries':queries,'documents':docs,'own_document_collected':own_collected,'rejected':rejected,'status':'collected' if docs else 'no_documents','completed_at':now()}

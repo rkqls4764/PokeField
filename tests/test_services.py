@@ -123,7 +123,7 @@ class DocumentTests(unittest.TestCase):
             if params.get('meta'): return {'query':{'rightsinfo':{'text':'CC BY-SA','url':'https://creativecommons.org/licenses/by-sa/4.0/'}}}
             if params.get('list'): return {'query':{'search':[{'pageid':25,'title':'피카츄','snippet':'포켓몬'}]}}
             if params.get('prop')=='info|pageprops': return {'query':{'pages':[{'pageid':25,'title':'피카츄'}]}}
-            return {'query':{'pages':[{'pageid':25,'title':'피카츄','extract':'피카츄는 포켓몬이다.','fullurl':'https://ko.wikipedia.org/wiki/피카츄','revisions':[{'revid':1,'timestamp':'2026-01-01'}]}]}}
+            return {'query':{'pages':[{'pageid':25,'title':'피카츄','extract': '양쪽 볼에 있는 전기주머니에 전기를 저장한다.','fullurl':'https://ko.wikipedia.org/wiki/피카츄','revisions':[{'revid':1,'timestamp':'2026-01-01'}]}]}}
         service.request=request
         result=service.collect(25,'설명'); self.assertTrue(result['own_document_collected']); self.assertGreater(result['chunks'],0)
         before=len(calls); embeds=self.emb.calls; again=service.collect(25,'설명')

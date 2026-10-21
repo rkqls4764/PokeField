@@ -11,6 +11,7 @@ from src.catalog import Catalog, TYPE_KO
 from src.settings import Settings
 from src.rag import cited_sources
 from src.ui_rag import render_chat, render_natural_search, index_counts
+from src.generation_compare import render_generation_analysis
 
 
 st.set_page_config(
@@ -308,6 +309,7 @@ with compare:
         "비교 데이터 출처",
         row["source_url"]
     )
+    render_generation_analysis(config, db, pokemon_id)
 
 
 # ----------------------------------
