@@ -94,15 +94,17 @@ class GlobalChatTests(unittest.TestCase):
         docs=SimpleNamespace(status=lambda sid:{'documents':[]})
         root=Path(__file__).resolve().parents[1]
         with patch('src.settings.Settings.load',return_value=self.settings),patch('src.ui_rag.services',return_value=(service,docs)),patch('src.ui_rag.index_counts',return_value={}),patch('src.llm.LanguageModel.complete',side_effect=AssertionError('paid API')),patch('src.llm.Embeddings.embed',side_effect=AssertionError('paid embedding')):
-            app=AppTest.from_file(str(root/'app.py'),default_timeout=30).run()
+            app=AppTest.from_file(str(root/'app.py'),default_timeout=30)
+            app.session_state['lab_panel']='tools'
+            app.run()
             self.assertFalse(app.exception)
             self.assertEqual(app.radio(key='chat_mode').value,'전체 포켓몬 질문')
-            app.sidebar.text_input[0].set_value('일치하지않는이름').run()
+            app.text_input(key='name_query').set_value('일치하지않는이름').run()
             self.assertFalse(app.exception)
             app.chat_input(key='global_pokemon_question').set_value('피카츄 타입 알려줘.').run()
             self.assertFalse(app.exception); self.assertEqual(len(app.session_state['global_history']),2)
-            app.sidebar.text_input[0].set_value('').run()
-            app.sidebar.selectbox[0].set_value(25).run()
+            app.text_input(key='name_query').set_value('').run()
+            app.selectbox(key='selected_pokemon').set_value(25).run()
             app.radio(key='chat_mode').set_value('선택한 포켓몬 질문').run()
             self.assertFalse(app.exception)
             self.assertTrue(app.session_state['histories'])

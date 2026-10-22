@@ -141,9 +141,11 @@ class ComparisonTests(unittest.TestCase):
         root=Path(__file__).resolve().parents[1]
         docs=SimpleNamespace(status=lambda sid:{'documents':[]},collect=self.documents.collect)
         with patch('src.settings.Settings.load',return_value=self.settings),patch('src.ui_rag.services',return_value=(self.rag,docs)),patch('src.ui_rag.index_counts',return_value=self.store.counts()):
-            app=AppTest.from_file(str(root/'app.py'),default_timeout=30).run()
+            app=AppTest.from_file(str(root/'app.py'),default_timeout=30)
+            app.session_state['lab_panel']='tools'
+            app.run()
             self.assertFalse(app.exception)
-            app.sidebar.text_input[0].set_value('팬텀').run()
+            app.text_input(key='name_query').set_value('팬텀').run()
             next(s for s in app.selectbox if s.label=='이전 세대').select(6).run()
             next(s for s in app.selectbox if s.label=='이후 세대').select(7).run()
             self.assertEqual(len(self.llm.calls),0)

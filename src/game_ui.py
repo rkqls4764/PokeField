@@ -40,7 +40,7 @@ def field_component():
 def open_panel():
     state=st.session_state.get('pokemon_field',{})
     action=state.get('action') if hasattr(state,'get') else None
-    if action and action.get('panel') in ('dex','professor'):
+    if action and action.get('panel') in ('dex','professor','tools'):
         st.session_state['lab_panel']=action['panel']
 
 def record_capture():
@@ -67,9 +67,14 @@ def render_field(settings,catalog,image_dir):
     for pid in st.session_state['field_pool_ids']:
         sid=catalog.varieties[pid]['species_id']
         pool.append({'id':pid,'name':catalog.species[sid]['name_ko'],'image':image_uri(str(image_dir/'official'/f'{pid}.png'))})
-    st.markdown('''<style>.stMainBlockContainer{padding-top:1.5rem;max-width:1440px}div[data-testid="stDialog"] [role="dialog"]{border-radius:24px}div[data-testid="stMetric"]{background:#eef7ef;border-radius:16px;padding:12px}</style>''',unsafe_allow_html=True)
-    field_component()(key='pokemon_field',data={'pool':pool,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':{name:(ASSETS/f'{name}.svg').read_text(encoding='utf-8') for name in ('professor','ball','dex')}},on_capture_change=record_capture,on_action_change=open_panel,height=650)
-    st.caption('몬스터볼을 누른 채 포켓몬 쪽으로 끌어서 놓으세요. 키보드에서는 포켓몬에 초점을 맞추고 Enter로 던질 수 있어요. 오박사 그림은 임시 에셋이에요.')
+    st.markdown('''<style>
+    html,body,[data-testid="stApp"],[data-testid="stAppViewContainer"]{margin:0!important;padding:0!important;width:100%;height:100%;overflow:hidden!important}
+    [data-testid="stHeader"],[data-testid="stSidebar"],[data-testid="stSidebarCollapsedControl"],#MainMenu,footer{display:none!important}
+    .stMain{overflow:hidden!important}.stMainBlockContainer{padding:0!important;margin:0!important;max-width:none!important;width:100%!important}
+    div[data-testid="stDialog"] [role="dialog"]{border-radius:24px;max-height:calc(100dvh - 24px);max-width:calc(100vw - 24px);overflow-y:auto;overscroll-behavior:contain}
+    @media(max-width:600px){div[data-testid="stDialog"] [role="dialog"]{width:calc(100vw - 12px);max-width:calc(100vw - 12px);max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);padding:12px;border-radius:16px}}
+    </style>''',unsafe_allow_html=True)
+    field_component()(key='pokemon_field',data={'pool':pool,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':{name:(ASSETS/f'{name}.svg').read_text(encoding='utf-8') for name in ('professor','ball','dex')}},on_capture_change=record_capture,on_action_change=open_panel,height='content')
     if st.session_state.get('lab_panel'): render_panel(settings,catalog,image_dir,collection)
     return records
 
@@ -85,7 +90,13 @@ def render_panel(settings,catalog,image_dir,collection):
         st.image(str(ASSETS/'professor.svg'),width=85)
         from .ui_rag import render_global_chat
         render_global_chat(settings,catalog,key_prefix='professor')
-    else: render_dex(settings,catalog,image_dir,collection)
+    elif st.session_state.get('lab_panel')=='tools':
+        from .lab_ui import render_lab
+        render_lab(settings,catalog,image_dir)
+    else:
+        if st.button('검색·세대 비교·항목별 채팅',key='open_research_tools'):
+            st.session_state['lab_panel']='tools'; st.rerun()
+        render_dex(settings,catalog,image_dir,collection)
 
 def render_dex(settings,catalog,image_dir,collection):
     st.subheader('포켓몬 백과사전')
@@ -143,4 +154,4 @@ def render_dex(settings,catalog,image_dir,collection):
         st.caption('AI 변화 분석은 아래 이동 버튼을 누른 뒤 기존 세대 비교 탭에서 사용할 수 있어요.')
         if st.button('기존 도감·항목별 채팅으로 이동',key='dex_select_existing'):
             st.session_state['pending_pokemon']={'pokemon_id':pid,'generation':gen}
-            close_panel(); st.rerun()
+            st.session_state['lab_panel']='tools'; st.rerun()

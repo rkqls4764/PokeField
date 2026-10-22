@@ -147,7 +147,9 @@ render_natural_search(s,Catalog(s.data_dir),9,s.data_dir.parent/'images')
         mock_rag=SimpleNamespace(store=SimpleNamespace(get_meta=lambda *args:[]))
         docs=SimpleNamespace(status=lambda sid:{'documents':[]})
         with patch('src.settings.Settings.load',return_value=self.settings),patch('src.ui_rag.LanguageModel',return_value=self.llm),patch('src.ui_rag.services',return_value=(mock_rag,docs)),patch('src.ui_rag.index_counts',return_value={}):
-            app=AppTest.from_file(str(root/'app.py'),default_timeout=30).run()
+            app=AppTest.from_file(str(root/'app.py'),default_timeout=30)
+            app.session_state['lab_panel']='tools'
+            app.run()
             field=next(t for t in app.text_input if t.label=='원하는 포켓몬 조건')
             field.set_value('숨겨진 특성이 피뢰침인 포켓몬 찾아줘')
             next(b for b in app.button if b.label=='AI로 찾아보기').click().run()
@@ -156,8 +158,8 @@ render_natural_search(s,Catalog(s.data_dir),9,s.data_dir.parent/'images')
             self.assertTrue(any('9세대 기준 검색 결과' in c.value for c in app.caption))
             chosen=app.session_state['natural_result']['results'][0]['row']
             next(b for b in app.button if b.label=='이 포켓몬 선택하고 질문하기').click().run()
-            self.assertFalse(app.exception); self.assertEqual(app.sidebar.selectbox[0].value,chosen['pokemon_id'])
-            self.assertEqual(app.sidebar.selectbox[1].value,9); self.assertEqual(app.session_state['preferred_tab'],'질문하기')
+            self.assertFalse(app.exception); self.assertEqual(app.selectbox(key='selected_pokemon').value,chosen['pokemon_id'])
+            self.assertEqual(app.selectbox(key='selected_generation').value,9); self.assertEqual(app.session_state['preferred_tab'],'질문하기')
             app.run(); self.assertEqual(self.llm.calls,[])
 
 class ChatPresentationTests(unittest.TestCase):
