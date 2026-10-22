@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 from .storage import digest
 
@@ -25,9 +26,67 @@ class Catalog:
         for name in ('ability_names_ko.json','ability_names_manual_ko.json'):
             p=self.data_dir/name
             if p.exists(): self.ability_names.update(json.loads(p.read_text(encoding='utf-8')))
+        self.ability_aliases={}
+        known=set(self.ability_names)|{a['name'] for r in self.records for a in r.get('abilities') or []}
+        for ability in known:
+            for alias in (ability,self.ability_names.get(ability,ability)):
+                token=re.sub(r'[\s_-]+','',alias.casefold())
+                self.ability_aliases.setdefault(token,set()).add(ability)
         p=self.data_dir/'pokemon_evolutions.jsonl'
         self.evolutions=read_jsonl(p) if p.exists() else []
     def records_for(self,pokemon_id): return sorted(self.by_pokemon.get(pokemon_id,[]),key=lambda r:r['generation'])
+    def resolve_ability(self,name):
+        matches=self.ability_aliases.get(re.sub(r'[\s_-]+','',name.casefold()),set())
+        return next(iter(matches)) if len(matches)==1 else None
+    def ability_mentions(self,text):
+        found=[]
+        for ability in sorted(set().union(*self.ability_aliases.values())):
+            for alias in {ability,self.ability_names.get(ability,ability)}:
+                pattern=re.escape(alias)
+                if alias.isascii(): pattern=r'(?<![A-Za-z0-9_-])'+pattern.replace(r'\-',r'[-_\s]+')+r'(?![A-Za-z0-9_-])'
+                for match in re.finditer(pattern,text,re.I): found.append((match.start(),match.end(),ability))
+        chosen=[]
+        for hit in sorted(found,key=lambda h:-(h[1]-h[0])):
+            if not any(hit[0]<old[1] and old[0]<hit[1] for old in chosen): chosen.append(hit)
+        return sorted(chosen)
+    def form_label(self,pokemon_id):
+        variety=self.varieties[pokemon_id]; name=variety['api_name']
+        if variety['is_default']: return '일반형'
+        if name.endswith('-mega-x'): return '메가진화 X형'
+        if name.endswith('-mega-y'): return '메가진화 Y형'
+        if name.endswith('-mega'): return '메가진화형'
+        return '선택한 특수형'
+    def answer_metadata(self,row,question):
+        """Local presentation of existing evidence; does not change stored documents."""
+        name=row['name_ko'] or '선택한 포켓몬'; form=self.form_label(row['pokemon_id'])
+        title=f"{name} · {form} · {row['generation']}세대"
+        want_types=bool(re.search('타입|속성',question)); want_abilities='특성' in question
+        want_stats=bool(re.search('종족값|능력치|공격|방어|스피드|속도|HP|체력',question,re.I))
+        all_fields=not any((want_types,want_abilities,want_stats))
+        lines=[title]
+        if want_types or all_fields:
+            lines.append('타입: '+(' / '.join(TYPE_KO.get(t,t) for t in row['types']) if row.get('types') else '정보 미확인'))
+        if want_abilities or all_fields:
+            if row['generation']<3: lines.append('특성: 특성 도입 이전 세대')
+            elif row.get('abilities') is None: lines.append('특성: 정보 미확인')
+            else:
+                for hidden,label in ((False,'일반 특성'),(True,'숨겨진 특성')):
+                    names=[self.ability_names.get(a['name'],'한국어 이름 미등록') for a in row['abilities'] if a['is_hidden']==hidden]
+                    lines.append(label+': '+(', '.join(names) or '등록된 특성 없음'))
+        if want_stats or all_fields:
+            values=[f'{STAT_KO.get(k,k)} {v}' for k,v in row['stats'].items() if v is not None]
+            lines.append('종족값: '+(', '.join(values) or '정보 미확인'))
+        return title,'\n'.join(lines)
+    def humanize_answer(self,text,pokemon_id):
+        mappings={**TYPE_KO,**STAT_KO,**self.ability_names}
+        variety=self.varieties[pokemon_id]
+        mappings[variety['api_name']]=(self.species[variety['species_id']]['name_ko'] or '선택한 포켓몬')+(' '+self.form_label(pokemon_id) if not variety['is_default'] else '')
+        for identifier in sorted(mappings,key=len,reverse=True):
+            text=re.sub(r'(?<![A-Za-z0-9_-])'+re.escape(identifier)+r'(?![A-Za-z0-9_-])',lambda m:mappings[identifier],text,flags=re.I)
+        text=re.sub(r'\b(?:species_id|pokemon_id|record_id|api_name|history_status|is_hidden)\s*[:=]\s*(?:"[^"]*"|\'[^\']*\'|[^\s,;)]+)[,;]?\s*','',text)
+        text=re.sub(r'(?<![A-Za-z0-9_])(?:None|null|NaN)(?![A-Za-z0-9_])','미확인',text,flags=re.I)
+        text=re.sub(r'\(\s*\)','',text)
+        return text
     def label(self,pokemon_id):
         v=self.varieties[pokemon_id]; s=self.species[v['species_id']]
         return f"{s.get('name_ko') or s.get('name_en')} · {v['api_name']} (#{pokemon_id})"

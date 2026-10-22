@@ -51,3 +51,16 @@ class VectorStore:
         keep={d['id'] for d in chunks}; stale=[i for i in old if i not in keep]
         if stale: self.collections['pokemon_docs'].delete(ids=stale)
         return result
+    def search_global(self,query,generation,top_k):
+        """Bounded semantic retrieval from the existing two collections."""
+        vector=None; sources=[]
+        for name in ('pokemon_meta','pokemon_docs'):
+            col=self.collections[name]
+            where={'generation':generation} if name=='pokemon_meta' else None
+            kwargs={'where':where} if where else {}
+            count=len(col.get(include=[],**kwargs)['ids'])
+            if not count: continue
+            if vector is None: vector=self.embeddings.embed([query])
+            result=col.query(query_embeddings=vector,n_results=min(top_k,count),include=['documents','metadatas'],**kwargs)
+            sources.extend(self._rows({k:v[0] for k,v in result.items() if k in ('ids','documents','metadatas')}))
+        return sources
