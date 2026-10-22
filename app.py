@@ -1,4 +1,4 @@
-"""Pokémon Lab: viewport field with on-demand research overlays."""
+"""PokéField: viewport field with on-demand research overlays."""
 import streamlit as st
 from pathlib import Path
 from hashlib import sha256
@@ -6,7 +6,7 @@ from src.catalog import Catalog
 from src.settings import Settings
 from src.game_ui import render_field
 
-st.set_page_config(page_title='Pokémon Lab',page_icon='🔎',layout='wide',initial_sidebar_state='collapsed')
+st.set_page_config(page_title='PokéField',page_icon='🔎',layout='wide',initial_sidebar_state='collapsed')
 @st.cache_resource
 def catalog(path,implementation_revision): return Catalog(path)
 try:

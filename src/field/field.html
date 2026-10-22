@@ -1,6 +1,6 @@
 <section class="lab" aria-label="포켓몬 수집 필드">
-  <header><div><span class="eyebrow">EXPLORE · CATCH · DISCOVER</span><h1>Pokémon Lab <small>수집 연구소</small></h1></div><div class="progress"><strong id="progress-count">0 / 1025</strong><span>나의 포켓몬 컬렉션</span><progress id="progress-bar" value="0" max="1025"></progress></div></header>
-  <div class="field" id="field"><div id="map-background"></div><div class="landmark"><strong id="region-name">초원</strong><span id="region-summary"></span></div><div id="tracking-controls" hidden><span id="tracking-name"></span><button id="cancel-target" type="button">추적 취소</button></div>
+  <header><div><h1>PokéField <small>수집 연구소</small></h1></div><div class="progress"><strong id="progress-count">0 / 1025</strong><span>나의 포켓몬 컬렉션</span><progress id="progress-bar" value="0" max="1025"></progress></div></header>
+  <div class="field" id="field"><div id="map-background"></div><div class="landmark"><strong id="region-name">초원</strong></div><div id="tracking-controls" hidden><span id="tracking-name"></span><button id="cancel-target" type="button">추적 취소</button></div>
 <div id="creatures"></div><div id="particles" aria-hidden="true"></div><div id="projectile" aria-hidden="true"></div><div id="aim"></div><p id="notice" role="status">오늘은 어떤 포켓몬을 만날까요?</p></div>
   <button id="region-prev" class="region-arrow" aria-label="이전 지역">❮</button><button id="region-next" class="region-arrow" aria-label="다음 지역">❯</button>
   <footer><button id="professor" class="tool" aria-label="오박사 챗봇 열기"><span class="art"></span><strong>오박사 연구실</strong><small>무엇이든 물어보세요</small></button><button id="throw" class="tool ball" aria-label="몬스터볼 드래그해서 던지기"><span class="art"></span><strong>몬스터볼 던지기</strong><small>누르고 → 조준하고 → 놓기</small></button><button id="dex" class="tool" aria-label="포켓몬 도감 열기"><span class="art"></span><strong>포켓몬 도감</strong><small>모든 포켓몬을 살펴봐요</small></button></footer>
@@ -18,6 +18,7 @@
       </div></div>
     </section>
   </div>
+  <div id="capture-toast" role="status" aria-live="polite" hidden></div>
   <div id="capture-popup" role="dialog" aria-label="포획 성공 정보" aria-modal="true" hidden>
     <article class="capture-card"><div id="capture-message"></div><img id="capture-image" alt="포획한 포켓몬"><h2 id="capture-name"></h2><p id="capture-types"></p><p id="capture-stats"></p><p id="capture-record"></p><div class="popup-actions"><button id="capture-confirm">확인</button><button id="capture-dex">도감에서 보기</button></div></article>
   </div>

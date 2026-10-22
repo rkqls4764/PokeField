@@ -37,7 +37,7 @@ def image_uri(path):
 
 def field_component():
     from streamlit.components.v2 import component
-    return component('pokemon_lab_field',html=(ASSETS/'field.html').read_text(encoding='utf-8'),css='/* Pokémon Lab */\n'+(ASSETS/'field.css').read_text(encoding='utf-8')+'\n'+(ASSETS/'rotom.css').read_text(encoding='utf-8'),js=(ASSETS/'rotom.js').read_text(encoding='utf-8')+'\n'+(ASSETS/'field.js').read_text(encoding='utf-8'))
+    return component('pokemon_lab_field',html=(ASSETS/'field.html').read_text(encoding='utf-8'),css='/* PokéField */\n'+(ASSETS/'field.css').read_text(encoding='utf-8')+'\n'+(ASSETS/'rotom.css').read_text(encoding='utf-8'),js=(ASSETS/'rotom.js').read_text(encoding='utf-8')+'\n'+(ASSETS/'field.js').read_text(encoding='utf-8'))
 
 def request_rotom():
     state=st.session_state.get('pokemon_field',{})
@@ -147,7 +147,7 @@ def render_field(settings,catalog,image_dir):
 
 def close_panel(): st.session_state['lab_panel']=None
 
-@st.dialog('Pokémon Lab · 포켓몬 센터',width='large',on_dismiss=close_panel)
+@st.dialog('PokéField · 포켓몬 센터',width='large',on_dismiss=close_panel)
 def render_panel(settings,catalog,image_dir,collection):
     if st.button('닫기 · 필드로 돌아가기',key='close_lab_panel'):
         close_panel(); st.rerun()

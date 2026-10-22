@@ -22,7 +22,7 @@ def query_dex(catalog,records,request,image_loader):
     if row is None and rows: row=rows[(page-1)*18]
     def brief(r):
         return {'id':r['pokemon_id'],'number':r['species_id'],'name':r['name_ko'],
-                'types':[TYPE_KO.get(t,t) for t in r.get('types') or []],'caught':r['pokemon_id'] in records}
+                'types':[TYPE_KO.get(t,t) for t in r.get('types') or []],'caught':r['pokemon_id'] in records,'image':image_loader(r['pokemon_id'])}
     detail=None
     if row:
         pid=row['pokemon_id'];sid=row['species_id'];species=catalog.species[sid]

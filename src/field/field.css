@@ -17,3 +17,14 @@ footer{position:absolute;left:0;right:0;bottom:calc(12px + env(safe-area-inset-b
 #professor .art img,#throw .art img{width:auto!important;height:100%;max-width:100%}
 
 #tracking-controls[hidden]{display:none}#tracking-controls{position:absolute;right:18px;top:112px;z-index:12;display:flex;gap:8px;align-items:center;padding:7px 10px;border-radius:12px;background:#fffdf1ed;color:#4c4632;font-size:12px;pointer-events:auto}#cancel-target{min-height:32px;border:1px solid #cfc6a8;border-radius:8px;padding:4px 8px;background:#fff;cursor:pointer;color:#514c3e}.pokemon.hunt-target:before{content:'';position:absolute;inset:-4px -5px 14px;border-radius:50%;background:radial-gradient(ellipse,#ffdf8855,transparent 68%);box-shadow:0 0 14px #e9bc5555;pointer-events:none;animation:target-glow 2.2s ease-in-out infinite;z-index:-1}.target-badge{position:absolute;top:-17px;left:50%;transform:translateX(-50%);white-space:nowrap;border-radius:7px;padding:2px 5px;background:#fff4c9;color:#685123;font-size:10px;pointer-events:none}.target-badge[hidden]{display:none}@keyframes target-glow{50%{opacity:.5;scale:1.07}}@media(prefers-reduced-motion:reduce){.pokemon.hunt-target:before{animation:none}}@media(max-width:600px){#tracking-controls{top:120px;right:10px;font-size:11px;gap:5px}}
+
+/* Shared CSS-pixel dimensions are also read by the movement/collision loop. */
+#field{--pokemon-size:108px;--pokemon-height:130px;--pokemon-image-size:104px}
+.pokemon{width:var(--pokemon-size);height:var(--pokemon-height)}
+.pokemon img{display:block;margin:0 auto;width:var(--pokemon-image-size);height:var(--pokemon-image-size);object-fit:contain}
+.pokemon span{margin-top:4px;line-height:1.4}
+header{height:64px;padding:8px 18px}header h1{margin:0}.landmark{top:100px}#tracking-controls{top:100px}
+#capture-toast[hidden]{display:none!important}#capture-toast{position:fixed;left:50%;bottom:calc(164px + env(safe-area-inset-bottom));transform:translateX(-50%);max-width:90vw;padding:10px 16px;border-radius:12px;background:#263b36ed;color:#fff;font-size:13px;text-align:center;pointer-events:none;z-index:45;opacity:1;transition:opacity .3s ease}
+#capture-toast.fading{opacity:0}
+@media(max-width:600px){#field{--pokemon-size:84px;--pokemon-height:106px;--pokemon-image-size:82px}header{height:68px;padding:8px 12px}.landmark{top:96px}#tracking-controls{top:108px}.pokemon span{font-size:10px;margin-top:3px}#capture-toast{bottom:calc(138px + env(safe-area-inset-bottom));font-size:11px;padding:8px 12px}}
+@media(max-height:480px){header{height:50px;padding:4px 12px}.landmark{display:block;top:66px;padding:5px 8px}#tracking-controls{top:66px}#capture-toast{bottom:102px;font-size:11px}}
