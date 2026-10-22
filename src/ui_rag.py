@@ -4,7 +4,7 @@ from dataclasses import replace
 import logging
 import traceback
 import streamlit as st
-from .llm import LanguageModel, ServiceError
+from .llm import LanguageModel, ServiceError, error_diagnostic
 from .vector_store import VectorStore
 from .document_service import DocumentService
 from .natural_search import NaturalSearch
@@ -55,16 +55,22 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
                                 result=reply(parent['content'],prior)
                                 message.update(content=result['answer'],sources=result.get('sources',[]),basis=result.get('basis',''),warnings=result.get('warnings',[]),status='complete')
                             except Exception as error:
-                                frames=[(f.filename,f.lineno,f.name) for f in traceback.extract_tb(error.__traceback__)]
-                                logger.warning('Chat request failed: %s; frames=%s',type(error).__name__,frames)
-                                message.update(content='질문을 처리하지 못했네. 연결·검색 조건을 확인하고 다시 시도해 보게.',sources=[],status='error')
+                                diagnostic=error_diagnostic(error)
+                                logger.error('Chat request failed: %s',diagnostic)
+                                from .storage import Metrics
+                                from .settings import Settings
+                                try: Metrics(Settings.load().runtime_dir).record('chat_failure',**diagnostic)
+                                except OSError: logger.error('Chat diagnostic file unavailable')
+                                category=diagnostic['category']
+                                notice='연결이 잠시 원활하지 않구나. 잠시 후 다시 시도해 보게.' if category=='connection' else 'AI 연결 설정을 확인해야겠구나. 관리자에게 알려 주게.' if category=='configuration' else '근거 또는 답변 검증 중 문제가 생겼구나. 관리자에게 알려 주게.' if category=='validation' else '데이터 처리 중 오류가 발생했구나. 관리자에게 알려 주게.'
+                                message.update(content=notice,sources=[],status='error',retryable=category in ('connection','validation'))
                         st.rerun()
                     st.markdown(message['content'])
                     if message['role']=='assistant':
                         if message.get('basis'): st.caption(message['basis'])
                         if message.get('status')!='error': render_sources(message['content'],message.get('sources',[]),prefix=message['id'])
                         for warning in message.get('warnings',[]): st.caption(warning)
-                        if message.get('status')=='error' and st.button('다시 시도',key=f'retry_{message["id"]}',disabled=busy or disabled):
+                        if message.get('status')=='error' and message.get('retryable',True) and st.button('다시 시도',key=f'retry_{message["id"]}',disabled=busy or disabled):
                             message.update(content='',status='pending'); st.rerun()
     question=st.chat_input(placeholder,disabled=disabled or busy,max_chars=2000,key=f'{prefix}_pokemon_question' if prefix!='selected' else 'pokemon_question')
     if question and not busy:

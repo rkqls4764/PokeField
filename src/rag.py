@@ -110,7 +110,9 @@ class RagService:
         if state.get('global_mode'):
             from .storage import Cache,digest
             cache=Cache(self.settings.runtime_dir)
-            cache_key=digest({'global_answer_v1':payload,'instructions':instructions,'model':self.settings.chat_model,'provider':self.settings.provider})
+            cache_parts={'global_answer_v1':payload,'instructions':instructions,'model':self.settings.chat_model,'provider':self.settings.provider}
+            if '진화' in state['question']: cache_parts['evolution_validation']=2
+            cache_key=digest(cache_parts)
             cached=cache.get(cache_key)
             if cached is not None and not ('진화' in state['question'] and '확인하기 어렵구나' in cached): return {'answer':cached}
         self.llm.check_key()
@@ -143,8 +145,8 @@ class RagService:
                 required={f'pokemon:{state["pokemon_id"]}:gen:{g}' for g in (comparison['before_generation'],comparison['after_generation'])}
                 if not required.issubset({sources[i-1]['id'] for i in claim.citations}): continue
             evidence='\n'.join(sources[i-1]['text'] for i in claim.citations)
-            unsupported=[s['name_ko'] for s in self.catalog.species.values() if s.get('name_ko') and s['name_ko'] in text and s['name_ko'] not in evidence]
-            if unsupported: raise ServiceError('답변에 해당 근거에서 확인되지 않는 포켓몬 이름이 포함되어 표시하지 않았습니다. 다시 질문해 주세요.')
+            unsupported=self.catalog.unsupported_species(text,evidence)
+            if unsupported: raise ServiceError('답변에 해당 근거에서 확인되지 않는 포켓몬 이름이 포함되어 표시하지 않았습니다. 다시 질문해 주세요.',stage='citation_validation',diagnostic={'unsupported_species_ids':unsupported})
             lines.append(text+' '+''.join(f'[근거 {i}]' for i in dict.fromkeys(claim.citations)))
         if result.not_found or not lines: lines.append('흠, 지금 가진 근거만으로는 질문한 내용을 확인하기 어렵구나.')
         if comparison and not reason_found: lines.append('변경 이유는 검색된 외부 문서에서 찾지 못했구나. 근거 없이 추측하지는 않겠네.')

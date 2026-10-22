@@ -77,6 +77,13 @@ class Catalog:
             values=[f'{STAT_KO.get(k,k)} {v}' for k,v in row['stats'].items() if v is not None]
             lines.append('종족값: '+(', '.join(values) or '정보 미확인'))
         return title,'\n'.join(lines)
+    def unsupported_species(self,text,evidence):
+        # Blue is both a game version and the Korean species name of Snubbull.
+        # Mask only the explicit game-title phrase when its version is evidenced.
+        names_text=text
+        if 'red-blue' in evidence:
+            names_text=re.sub(r'레드\s*[·/ㆍ]\s*(?:그린\s*[·/ㆍ]\s*)?블루','',names_text)
+        return [s['species_id'] for s in self.species.values() if s.get('name_ko') and s['name_ko'] in names_text and s['name_ko'] not in evidence]
     def humanize_answer(self,text,pokemon_id):
         mappings={**TYPE_KO,**STAT_KO,**self.ability_names}
         variety=self.varieties[pokemon_id]
@@ -118,6 +125,9 @@ class Catalog:
             details={translations.get(k,k):v for k,v in details.items()}
             relations.append({'from_species_id':e['from_species_id'],'to_species_id':e['to_species_id'],'from':self.species.get(e['from_species_id'],{}).get('name_ko',e['from_species_id']),'to':self.species.get(e['to_species_id'],{}).get('name_ko',e['to_species_id']),'조건':details,'source_url':e['source_url']})
         profile={'name_ko':s['name_ko'],'name_en':s['name_en'],'species_id':species_id,'first_generation':s['first_generation'],'evolutions':relations,'evolution_version_warning':'조건에 명시된 버전 그룹 이외의 게임으로 일반화하지 않는다. 버전 그룹이 없으면 적용 게임은 미확인.'}
+        profile['direct_previous']=list(dict.fromkeys(e['from'] for e in relations if e['to_species_id']==species_id))
+        profile['direct_next']=list(dict.fromkeys(e['to'] for e in relations if e['from_species_id']==species_id))
+        profile['direction_rule']='direct_previous는 진화 전, direct_next는 진화 후다. from → to의 방향을 뒤집지 않는다.'
         return {'id':f'species:{species_id}:profile','title':f"{s['name_ko']} 종·진화 정보",'text':json.dumps(profile,ensure_ascii=False),'source_type':'pokemon_metadata','source_url':relations[0]['source_url'] if relations else s['source_url'],'species_id':species_id}
 
 def metadata_document(row,ability_names=None,api_name=''):

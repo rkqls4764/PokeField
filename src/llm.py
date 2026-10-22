@@ -1,7 +1,22 @@
-import json
+import json, re, traceback
 from .storage import Cache, Metrics, digest
 
-class ServiceError(RuntimeError): pass
+class ServiceError(RuntimeError):
+    def __init__(self,message,*,stage=None,category='validation',diagnostic=None):
+        super().__init__(message);self.stage=stage;self.category=category;self.diagnostic=diagnostic
+
+def error_diagnostic(error,stage='chat'):
+    """Stack locations and controlled codes only; never exception bodies or locals."""
+    frames=[{'file':f.filename,'line':f.lineno,'function':f.name} for f in traceback.extract_tb(error.__traceback__)]
+    names={f['function'] for f in frames}
+    detected='retrieve' if names & {'retrieve','retrieve_global'} else 'generate' if 'generate' in names else stage
+    if any(f['file'].endswith('storage.py') and f['function'] in ('get','put','connect') for f in frames): detected='cache'
+    code=type(error).__name__
+    if isinstance(error,TypeError):
+        match=re.search(r"unexpected keyword argument '([A-Za-z_][A-Za-z_0-9]*)'",str(error))
+        if match: code='unexpected_keyword:'+match[1]
+    return {'stage':getattr(error,'stage',None) or detected,'category':getattr(error,'category','cache' if detected=='cache' else 'data' if isinstance(error,(KeyError,ValueError,OSError)) else 'code'),'error_type':type(error).__name__,'code':code,'traceback':frames,'cause':getattr(error,'diagnostic',None)}
+
 
 class LanguageModel:
     def __init__(self,settings):
@@ -27,14 +42,14 @@ class LanguageModel:
             return text
         except Exception as exc:
             self.metrics.record('llm_error',purpose=purpose,error_type=type(exc).__name__)
-            raise ServiceError('AI 서비스 호출에 실패했습니다. 키·모델·연결 상태를 확인하세요.') from None
+            raise ServiceError('AI 서비스 호출에 실패했습니다. 키·모델·연결 상태를 확인하세요.',stage='llm_request',category='connection' if type(exc).__name__ in ('APIConnectionError','APITimeoutError','RateLimitError','InternalServerError') else 'configuration',diagnostic=error_diagnostic(exc,'llm_request')) from None
     def structured(self,prompt,payload,schema,purpose,cache=True):
         text=self.complete(prompt+'\nJSON 객체만 출력한다. 스키마: '+json.dumps(schema.model_json_schema(),ensure_ascii=False),payload,purpose,True,cache)
         try: return schema.model_validate_json(text)
         except Exception as exc:
             issues=[{'loc':list(e['loc']),'type':e['type']} for e in exc.errors(include_input=False)] if hasattr(exc,'errors') else []
             self.metrics.record('schema_error',purpose=purpose,issues=issues)
-            raise ServiceError('AI가 반환한 구조화 결과가 올바르지 않습니다. 다시 시도해 주세요.') from None
+            raise ServiceError('AI가 반환한 구조화 결과가 올바르지 않습니다. 다시 시도해 주세요.',stage='structured_response',category='validation',diagnostic=error_diagnostic(exc,'structured_response')) from None
 
 class Embeddings:
     def __init__(self,settings):
