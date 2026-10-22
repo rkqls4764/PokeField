@@ -50,6 +50,8 @@ class RagService:
         pid=state['pokemon_id']; gen=state['generation']; question=state['question']
         row=self.catalog.index.get((pid,gen))
         if row is None: raise ServiceError('선택한 형태와 세대의 데이터가 없습니다.')
+        if '진화' in question and '메가' not in question:
+            return {'sources':[dict(self.catalog.profile_source(row['species_id'],full_chain=True),number=1)],'warnings':[]}
         sources=self.store.get_meta(pid,gen)
         if not sources: raise ServiceError('선택한 포켓몬의 색인이 없습니다. 메타데이터 색인 스크립트를 실행하세요.')
         mentioned={int(n) for n in re.findall(r'(\d+)\s*세대',question)} & set(self.catalog.generations)
@@ -110,7 +112,7 @@ class RagService:
             cache=Cache(self.settings.runtime_dir)
             cache_key=digest({'global_answer_v1':payload,'instructions':instructions,'model':self.settings.chat_model,'provider':self.settings.provider})
             cached=cache.get(cache_key)
-            if cached is not None: return {'answer':cached}
+            if cached is not None and not ('진화' in state['question'] and '확인하기 어렵구나' in cached): return {'answer':cached}
         self.llm.check_key()
         result=self.llm.structured(instructions,payload,schema,'generate_answer',cache=False)
         lines=[]
@@ -163,6 +165,11 @@ class RagService:
         gen=generations[-1] if generations else 9
         context={'generation':gen,'pokemon_ids':pids,'filters':filters.model_dump()}
         sources=[]; warnings=[]
+        if pids and '진화' in question and '메가' not in question:
+            species_ids=list(dict.fromkeys(self.catalog.varieties[pid]['species_id'] for pid in pids))
+            if len(species_ids)>6: raise ServiceError('한 번에 비교할 포켓몬은 6마리까지 지정해 주세요.')
+            sources=[self.catalog.profile_source(sid,full_chain=True) for sid in species_ids]
+            return {'sources':[dict(source,number=i) for i,source in enumerate(sources,1)],'generation':gen,'search_context':context,'warnings':[]}
         if constrained:
             rows,gen,limits=filter_rows(self.catalog,filters,gen,self.settings)
             # Explicit form names narrow species-level filters to the requested form.

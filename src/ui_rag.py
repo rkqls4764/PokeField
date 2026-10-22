@@ -35,6 +35,44 @@ def render_sources(answer,sources,prefix='current'):
             st.text(s['text'][:1400])
             if s.get('license'): st.caption('이용 조건: '+s['license'])
 
+def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avatar=None,scrolling=False):
+    """Render only persisted messages; each turn keeps a stable DOM/source identity."""
+    from uuid import uuid4
+    for message in messages: message.setdefault('id',uuid4().hex)
+    conversation=st.container(height=400,key='oak_messages',autoscroll=True) if scrolling else st.container()
+    busy=any(m.get('status')=='pending' for m in messages)
+    with conversation:
+        if not messages and scrolling: st.caption('트레이너, 궁금한 포켓몬을 물어보게. 세대를 생략하면 9세대 기준으로 살펴보겠네.')
+        for position,message in enumerate(messages):
+            with st.container(key=f'chat_{prefix}_{message["id"]}'):
+                with st.chat_message(message['role'],avatar=avatar if message['role']=='assistant' else None):
+                    if avatar and message['role']=='assistant': st.caption('오박사')
+                    if message.get('status')=='pending':
+                        parent=next(m for m in messages if m['id']==message['reply_to'])
+                        prior=[m for m in messages[:messages.index(parent)] if m.get('status')!='error']
+                        with st.spinner('오박사가 연구 자료를 살펴보고 있네…'):
+                            try:
+                                result=reply(parent['content'],prior)
+                                message.update(content=result['answer'],sources=result.get('sources',[]),basis=result.get('basis',''),warnings=result.get('warnings',[]),status='complete')
+                            except Exception as error:
+                                frames=[(f.filename,f.lineno,f.name) for f in traceback.extract_tb(error.__traceback__)]
+                                logger.warning('Chat request failed: %s; frames=%s',type(error).__name__,frames)
+                                message.update(content='질문을 처리하지 못했네. 연결·검색 조건을 확인하고 다시 시도해 보게.',sources=[],status='error')
+                        st.rerun()
+                    st.markdown(message['content'])
+                    if message['role']=='assistant':
+                        if message.get('basis'): st.caption(message['basis'])
+                        if message.get('status')!='error': render_sources(message['content'],message.get('sources',[]),prefix=message['id'])
+                        for warning in message.get('warnings',[]): st.caption(warning)
+                        if message.get('status')=='error' and st.button('다시 시도',key=f'retry_{message["id"]}',disabled=busy or disabled):
+                            message.update(content='',status='pending'); st.rerun()
+    question=st.chat_input(placeholder,disabled=disabled or busy,max_chars=2000,key=f'{prefix}_pokemon_question' if prefix!='selected' else 'pokemon_question')
+    if question and not busy:
+        question_id=uuid4().hex
+        messages.extend([{'id':question_id,'role':'user','content':question},{'id':uuid4().hex,'reply_to':question_id,'role':'assistant','content':'','status':'pending','sources':[]}])
+        st.rerun()
+
+
 def render_global_chat(settings,catalog,key_prefix='global'):
     from pathlib import Path
     oak_avatar=str(Path(__file__).resolve().parents[1]/'static/regions/professor.jpg')
@@ -47,40 +85,16 @@ def render_global_chat(settings,catalog,key_prefix='global'):
         messages=st.session_state.setdefault('global_history',[])
         if st.button('전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
             messages.clear(); st.rerun()
-        conversation=st.container(height=400,key='oak_messages',autoscroll=True)
-        with conversation:
-            if not messages: st.caption('트레이너, 궁금한 포켓몬을 물어보게. 세대를 생략하면 9세대 기준으로 살펴보겠네.')
-            for position,m in enumerate(messages):
-                with st.chat_message(m['role'],avatar=oak_avatar if m['role']=='assistant' else None):
-                    if m['role']=='assistant': st.caption('오박사')
-                    st.markdown(m['content'])
-                    if m['role']=='assistant':
-                        st.caption(m.get('basis',''))
-                        render_sources(m['content'],m.get('sources',[]),prefix=f'{key_prefix}_{position}')
-        question=st.chat_input('포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',max_chars=2000,key=f'{key_prefix}_pokemon_question')
-    if not question: return
-    prior=list(messages); messages.append({'role':'user','content':question})
-    with conversation, st.chat_message('user'): st.markdown(question)
-    with conversation, st.chat_message('assistant',avatar=oak_avatar),st.spinner('오박사가 연구 자료를 살펴보고 있네…'):
-        st.caption('오박사')
-        try:
+        def reply(question,prior):
             rag,_=services(replace(settings,auto_collect=False),catalog)
             result=rag.ask_global(question,prior)
-            gens=sorted({s['generation'] for s in result.get('sources',[]) if s.get('generation')})
+            gens=sorted({source['generation'] for source in result.get('sources',[]) if source.get('generation')})
             basis=' · '.join(f'{g}세대' for g in gens) if len(gens)>1 else f"{result['generation']}세대 기준"
             context=result.get('search_context',{})
             if 'candidate_count' in context: basis+=f" · 조건 일치 {context['candidate_count']}개 형태 · 최대 {settings.result_limit}개 근거 제시"
-            st.caption(basis); st.markdown(result['answer'])
-            render_sources(result['answer'],result.get('sources',[]),prefix=f'{key_prefix}_{len(messages)}')
-            for warning in result.get('warnings',[]): st.caption(warning)
-            messages.append({'role':'assistant','content':result['answer'],'sources':result.get('sources',[]),'basis':basis})
-        except ServiceError:
-            logger.warning('Global chat validation or service error')
-            st.warning('질문을 처리하지 못했어요. 포켓몬 이름·형태·세대·조건과 API 연결 설정을 확인해 주세요. 조건은 “공격력 120 이상”처럼 입력해 주세요.')
-        except Exception as e:
-            frames=[(f.filename,f.lineno,f.name) for f in traceback.extract_tb(e.__traceback__)]
-            logger.error('Global chat failure: %s; frames=%s',type(e).__name__,frames)
-            st.error('답변 처리 중 문제가 발생했어요. 연결과 색인 상태를 확인하고 다시 시도해 주세요.')
+            return dict(result,basis=basis)
+        render_conversation(messages,reply,prefix=key_prefix,placeholder='포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',avatar=oak_avatar,scrolling=True)
+
 
 def render_chat(settings,catalog,pokemon_id,generation):
     st.subheader('근거를 찾아 질문하기')
@@ -110,27 +124,8 @@ def render_chat(settings,catalog,pokemon_id,generation):
     indexed=bool(rag.store.get_meta(pokemon_id,generation))
     if not settings.api_key: st.warning('AI 서비스 키가 없습니다. .env에서 LLM_PROVIDER와 해당 API 키를 설정하세요.')
     if not indexed: st.warning('선택한 포켓몬의 메타데이터 색인이 없습니다. scripts/index_pokemon.py를 먼저 실행하세요.')
-    for position,m in enumerate(messages):
-        with st.chat_message(m['role']):
-            st.markdown(m['content'])
-            if m['role']=='assistant':
-                # A stable per-message container avoids duplicate link-button keys.
-                with st.container(key=f'message_{key}_{position}'): render_sources(m['content'],m.get('sources',[]),prefix=f'{key}_{position}')
-    question=st.chat_input('선택한 포켓몬에 대해 질문하세요.',disabled=not settings.api_key or not indexed,max_chars=2000,key='pokemon_question')
-    if question:
-        prior=list(messages)
-        messages.append({'role':'user','content':question})
-        with st.chat_message('user'): st.markdown(question)
-        with st.chat_message('assistant'):
-            with st.status('관련 근거를 검색하고 답변을 작성합니다…',expanded=False) as progress:
-                try:
-                    result=rag.ask(pokemon_id,generation,question,prior)
-                    progress.update(label='답변과 근거 번호 확인 완료',state='complete')
-                    st.markdown(result['answer']); render_sources(result['answer'],result['sources'])
-                    for message in result.get('warnings',[]): st.caption(message)
-                    messages.append({'role':'assistant','content':result['answer'],'sources':result['sources']})
-                except ServiceError as e: progress.update(label='답변을 완료하지 못했습니다.',state='error'); st.warning(str(e))
-                except Exception: progress.update(label='답변 처리에 실패했습니다.',state='error'); st.error('연결과 색인 상태를 확인한 뒤 다시 질문해 주세요.')
+    render_conversation(messages,lambda question,prior:rag.ask(pokemon_id,generation,question,prior),prefix='selected',placeholder='선택한 포켓몬에 대해 질문하세요.',disabled=not settings.api_key or not indexed)
+
 
 def render_natural_search(settings,catalog,ui_generation,image_dir):
     st.subheader('AI 자연어 포켓몬 탐색')

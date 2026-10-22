@@ -99,14 +99,24 @@ class Catalog:
             result.append({'포켓몬':self.label(r['pokemon_id']),'타입':', '.join(TYPE_KO.get(t,t) for t in r['types'] or []),'종족값 합계':total,'pokemon_id':r['pokemon_id']})
         return result
     def document(self,row): return metadata_document(row,self.ability_names,self.varieties[row['pokemon_id']]['api_name'])
-    def profile_source(self,species_id):
+    def profile_source(self,species_id,full_chain=False):
         s=self.species[species_id]; relations=[]
+        related={species_id}
+        if full_chain:
+            neighbors={}
+            for edge in self.evolutions:
+                a,b=edge['from_species_id'],edge['to_species_id']
+                neighbors.setdefault(a,set()).add(b); neighbors.setdefault(b,set()).add(a)
+            pending=[species_id]
+            while pending:
+                for neighbor in neighbors.get(pending.pop(),()):
+                    if neighbor not in related: related.add(neighbor); pending.append(neighbor)
         for e in self.evolutions:
-            if species_id not in (e['from_species_id'],e['to_species_id']): continue
+            if not ({e['from_species_id'],e['to_species_id']} & related): continue
             details={k:v for k,v in (e.get('details') or {}).items() if v not in (None,'',False)}
             translations={'min_happiness':'친밀도_최솟값','min_affection':'애정도_최솟값','min_beauty':'아름다움_최솟값','min_level':'최소_레벨','time_of_day':'시간대','version_group':'적용_버전그룹','known_move_type':'알고_있어야_할_기술타입','near_special_rock':'특수한_바위_근처','item':'사용_아이템','held_item':'지닌_아이템','trigger':'진화_계기'}
             details={translations.get(k,k):v for k,v in details.items()}
-            relations.append({'from':self.species.get(e['from_species_id'],{}).get('name_ko',e['from_species_id']),'to':self.species.get(e['to_species_id'],{}).get('name_ko',e['to_species_id']),'조건':details,'source_url':e['source_url']})
+            relations.append({'from_species_id':e['from_species_id'],'to_species_id':e['to_species_id'],'from':self.species.get(e['from_species_id'],{}).get('name_ko',e['from_species_id']),'to':self.species.get(e['to_species_id'],{}).get('name_ko',e['to_species_id']),'조건':details,'source_url':e['source_url']})
         profile={'name_ko':s['name_ko'],'name_en':s['name_en'],'species_id':species_id,'first_generation':s['first_generation'],'evolutions':relations,'evolution_version_warning':'조건에 명시된 버전 그룹 이외의 게임으로 일반화하지 않는다. 버전 그룹이 없으면 적용 게임은 미확인.'}
         return {'id':f'species:{species_id}:profile','title':f"{s['name_ko']} 종·진화 정보",'text':json.dumps(profile,ensure_ascii=False),'source_type':'pokemon_metadata','source_url':relations[0]['source_url'] if relations else s['source_url'],'species_id':species_id}
 
