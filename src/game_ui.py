@@ -116,9 +116,6 @@ def render_panel(settings,catalog,image_dir,collection):
     if st.button('닫기 · 필드로 돌아가기',key='close_lab_panel'):
         close_panel(); st.rerun()
     if st.session_state.get('lab_panel')=='professor':
-        st.markdown('### 오박사 연구실')
-        st.caption('궁금한 포켓몬이나 조건을 물어보세요. 확인한 자료와 함께 알려드려요.')
-        st.image(str(ASSETS.parents[1]/'static/regions/professor.jpg'),width=85)
         from .ui_rag import render_global_chat
         render_global_chat(settings,catalog,key_prefix='professor')
     elif st.session_state.get('lab_panel')=='tools':

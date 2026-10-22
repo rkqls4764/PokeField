@@ -36,22 +36,33 @@ def render_sources(answer,sources,prefix='current'):
             if s.get('license'): st.caption('이용 조건: '+s['license'])
 
 def render_global_chat(settings,catalog,key_prefix='global'):
-    st.subheader('전체 포켓몬에게 질문하기')
-    st.caption('사이드바 선택 없이 질문할 수 있어요. 세대를 지정하지 않으면 9세대 기준이며, 변경 시점 질문은 세대별 기록을 확인해요.')
-    messages=st.session_state.setdefault('global_history',[])
-    if st.button('전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
-        messages.clear(); st.rerun()
-    for position,m in enumerate(messages):
-        with st.chat_message(m['role']):
-            st.markdown(m['content'])
-            if m['role']=='assistant':
-                st.caption(m.get('basis',''))
-                render_sources(m['content'],m.get('sources',[]),prefix=f'{key_prefix}_{position}')
-    question=st.chat_input('포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',max_chars=2000,key=f'{key_prefix}_pokemon_question')
+    from pathlib import Path
+    oak_avatar=str(Path(__file__).resolve().parents[1]/'static/regions/professor.jpg')
+    css=(Path(__file__).parent/'oak_chat.css').read_text(encoding='utf-8')
+    st.markdown('<style>'+css+'</style>',unsafe_allow_html=True)
+    with st.container(key='oak_chat'):
+        with st.container(key='oak_header',horizontal=True,vertical_alignment='center'):
+            st.image(oak_avatar,width=48)
+            st.markdown('**오박사의 연구실**  \n포켓몬에 대해 무엇이든 물어보세요')
+        messages=st.session_state.setdefault('global_history',[])
+        if st.button('전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
+            messages.clear(); st.rerun()
+        conversation=st.container(height=400,key='oak_messages',autoscroll=True)
+        with conversation:
+            if not messages: st.caption('트레이너, 궁금한 포켓몬을 물어보게. 세대를 생략하면 9세대 기준으로 살펴보겠네.')
+            for position,m in enumerate(messages):
+                with st.chat_message(m['role'],avatar=oak_avatar if m['role']=='assistant' else None):
+                    if m['role']=='assistant': st.caption('오박사')
+                    st.markdown(m['content'])
+                    if m['role']=='assistant':
+                        st.caption(m.get('basis',''))
+                        render_sources(m['content'],m.get('sources',[]),prefix=f'{key_prefix}_{position}')
+        question=st.chat_input('포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',max_chars=2000,key=f'{key_prefix}_pokemon_question')
     if not question: return
     prior=list(messages); messages.append({'role':'user','content':question})
-    with st.chat_message('user'): st.markdown(question)
-    with st.chat_message('assistant'),st.spinner('데이터와 근거를 확인하고 있어요…'):
+    with conversation, st.chat_message('user'): st.markdown(question)
+    with conversation, st.chat_message('assistant',avatar=oak_avatar),st.spinner('오박사가 연구 자료를 살펴보고 있네…'):
+        st.caption('오박사')
         try:
             rag,_=services(replace(settings,auto_collect=False),catalog)
             result=rag.ask_global(question,prior)
