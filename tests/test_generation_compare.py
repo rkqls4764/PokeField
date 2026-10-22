@@ -110,7 +110,7 @@ class ComparisonTests(unittest.TestCase):
     def test_reason_without_external_evidence_is_dropped(self):
         self.llm.outputs['generate_answer']=ComparisonAnswer(claims=[ComparisonClaim(text='밸런스를 위해 변경했습니다.',kind='reason',citations=[1,2])])
         result=analyze_comparison(self.rag,self.comparison())
-        self.assertNotIn('밸런스를 위해',result['answer']); self.assertIn('이유는 검색된 외부 문서에서 확인되지',result['answer'])
+        self.assertNotIn('밸런스를 위해',result['answer']); self.assertIn('이유는 검색된 외부 문서에서 찾지 못했구나',result['answer'])
     def test_reason_disguised_as_change_is_dropped(self):
         self.llm.outputs['generate_answer']=ComparisonAnswer(claims=[ComparisonClaim(text='밸런스 때문에 팬텀의 특성이 변경됐습니다.',citations=[1,2])])
         result=analyze_comparison(self.rag,self.comparison()); self.assertNotIn('밸런스 때문에',result['answer'])

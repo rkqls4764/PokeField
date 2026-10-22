@@ -36,8 +36,9 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
   await check(1440,900);
   const dialog=page.getByRole('dialog');
   for(let i=0;i<4;i++){
-   await page.locator(i%2?'#professor':'#dex').click();await dialog.waitFor();
-   await dialog.getByRole('button',{name:'닫기 · 필드로 돌아가기',exact:true}).click();await dialog.waitFor({state:'hidden'});
+   await page.locator(i%2?'#professor':'#dex').click();
+   if(i%2){await dialog.waitFor();await dialog.getByRole('button',{name:'닫기 · 필드로 돌아가기',exact:true}).click();await dialog.waitFor({state:'hidden'})}
+   else {await page.locator('#rotom-stage[data-state=opened]').waitFor();await page.locator('#rotom-close').click();await page.locator('#rotom-stage[data-state=closed]').waitFor({state:'attached'})}
    await page.locator('#dex-transition').waitFor({state:'hidden'});
    await page.waitForTimeout(100);assert.equal(await page.evaluate(()=>window.labAnimationFrames.size),1);
   }

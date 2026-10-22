@@ -65,10 +65,10 @@ class GlobalChatTests(unittest.TestCase):
             with patch.object(service.llm,'structured',side_effect=AssertionError('unexpected LLM')):
                 state=service.retrieve_global({'question':f'{gen}세대 부유 특성을 가진 팬텀 찾아줘'})
                 self.assertEqual(state['search_context']['candidate_count'],count)
-                if not count: self.assertIn('없습니다',service.ask_global(f'{gen}세대 부유 특성을 가진 팬텀 찾아줘')['answer'])
+                if not count: self.assertIn('찾지 못했구나',service.ask_global(f'{gen}세대 부유 특성을 가진 팬텀 찾아줘')['answer'])
         with patch.object(service.llm,'structured',side_effect=AssertionError('unexpected LLM')):
             self.assertEqual(service.ask_global('없는몬 타입 알려줘')['sources'],[])
-            self.assertIn('없습니다',service.ask_global('공격력 9999 이상인 포켓몬')['answer'])
+            self.assertIn('찾지 못했구나',service.ask_global('공격력 9999 이상인 포켓몬')['answer'])
     def test_invalid_citations_and_api_error(self):
         service=self.service(Answer(claims=[Claim(text='전기 타입이에요.',citations=[99])]))
         with self.assertRaises(ServiceError): service.ask_global('피카츄 타입')

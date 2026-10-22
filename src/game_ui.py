@@ -11,6 +11,7 @@ from PIL import Image
 from .collection import Collection,dex_rows
 from .catalog import TYPE_KO,STAT_KO
 from .regions import REGIONS,region_candidates,capture_fact
+from .rotom_data import query_dex,DISPLAY
 
 ASSETS=Path(__file__).parent/'field'
 logger=logging.getLogger(__name__)
@@ -36,13 +37,27 @@ def image_uri(path):
 
 def field_component():
     from streamlit.components.v2 import component
-    return component('pokemon_lab_field',html=(ASSETS/'field.html').read_text(encoding='utf-8'),css='/* Pokémon Lab */\n'+(ASSETS/'field.css').read_text(encoding='utf-8'),js=(ASSETS/'field.js').read_text(encoding='utf-8'))
+    return component('pokemon_lab_field',html=(ASSETS/'field.html').read_text(encoding='utf-8'),css='/* Pokémon Lab */\n'+(ASSETS/'field.css').read_text(encoding='utf-8')+'\n'+(ASSETS/'rotom.css').read_text(encoding='utf-8'),js=(ASSETS/'rotom.js').read_text(encoding='utf-8')+'\n'+(ASSETS/'field.js').read_text(encoding='utf-8'))
+
+def request_rotom():
+    state=st.session_state.get('pokemon_field',{})
+    request=state.get('rotom') if hasattr(state,'get') else None
+    if not isinstance(request,dict): return
+    try:
+        catalog=st.session_state['_rotom_catalog'];directory=Path(st.session_state['_rotom_images'])
+        records=Collection(st.session_state['collection_path']).all()
+        st.session_state['rotom_response']=query_dex(catalog,records,request,lambda pid:image_uri(str(directory/'official'/f'{pid}.png')))
+    except Exception as exc:
+        logger.error('Rotom query failed: %s',type(exc).__name__)
+        st.session_state['rotom_response']={'request_id':request.get('request_id'),'error':'도감 데이터를 불러오지 못했어요. 조건을 확인하고 다시 시도해 주세요.'}
 
 def open_panel():
     state=st.session_state.get('pokemon_field',{})
     action=state.get('action') if hasattr(state,'get') else None
     if action and action.get('panel') in ('dex','professor','tools'):
         st.session_state['lab_panel']=action['panel']
+        if action['panel']=='tools' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
+            st.session_state['pending_pokemon']={'pokemon_id':action['pokemon_id'],'generation':action.get('generation',9)}
         if action.get('panel')=='dex' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
             st.session_state['dex_detail_id']=action['pokemon_id']
             st.session_state['dex_query']=st.session_state['field_facts'][action['pokemon_id']]['name']
@@ -69,6 +84,8 @@ def render_field(settings,catalog,image_dir):
     collection_path=settings.runtime_dir/'collection.sqlite3'
     st.session_state['collection_path']=str(collection_path)
     collection=Collection(collection_path); records=collection.all()
+    st.session_state['_rotom_catalog']=catalog
+    st.session_state['_rotom_images']=str(image_dir)
     allowed=[pid for pid,v in catalog.varieties.items() if v['is_default'] and catalog.records_for(pid)]
     if 'field_region_ids' not in st.session_state:
         st.session_state['field_region_ids']={r['id']:random.sample(ids,min(60,len(ids))) for r in REGIONS for ids in [[row['pokemon_id'] for row in region_candidates(catalog,r['id'])]]}
@@ -86,8 +103,9 @@ def render_field(settings,catalog,image_dir):
     div[data-testid="stDialog"] [role="dialog"]{border-radius:24px;max-height:calc(100dvh - 24px);max-width:calc(100vw - 24px);overflow-y:auto;overscroll-behavior:contain}
     @media(max-width:600px){div[data-testid="stDialog"] [role="dialog"]{width:calc(100vw - 12px);max-width:calc(100vw - 12px);max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);padding:12px;border-radius:16px}}
     </style>''',unsafe_allow_html=True)
-    assets={'professor':'<img class="professor-photo" src="app/static/regions/professor.jpg" alt="오박사" draggable="false">','ball':'<img class="ball-photo" src="app/static/regions/ball.jpg" alt="몬스터볼" draggable="false">','dex':(ASSETS/'dex.svg').read_text(encoding='utf-8')}
-    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets},on_capture_change=record_capture,on_action_change=open_panel,height='content')
+    assets={'professor':'<img class="professor-photo" src="app/static/regions/professor.jpg" alt="오박사" draggable="false">','ball':'<img class="ball-photo" src="app/static/regions/ball.jpg" alt="몬스터볼" draggable="false">','dex':'<img src="app/static/rotom/closed.png" alt="닫힌 로토무 도감" draggable="false">'}
+    rotom={'response':st.session_state.get('rotom_response'),'generations':catalog.generations,'types':TYPE_KO,'display':DISPLAY}
+    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets,'rotom':rotom},on_capture_change=record_capture,on_action_change=open_panel,on_rotom_change=request_rotom,height='content')
     if st.session_state.get('lab_panel'): render_panel(settings,catalog,image_dir,collection)
     return records
 

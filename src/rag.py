@@ -4,6 +4,7 @@ from pydantic import BaseModel, ConfigDict, Field, StrictInt
 from .llm import ServiceError
 from .document_service import prompt
 
+
 class RagState(TypedDict,total=False):
     pokemon_id:int
     generation:int
@@ -87,7 +88,7 @@ class RagService:
         return {'sources':numbered,'warnings':warnings}
     def generate(self,state):
         sources=state.get('sources',[])
-        if not sources: return {'answer':state.get('answer','제공된 근거에서는 확인되지 않아요.')}
+        if not sources: return {'answer':state.get('answer','흠, 지금 가진 근거만으로는 확인하기 어렵구나.')}
         # Previous messages are conversational context, never evidence.
         history=[{'role':m['role'],'content':m['content'][:800]} for m in state.get('history',[])[-4:]]
         instructions=prompt('generate_answer.txt'); schema=Answer
@@ -143,8 +144,8 @@ class RagService:
             unsupported=[s['name_ko'] for s in self.catalog.species.values() if s.get('name_ko') and s['name_ko'] in text and s['name_ko'] not in evidence]
             if unsupported: raise ServiceError('답변에 해당 근거에서 확인되지 않는 포켓몬 이름이 포함되어 표시하지 않았습니다. 다시 질문해 주세요.')
             lines.append(text+' '+''.join(f'[근거 {i}]' for i in dict.fromkeys(claim.citations)))
-        if result.not_found or not lines: lines.append('제공된 근거에서는 질문하신 정보가 확인되지 않아요.')
-        if comparison and not reason_found: lines.append('변경 이유는 검색된 외부 문서에서 확인되지 않습니다. 이유를 추측하지 않습니다.')
+        if result.not_found or not lines: lines.append('흠, 지금 가진 근거만으로는 질문한 내용을 확인하기 어렵구나.')
+        if comparison and not reason_found: lines.append('변경 이유는 검색된 외부 문서에서 찾지 못했구나. 근거 없이 추측하지는 않겠네.')
         answer='\n\n'.join(lines)
         if not validate_citations(answer,sources): raise ServiceError('답변 근거 검증에 실패했습니다.')
         if cache_key: cache.put(cache_key,answer)
@@ -168,7 +169,7 @@ class RagService:
             if pids: rows=[r for r in rows if r['pokemon_id'] in pids]
             context.update(candidate_count=len(rows),thresholds=limits,shown_limit=self.settings.result_limit)
             for row in rows[:self.settings.result_limit]: sources.extend(self.store.get_meta(row['pokemon_id'],gen))
-            if not rows: return {'sources':[],'generation':gen,'search_context':context,'answer':'조건에 맞는 포켓몬이 없습니다.','warnings':[]}
+            if not rows: return {'sources':[],'generation':gen,'search_context':context,'answer':'흠, 조건에 맞는 포켓몬을 찾지 못했구나. 조건을 조금 바꿔 보게나.','warnings':[]}
         elif pids:
             if len(pids)>6: raise ServiceError('한 번에 비교할 포켓몬은 6마리까지 지정해 주세요.')
             history_question=bool(re.search('언제|바뀌|변경|달라|세대별|부터|변했',question))

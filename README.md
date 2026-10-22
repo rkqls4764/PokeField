@@ -46,7 +46,7 @@ AI chat, cited sources, natural-language Pokemon search and indexing commands ar
 
 도감 기기는 전체 1025종의 일반형 백과사전을 열며 수집 여부와 관계없이 조회할 수 있습니다. 세대는 데이터 기준이며 게임별 등장 여부를 뜻하지 않습니다. 키·몸무게는 기존 수집기의 원문 캐시에서 읽고, 없는 정보는 미확인으로 표시합니다. 세대 비교·조건 검색·항목별 채팅은 기존 탭에서 계속 사용합니다. 오박사 패널은 기존 전체 포켓몬 RAG와 대화 기록을 공유합니다.
 
-오박사·몬스터볼 및 9개 배경은 사용자가 제공한 이미지이며 `static/regions/`에 원본 그대로 복사했습니다. JPG는 외곽 CSS 마스크로 표시해 몸체·연구복의 흰색 픽셀을 지우지 않습니다. 도감 SVG는 기존 자체 제작 임시 에셋입니다. 기존 포켓몬 PNG의 투명도를 보존한 축소 이미지만 메모리에 캐싱합니다. 이미지 원본은 수정하지 않습니다.
+오박사·몬스터볼 및 9개 배경은 사용자가 제공한 이미지이며 `static/regions/`에 원본 그대로 복사했습니다. JPG는 외곽 CSS 마스크로 표시해 몸체·연구복의 흰색 픽셀을 지우지 않습니다. 로토무 도감은 사용자가 제공한 투명 PNG 원본을 사용하며 `static/rotom/`에 저장합니다. 기존 포켓몬 PNG의 투명도를 보존한 축소 이미지만 메모리에 캐싱합니다. 이미지 원본은 수정하지 않습니다.
 
 전체 단위 테스트: `.venv\Scripts\python.exe -m unittest discover -s tests -v`. 자동 테스트에는 실제 유료 LLM/임베딩 호출이 없습니다.
 
@@ -69,3 +69,11 @@ AI chat, cited sources, natural-language Pokemon search and indexing commands ar
 `.streamlit/config.toml`의 `server.enableStaticServing=true`가 필요하므로 서버를 재시작해 주세요. 이미지 11개만 `static/regions/`로 공개하며 원본 JSON·수집 DB·키 파일은 공개하지 않습니다. 앱 실행 명령은 기존과 같습니다.
 
 게임 상태의 브라우저 회귀 테스트: Playwright와 Chrome이 있는 환경에서 `node tests/browser_regions.cjs`. 실제 제품 JS/CSS와 JSON을 사용하되 가짜 브라우저 장면·저장 응답을 사용하므로 앱 서버나 실제 수집 DB 및 유료 API가 필요하지 않습니다.
+
+### 로토무 도감
+
+우측 하단 로토무를 누르면 600ms Y축 회전 → 520ms 중앙 확대 → 380ms 화면 활성화 후 기기 안에서 도감을 사용할 수 있습니다. X·Esc·바깥 영역 클릭은 역순으로 닫습니다. 이름·번호 검색, 타입·세대·수집 필터와 상세 조회는 기존 Catalog·SQLite 데이터를 사용합니다. 작은 화면에서는 목록/상세 탭과 필터 버튼을 사용하고 내용 영역을 스크롤합니다. 연구 도구 버튼은 선택한 포켓몬의 기존 비교·자연어 검색·채팅 패널로 연결합니다.
+
+열린 이미지 원본 314×325 기준 디스플레이는 x=34, y=126, 너비=271, 높이=138입니다. 실제 픽셀 경계를 측정했으며 비례 좌표와 왼쪽 장식 마스크로 주황 테두리를 보존합니다. `src/rotom_data.py`는 기존 `dex_rows`를 재사용하고 18종씩 조회하며 전체 JSON을 브라우저에 전송하지 않습니다.
+
+Playwright·Chrome 환경에서 `node tests/browser_rotom.cjs`로 프레임 정렬·검색·필터·역방향 닫기·모바일·창 크기 변경을 검증할 수 있습니다. `BROWSER_TEST_URL`과 `PLAYWRIGHT_MODULE`은 기존 브라우저 테스트와 동일합니다. 자동 테스트는 유료 API를 호출하지 않습니다.

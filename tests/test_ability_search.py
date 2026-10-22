@@ -184,7 +184,7 @@ class ChatPresentationTests(unittest.TestCase):
         self.assertIn('타입: 에스퍼',evidence); self.assertNotIn('특성:',evidence); self.assertNotIn('종족값:',evidence)
         for token in ('null','None','species_id','pokemon_id','psychic'): self.assertNotIn(token,evidence)
         self.assertEqual(payload['selected_form']['form'],'일반형'); self.assertEqual(len(self.llm.calls),1)
-        self.assertIn('해요체',self.llm.calls[0][1]); self.assertIn('1~3문장',self.llm.calls[0][1])
+        self.assertIn('오박사',self.llm.calls[0][1]); self.assertIn('~일세',self.llm.calls[0][1]); self.assertNotIn('해요체',self.llm.calls[0][1]); self.assertIn('1~3문장',self.llm.calls[0][1])
     def test_pikachu_ability_question_uses_korean_names(self):
         result=self.reply(25,'피카츄 특성이 뭐야?','일반 특성은 정전기이고, 숨겨진 특성은 피뢰침이에요.')
         text=self.llm.calls[0][2]['evidence'][0]['text']

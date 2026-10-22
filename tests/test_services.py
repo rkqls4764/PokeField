@@ -79,7 +79,7 @@ class CoreTests(unittest.TestCase):
         result=service.ask(25,9,'특성은?'); self.assertIn('[근거 1]',result['answer'])
     def test_no_fabricated_answer_without_evidence(self):
         service=RagService(self.settings,self.catalog,self.store,FakeLLM({'generate_answer':Answer(claims=[],not_found=True)}))
-        result=service.ask(25,9,'가상의 특성을 알려줘'); self.assertNotIn('[근거',result['answer']); self.assertIn('확인되지',result['answer'])
+        result=service.ask(25,9,'가상의 특성을 알려줘'); self.assertNotIn('[근거',result['answer']); self.assertIn('확인하기 어렵구나',result['answer'])
     def test_inline_valid_citation_is_normalized(self):
         llm=FakeLLM({'generate_answer':Answer(claims=[Claim(text='피카츄의 정보입니다. [근거 1]',citations=[1])])})
         result=RagService(self.settings,self.catalog,self.store,llm).ask(25,9,'설명')
