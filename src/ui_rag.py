@@ -42,7 +42,7 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
     conversation=st.container(height=400,key='oak_messages',autoscroll=True) if scrolling else st.container()
     busy=any(m.get('status')=='pending' for m in messages)
     with conversation:
-        if not messages and scrolling: st.caption('트레이너, 궁금한 포켓몬을 물어보게. 세대를 생략하면 9세대 기준으로 살펴보겠네.')
+        if not messages and scrolling: st.caption('트레이너, 궁금한 포켓몬을 물어보게.')
         for position,message in enumerate(messages):
             with st.container(key=f'chat_{prefix}_{message["id"]}'):
                 with st.chat_message(message['role'],avatar=avatar if message['role']=='assistant' else None):
@@ -89,7 +89,7 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
         st.rerun()
 
 
-def render_global_chat(settings,catalog,key_prefix='global'):
+def render_global_chat(settings,catalog,key_prefix='global',selected_context=None):
     from pathlib import Path
     oak_avatar=str(Path(__file__).resolve().parents[1]/'static/regions/professor.jpg')
     css=(Path(__file__).parent/'oak_chat.css').read_text(encoding='utf-8')
@@ -98,14 +98,20 @@ def render_global_chat(settings,catalog,key_prefix='global'):
         with st.container(key='oak_header',horizontal=True,vertical_alignment='center'):
             st.image(oak_avatar,width=48)
             st.markdown('**오박사의 연구실**  \n포켓몬에 대해 무엇이든 물어보세요')
-        messages=st.session_state.setdefault('global_history',[])
-        if st.button('전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
+        selected=None
+        if selected_context:
+            mode=st.radio('질문 모드',['전체 포켓몬 질문','선택한 포켓몬 질문'],horizontal=True,key=f'{key_prefix}_chat_mode')
+            if mode=='선택한 포켓몬 질문':
+                selected=selected_context
+                st.caption(f"{catalog.label(selected['pokemon_id'])} · {selected['generation']}세대에 대해 질문해 보게.")
+        messages=(st.session_state.setdefault('histories',{}).setdefault(f"{selected['pokemon_id']}:{selected['generation']}",[]) if selected else st.session_state.setdefault('global_history',[]))
+        if st.button('이 포켓몬의 대화 지우기' if selected else '전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
             messages.clear(); st.rerun()
         def reply(question,prior):
             rag,_=services(replace(settings,auto_collect=False),catalog)
-            result=rag.ask_global(question,prior)
+            result=rag.ask(selected['pokemon_id'],selected['generation'],question,prior) if selected else rag.ask_global(question,prior)
             gens=sorted({source['generation'] for source in result.get('sources',[]) if source.get('generation')})
-            basis=' · '.join(f'{g}세대' for g in gens) if len(gens)>1 else f"{result['generation']}세대 기준"
+            basis=' · '.join(f'{g}세대' for g in gens) if len(gens)>1 else f"{result.get('generation',selected['generation'] if selected else 9)}세대 기준"
             context=result.get('search_context',{})
             if 'candidate_count' in context: basis+=f" · 조건 일치 {context['candidate_count']}개 형태 · 최대 {settings.result_limit}개 근거 제시"
             return dict(result,basis=basis)

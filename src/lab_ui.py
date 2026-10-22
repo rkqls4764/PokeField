@@ -70,7 +70,7 @@ def render_lab(config,db,image_dir):
         st.session_state['selected_pokemon'] = pending['pokemon_id']
         st.session_state['selected_generation'] = pending['generation']
         st.session_state['show_chat_hint'] = True
-        st.session_state['preferred_tab'] = '질문하기'
+        st.session_state['preferred_tab'] = pending.get('tab','질문하기')
         st.session_state['chat_mode'] = '선택한 포켓몬 질문'
 
     with st.container(border=True):

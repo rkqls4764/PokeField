@@ -58,7 +58,13 @@ def open_panel():
         st.session_state['lab_panel']=action['panel']
         if action.get('region') in {r['id'] for r in REGIONS}: st.session_state['current_region']=action['region']
         if action['panel']=='tools' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
-            st.session_state['pending_pokemon']={'pokemon_id':action['pokemon_id'],'generation':action.get('generation',9)}
+            st.session_state['pending_pokemon']={'pokemon_id':action['pokemon_id'],'generation':action.get('generation',9),'tab':action.get('tab') if action.get('tab') in ('세대 비교','조건 검색') else '질문하기'}
+        if action['panel']=='professor':
+            pid=action.get('pokemon_id');gen=action.get('generation',9)
+            catalog=st.session_state.get('_rotom_catalog')
+            context={'pokemon_id':pid,'generation':gen} if catalog and pid in catalog.varieties and catalog.index.get((pid,gen)) else None
+            st.session_state['professor_context']=context
+            st.session_state['professor_chat_mode']='선택한 포켓몬 질문' if context else '전체 포켓몬 질문'
         if action.get('panel')=='dex' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
             st.session_state['dex_detail_id']=action['pokemon_id']
             st.session_state['dex_query']=st.session_state['field_facts'][action['pokemon_id']]['name']
@@ -153,7 +159,7 @@ def render_panel(settings,catalog,image_dir,collection):
         close_panel(); st.rerun()
     if st.session_state.get('lab_panel')=='professor':
         from .ui_rag import render_global_chat
-        render_global_chat(settings,catalog,key_prefix='professor')
+        render_global_chat(settings,catalog,key_prefix='professor',selected_context=st.session_state.get('professor_context'))
     elif st.session_state.get('lab_panel')=='tools':
         from .lab_ui import render_lab
         render_lab(settings,catalog,image_dir)

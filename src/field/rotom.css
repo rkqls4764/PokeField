@@ -17,3 +17,14 @@
 @container(max-width:550px){#dex .art{height:82px;width:87px}.rotom-top{min-height:27px;gap:3px}.rotom-content{font-size:11px;inset:1% 1.5% 1% 9%}.rotom-content button,.rotom-content input,.rotom-content select{min-height:26px;padding:2px 4px}.rotom-search{min-height:29px}.rotom-search>button{display:block;font-size:10px}.rotom-top strong{font-size:11px;letter-spacing:0}.rotom-top span{font-size:10px}.rotom-bottom{min-height:26px;font-size:10px}#rotom-filters{display:none}#rotom-filters-toggle{display:block;font-size:10px}#rotom-stage.filters-open #rotom-filters{position:absolute;inset:28px 0 26px;background:#fff;z-index:5;display:flex;flex-direction:column;justify-content:center;padding:3px;gap:3px}#rotom-stage.filters-open #rotom-filters select{width:100%;flex:none;min-height:26px}#rotom-body{display:block}#rotom-list,#rotom-detail{height:100%}#rotom-list{border-right:0;padding-right:0}#rotom-stage[data-tab="list"] #rotom-detail{display:none}#rotom-stage[data-tab="detail"] #rotom-list{display:none}.rotom-content .rotom-row{min-height:40px!important;padding:3px 2px;gap:5px}.rotom-row img{width:30px;height:30px}.rotom-row-info strong{font-size:10px}.rotom-row-info small{font-size:9px}.rotom-pokemon{width:64px;height:64px}.rotom-bottom button{font-size:10px;min-height:24px}#rotom-status{max-width:60px}}
 
 @media(max-height:480px){#dex .art{height:58px;width:70px}}
+
+/* Detail sections stay inside the measured Rotom display, including narrow landscape views. */
+#rotom-detail .rotom-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:8px}
+#rotom-detail .rotom-pokemon{float:none;display:block;width:100%;height:clamp(110px,22cqw,190px);max-width:190px;object-fit:contain;margin:0 auto}
+#rotom-detail .rotom-hero small{color:#737e89}#rotom-detail .rotom-section{border-top:1px solid #edf0f3;margin-top:8px;padding-top:2px}
+.rotom-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:5px 0}.rotom-stats div{min-width:0}.rotom-stats dt{font-size:.85em;color:#737e89}.rotom-stats dd{margin:0;font-size:1.15em;font-weight:600}
+.rotom-detail-actions{display:flex;flex-wrap:wrap;gap:5px;padding:10px 0 4px}.rotom-detail-actions #rotom-ask{flex-basis:100%;color:#245c96;border-color:#b9cfe7}
+@media(max-width:600px){#rotom-detail .rotom-pokemon{height:116px;max-width:128px}.rotom-stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@container(max-width:550px){#rotom-detail .rotom-pokemon{height:116px;max-width:128px}}
+
+#rotom-list,#rotom-detail{overflow-anchor:none}
