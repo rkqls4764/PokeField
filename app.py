@@ -12,6 +12,7 @@ from src.settings import Settings
 from src.rag import cited_sources
 from src.ui_rag import render_chat, render_global_chat, render_natural_search, index_counts
 from src.generation_compare import render_generation_analysis
+from src.game_ui import render_field
 
 
 st.set_page_config(
@@ -20,8 +21,7 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Pokémon Lab")
-st.caption("세대에 따라 달라지는 포켓몬 정보를 원본 데이터와 함께 살펴보세요.")
+st.caption("필드에서 포켓몬을 수집하고, 도감과 AI 연구실에서 새로운 사실을 발견하세요.")
 
 
 # ----------------------------------
@@ -129,6 +129,7 @@ except (FileNotFoundError, ValueError, KeyError):
 # ----------------------------------
 # 사이드바
 # ----------------------------------
+collection_records = render_field(config, db, image_dir)
 pending = st.session_state.pop('pending_pokemon', None)
 if pending:
     st.session_state['name_query'] = ''

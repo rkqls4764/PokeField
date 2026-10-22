@@ -35,19 +35,19 @@ def render_sources(answer,sources,prefix='current'):
             st.text(s['text'][:1400])
             if s.get('license'): st.caption('이용 조건: '+s['license'])
 
-def render_global_chat(settings,catalog):
+def render_global_chat(settings,catalog,key_prefix='global'):
     st.subheader('전체 포켓몬에게 질문하기')
     st.caption('사이드바 선택 없이 질문할 수 있어요. 세대를 지정하지 않으면 9세대 기준이며, 변경 시점 질문은 세대별 기록을 확인해요.')
     messages=st.session_state.setdefault('global_history',[])
-    if st.button('전체 포켓몬 대화 지우기',key='clear_global_chat'):
+    if st.button('전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
         messages.clear(); st.rerun()
     for position,m in enumerate(messages):
         with st.chat_message(m['role']):
             st.markdown(m['content'])
             if m['role']=='assistant':
                 st.caption(m.get('basis',''))
-                render_sources(m['content'],m.get('sources',[]),prefix=f'global_{position}')
-    question=st.chat_input('포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',max_chars=2000,key='global_pokemon_question')
+                render_sources(m['content'],m.get('sources',[]),prefix=f'{key_prefix}_{position}')
+    question=st.chat_input('포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',max_chars=2000,key=f'{key_prefix}_pokemon_question')
     if not question: return
     prior=list(messages); messages.append({'role':'user','content':question})
     with st.chat_message('user'): st.markdown(question)
@@ -60,7 +60,7 @@ def render_global_chat(settings,catalog):
             context=result.get('search_context',{})
             if 'candidate_count' in context: basis+=f" · 조건 일치 {context['candidate_count']}개 형태 · 최대 {settings.result_limit}개 근거 제시"
             st.caption(basis); st.markdown(result['answer'])
-            render_sources(result['answer'],result.get('sources',[]),prefix=f'global_{len(messages)}')
+            render_sources(result['answer'],result.get('sources',[]),prefix=f'{key_prefix}_{len(messages)}')
             for warning in result.get('warnings',[]): st.caption(warning)
             messages.append({'role':'assistant','content':result['answer'],'sources':result.get('sources',[]),'basis':basis})
         except ServiceError:

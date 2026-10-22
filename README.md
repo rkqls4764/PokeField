@@ -35,3 +35,17 @@ if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ## AI chatbot / RAG update
 
 AI chat, cited sources, natural-language Pokemon search and indexing commands are described in [docs/RAG_IMPLEMENTATION.md](docs/RAG_IMPLEMENTATION.md). Latest verification: docs/RAG_VERIFICATION.json.
+
+## 포켓몬 수집 필드
+
+`start.ps1` 또는 `.venv\Scripts\python.exe -m streamlit run app.py`로 실행합니다. 현재 고정 버전 Streamlit 1.62의 Component v2를 사용하며 추가 게임 엔진이나 패키지 설치는 필요하지 않습니다.
+
+필드에는 일반형 포켓몬 세 마리가 등장합니다. 몬스터볼을 누른 채 목표 쪽으로 끌어서 놓으면 투척합니다. 터치도 지원하며, 키보드에서는 포켓몬에 초점을 맞추고 Enter로 던집니다. 포획 기록은 저장 성공 응답 후 반영합니다. SQLite 이벤트 ID로 중복 전송을 방지하고, 같은 종의 재포획은 종류 수 대신 누적 횟수를 늘립니다.
+
+기본 수집 DB는 `.local/rag/collection.sqlite3`입니다(CHROMA_DIR의 부모 기준). 기존 JSONL과 ChromaDB는 재생성하지 않습니다. 수집 기록은 현재 이 설치를 사용하는 모든 브라우저가 공유하며 사용자 계정별로 분리하지 않습니다. 여러 서버로 배포할 때는 영구 디스크 또는 별도 저장소가 필요합니다.
+
+도감 기기는 전체 1025종의 일반형 백과사전을 열며 수집 여부와 관계없이 조회할 수 있습니다. 세대는 데이터 기준이며 게임별 등장 여부를 뜻하지 않습니다. 키·몸무게는 기존 수집기의 원문 캐시에서 읽고, 없는 정보는 미확인으로 표시합니다. 세대 비교·조건 검색·항목별 채팅은 기존 탭에서 계속 사용합니다. 오박사 패널은 기존 전체 포켓몬 RAG와 대화 기록을 공유합니다.
+
+오박사 안내 캐릭터·몬스터볼·도감 SVG는 이 UI용으로 직접 그린 임시 에셋이며 공식 이미지가 아닙니다. 기존 포켓몬 PNG의 투명도를 보존한 축소 이미지만 메모리에 캐싱합니다. 이미지 원본은 수정하지 않습니다.
+
+전체 단위 테스트: `.venv\Scripts\python.exe -m unittest discover -s tests -v`. 자동 테스트에는 실제 유료 LLM/임베딩 호출이 없습니다.

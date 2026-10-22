@@ -136,7 +136,7 @@ def global_conditions(catalog,question):
         pattern=r'(?:'+aliases_+r')(?:이|가|은|는)?\s*(\d+)\s*이상'
         hit=re.search(pattern,numeric,re.I)
         if hit: setattr(filters,'min_'+stat,int(hit[1])); numeric=re.sub(pattern,' ',numeric,flags=re.I)
-        if stat!='total' and stat!='hp' and re.search(r'(?:'+aliases_+r')(?:이|가|력)?\s*(?:높|빠)',numeric): setattr(filters,'high_'+stat,True)
+        if stat!='total' and stat!='hp' and (re.search(r'(?:'+aliases_+r')(?:이|가|력)?\s*(?:높|빠)',numeric) or re.search(r'(?:높은|빠른)\s*(?:'+aliases_+r')',numeric)): setattr(filters,'high_'+stat,True)
     if '빠르' in question or '빠른' in question or '빠르고' in question: filters.high_speed=True
     constrained=bool(types or mentions or any(getattr(filters,k) for k in Filters.model_fields if k.startswith(('min_','high_'))))
     if re.search(r'\d+\s*(?:이하|미만|초과)|최저|가장|최고|상위|하위',question): raise ServiceError('최소값(이상) 또는 높은/빠른 조건으로 질문해 주세요. 순위 조건은 아직 지원하지 않아요.')
