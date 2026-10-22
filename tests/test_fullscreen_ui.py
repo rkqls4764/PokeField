@@ -17,7 +17,7 @@ class FullscreenUITests(unittest.TestCase):
             self.assertFalse(app.exception)
             self.assertFalse(app.text_input);self.assertFalse(app.selectbox);self.assertFalse(app.radio)
             self.assertFalse(app.chat_input);self.assertFalse(app.sidebar.text_input)
-            self.assertEqual(len(app.session_state['field_pool_ids']),60)
+            self.assertGreaterEqual(len(app.session_state['field_pool_ids']),60)
     def test_research_overlay_preserves_tools_and_closes(self):
         from streamlit.testing.v1 import AppTest
         with patch('src.settings.Settings.load',return_value=self.settings),patch('src.ui_rag.index_counts',return_value={}):

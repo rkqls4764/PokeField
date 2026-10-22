@@ -10,6 +10,7 @@ import streamlit as st
 from PIL import Image
 from .collection import Collection,dex_rows
 from .catalog import TYPE_KO,STAT_KO
+from .regions import REGIONS,region_candidates,capture_fact
 
 ASSETS=Path(__file__).parent/'field'
 logger=logging.getLogger(__name__)
@@ -42,6 +43,10 @@ def open_panel():
     action=state.get('action') if hasattr(state,'get') else None
     if action and action.get('panel') in ('dex','professor','tools'):
         st.session_state['lab_panel']=action['panel']
+        if action.get('panel')=='dex' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
+            st.session_state['dex_detail_id']=action['pokemon_id']
+            st.session_state['dex_query']=st.session_state['field_facts'][action['pokemon_id']]['name']
+            st.session_state['dex_generation']=9
 
 def record_capture():
     state=st.session_state.get('pokemon_field',{})
@@ -50,8 +55,12 @@ def record_capture():
     ack={'event_id':event.get('event_id'),'ok':False}
     try:
         collection=Collection(st.session_state['collection_path'])
-        collection.catch(event.get('pokemon_id'),event.get('event_id'),set(st.session_state['field_pool_ids']))
+        regions=st.session_state.get('field_region_ids')
+        allowed=set(regions.get(event.get('region'),[])) if regions else set(st.session_state['field_pool_ids'])
+        record=collection.catch(event.get('pokemon_id'),event.get('event_id'),allowed)
         ack['ok']=True
+        ack['record']=record
+        ack['detail']=st.session_state.get('field_facts',{}).get(event['pokemon_id'])
     except Exception as exc:
         logger.error('Capture persistence failure: %s',type(exc).__name__)
     st.session_state['capture_ack']=ack
@@ -61,12 +70,15 @@ def render_field(settings,catalog,image_dir):
     st.session_state['collection_path']=str(collection_path)
     collection=Collection(collection_path); records=collection.all()
     allowed=[pid for pid,v in catalog.varieties.items() if v['is_default'] and catalog.records_for(pid)]
-    if 'field_pool_ids' not in st.session_state:
-        st.session_state['field_pool_ids']=random.sample(allowed,min(60,len(allowed)))
+    if 'field_region_ids' not in st.session_state:
+        st.session_state['field_region_ids']={r['id']:random.sample(ids,min(60,len(ids))) for r in REGIONS for ids in [[row['pokemon_id'] for row in region_candidates(catalog,r['id'])]]}
+    st.session_state['field_pool_ids']=sorted(set().union(*map(set,st.session_state['field_region_ids'].values())))
     pool=[]
     for pid in st.session_state['field_pool_ids']:
         sid=catalog.varieties[pid]['species_id']
-        pool.append({'id':pid,'name':catalog.species[sid]['name_ko'],'image':image_uri(str(image_dir/'official'/f'{pid}.png'))})
+        pool.append(dict(capture_fact(catalog,catalog.index[(pid,9)]),image=image_uri(str(image_dir/'official'/f'{pid}.png'))))
+    st.session_state['field_facts']={pid:capture_fact(catalog,catalog.index[(pid,9)]) for pid in allowed if (pid,9) in catalog.index}
+    regions=[dict(r,pool_ids=st.session_state['field_region_ids'][r['id']],background=f'app/static/regions/{r["id"]}.png') for r in REGIONS]
     st.markdown('''<style>
     html,body,[data-testid="stApp"],[data-testid="stAppViewContainer"]{margin:0!important;padding:0!important;width:100%;height:100%;overflow:hidden!important}
     [data-testid="stHeader"],[data-testid="stSidebar"],[data-testid="stSidebarCollapsedControl"],#MainMenu,footer{display:none!important}
@@ -74,7 +86,8 @@ def render_field(settings,catalog,image_dir):
     div[data-testid="stDialog"] [role="dialog"]{border-radius:24px;max-height:calc(100dvh - 24px);max-width:calc(100vw - 24px);overflow-y:auto;overscroll-behavior:contain}
     @media(max-width:600px){div[data-testid="stDialog"] [role="dialog"]{width:calc(100vw - 12px);max-width:calc(100vw - 12px);max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px);padding:12px;border-radius:16px}}
     </style>''',unsafe_allow_html=True)
-    field_component()(key='pokemon_field',data={'pool':pool,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':{name:(ASSETS/f'{name}.svg').read_text(encoding='utf-8') for name in ('professor','ball','dex')}},on_capture_change=record_capture,on_action_change=open_panel,height='content')
+    assets={'professor':'<img class="professor-photo" src="app/static/regions/professor.jpg" alt="오박사" draggable="false">','ball':'<img class="ball-photo" src="app/static/regions/ball.jpg" alt="몬스터볼" draggable="false">','dex':(ASSETS/'dex.svg').read_text(encoding='utf-8')}
+    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets},on_capture_change=record_capture,on_action_change=open_panel,height='content')
     if st.session_state.get('lab_panel'): render_panel(settings,catalog,image_dir,collection)
     return records
 
@@ -87,7 +100,7 @@ def render_panel(settings,catalog,image_dir,collection):
     if st.session_state.get('lab_panel')=='professor':
         st.markdown('### 오박사 연구실')
         st.caption('궁금한 포켓몬이나 조건을 물어보세요. 확인한 자료와 함께 알려드려요.')
-        st.image(str(ASSETS/'professor.svg'),width=85)
+        st.image(str(ASSETS.parents[1]/'static/regions/professor.jpg'),width=85)
         from .ui_rag import render_global_chat
         render_global_chat(settings,catalog,key_prefix='professor')
     elif st.session_state.get('lab_panel')=='tools':
@@ -103,7 +116,8 @@ def render_dex(settings,catalog,image_dir,collection):
     st.caption('수집하지 않은 포켓몬도 모든 제공 정보를 열람할 수 있어요. 일반형 기준으로 수집해요.')
     a,b=st.columns(2)
     query=a.text_input('이름 또는 도감 번호',key='dex_query')
-    gen=b.selectbox('도감 세대',catalog.generations,index=len(catalog.generations)-1,key='dex_generation')
+    st.session_state.setdefault('dex_generation',catalog.generations[-1])
+    gen=b.selectbox('도감 세대',catalog.generations,index=None,key='dex_generation')
     a,b=st.columns(2)
     kind=a.selectbox('도감 타입',['전체']+list(TYPE_KO),format_func=lambda t:TYPE_KO.get(t,t),key='dex_type')
     ownership=b.radio('수집 상태',['전체','수집','미수집'],horizontal=True,key='dex_owned')

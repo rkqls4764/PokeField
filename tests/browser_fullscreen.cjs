@@ -19,18 +19,18 @@ const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'playwright');
    window.cancelAnimationFrame=id=>{window.labAnimationFrames.delete(id);cancel(id)};
   });
   await page.goto(process.env.BROWSER_TEST_URL||'http://127.0.0.1:8505');
-  await page.locator('.pokemon').first().waitFor({timeout:45000});
+  await page.locator('.pokemon[data-phase=wandering]').first().waitFor({timeout:45000});
   async function check(width,height){
    await page.setViewportSize({width,height});await page.waitForTimeout(200);
    const field=await page.locator('#field').boundingBox();assert.deepEqual(field,{x:0,y:0,width,height});
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth||document.documentElement.scrollHeight>innerHeight),false);
    const header=await page.locator('.lab header').boundingBox(),footer=await page.locator('.lab footer').boundingBox();
-   for(const actor of await page.locator('.pokemon').all()){
+   for(const actor of await page.locator('.pokemon[data-phase=wandering]').all()){
     const r=await actor.boundingBox();assert.ok(r.x>=0&&r.x+r.width<=width&&r.y>=header.y+header.height&&r.y+r.height<=footer.y);
    }
    assert.equal(await page.evaluate(()=>window.labAnimationFrames.size),1);
   }
-  await check(1440,900);const ids=await page.locator('.pokemon').evaluateAll(es=>es.map(e=>e.dataset.pokemonId).sort());
+  await page.waitForTimeout(6500);await check(1440,900);const ids=await page.locator('.pokemon').evaluateAll(es=>es.map(e=>e.dataset.pokemonId).sort());
   for(const [w,h] of [[390,844],[844,390],[320,568]])await check(w,h);
   assert.deepEqual(await page.locator('.pokemon').evaluateAll(es=>es.map(e=>e.dataset.pokemonId).sort()),ids);
   await check(1440,900);

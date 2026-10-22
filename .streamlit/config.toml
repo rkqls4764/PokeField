@@ -5,6 +5,7 @@ secondaryBackgroundColor = "#f0eee7"
 textColor = "#232d36"
 font = "sans serif"
 [server]
+enableStaticServing = true
 address = "127.0.0.1"
 [browser]
 gatherUsageStats = false
