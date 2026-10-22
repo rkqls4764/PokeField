@@ -30,7 +30,7 @@ def query_dex(catalog,records,request,image_loader):
         pid=row['pokemon_id'];sid=row['species_id'];species=catalog.species[sid]
         profile=json.loads(catalog.profile_source(sid,full_chain=True)['text'])
         abilities=[{'name':catalog.ability_names.get(a['name'],'한국어 이름 미확인'),'hidden':a['is_hidden']} for a in row.get('abilities') or []]
-        detail=dict(brief(row),generation=gen,image=image_loader(pid),stats={STAT_KO.get(k,k):v for k,v in row['stats'].items() if v is not None},abilities=abilities,
+        detail=dict(brief(row),type_matchups=catalog.battle.defense(row['types'],gen) if row.get('types') else {},generation=gen,image=image_loader(pid),stats={STAT_KO.get(k,k):v for k,v in row['stats'].items() if v is not None},abilities=abilities,
                     ability_note='도입 이전' if gen<3 else '미확인' if row.get('abilities') is None else '',
                     evolutions=profile.get('evolutions',[]),evolution_routes=evolution_routes(profile.get('evolutions',[])),record=records.get(pid),
                     description=(species.get('flavor_texts_ko') or [{}])[0].get('text','설명 미확인').replace('\n',' '))

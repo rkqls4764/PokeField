@@ -1,6 +1,7 @@
 import json
 import re
 from pathlib import Path
+from functools import cached_property
 from .storage import digest
 
 TYPE_KO = dict(normal='노말',fire='불꽃',water='물',electric='전기',grass='풀',ice='얼음',fighting='격투',poison='독',ground='땅',flying='비행',psychic='에스퍼',bug='벌레',rock='바위',ghost='고스트',dragon='드래곤',dark='악',steel='강철',fairy='페어리')
@@ -34,6 +35,14 @@ class Catalog:
                 self.ability_aliases.setdefault(token,set()).add(ability)
         p=self.data_dir/'pokemon_evolutions.jsonl'
         self.evolutions=read_jsonl(p) if p.exists() else []
+    @cached_property
+    def battle(self):
+        from .battle import BattleData
+        return BattleData(self)
+    def structured_query(self,question,generation=9,pokemon_id=None,history=None,limit=10):
+        from .natural_search import structured_intent
+        if not structured_intent(question):return None
+        return self.battle.query(question,generation,pokemon_id,history,limit)
     def records_for(self,pokemon_id): return sorted(self.by_pokemon.get(pokemon_id,[]),key=lambda r:r['generation'])
     def resolve_ability(self,name):
         matches=self.ability_aliases.get(re.sub(r'[\s_-]+','',name.casefold()),set())

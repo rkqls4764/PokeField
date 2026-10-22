@@ -53,7 +53,7 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
                         with st.spinner('오박사가 연구 자료를 살펴보고 있네…'):
                             try:
                                 result=reply(parent['content'],prior)
-                                message.update(content=result['answer'],sources=result.get('sources',[]),basis=result.get('basis',''),warnings=result.get('warnings',[]),status='complete')
+                                message.update(content=result['answer'],sources=result.get('sources',[]),basis=result.get('basis',''),warnings=result.get('warnings',[]),status='complete',more_question=result.get('more_question',''))
                             except Exception as error:
                                 diagnostic=error_diagnostic(error)
                                 logger.error('Chat request failed: %s',diagnostic)
@@ -80,6 +80,10 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
                         if message.get('basis'): st.caption(message['basis'])
                         if message.get('status')!='error': render_sources(message['content'],message.get('sources',[]),prefix=message['id'])
                         for warning in message.get('warnings',[]): st.caption(warning)
+                        if message.get('more_question') and st.button('기술 검색 결과 더 보기',key=f'more_{message["id"]}',disabled=busy):
+                            question_id=uuid4().hex
+                            messages.extend([{'id':question_id,'role':'user','content':message['more_question']},{'id':uuid4().hex,'reply_to':question_id,'role':'assistant','content':'','status':'pending','sources':[]}]);st.rerun()
+
                         if message.get('status')=='error' and message.get('retryable',True) and st.button('다시 시도',key=f'retry_{message["id"]}',disabled=busy or disabled):
                             message.update(content='',status='pending'); st.rerun()
     question=st.chat_input(placeholder,disabled=disabled or busy,max_chars=2000,key=f'{prefix}_pokemon_question' if prefix!='selected' else 'pokemon_question')
@@ -171,6 +175,12 @@ def render_natural_search(settings,catalog,ui_generation,image_dir):
                 st.session_state.pop('natural_result',None); progress.update(label='검색 처리 중 오류가 발생했어요.',state='error'); st.error('검색을 처리하지 못했어요. 잠시 후 다시 시도해 주세요.')
     result=st.session_state.get('natural_result')
     if not result: return
+    if result.get('selection_mode')=='local_moves':
+        st.markdown('\n\n'.join(result['verified_lines']))
+        render_sources('\n'.join(result['verified_lines']),result['sources'],prefix='natural_moves')
+        if result.get('more_question') and st.button('기술 검색 결과 더 보기',key='natural_more_moves'):
+            st.session_state['natural_result']=NaturalSearch(settings,catalog,LanguageModel(settings)).run(result['more_question'],ui_generation);st.rerun()
+        return
     st.caption(f"{result['generation']}세대 기준 검색 결과 · 타입·특성·수치 조건을 실제 데이터로 검증했어요. 게임별 등장 여부는 미확인이에요.")
     with st.expander('추출한 조건 확인'): st.json({'filters':result['filters'],'applied_thresholds':result['thresholds']})
     if not result['results']: st.info('조건에 맞는 포켓몬이 없습니다. 조건이나 검색 세대를 바꿔 주세요.'); return

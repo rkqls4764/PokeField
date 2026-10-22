@@ -14,6 +14,8 @@ class RagState(TypedDict,total=False):
     warnings:list[str]
     history:list[dict]
     comparison:dict
+    verified_lines:list[str]
+    more_question:str
     global_mode:bool
     search_context:dict
 
@@ -82,6 +84,9 @@ class RagService:
         self.graph=build_graph(self.retrieve,self.generate)
     def retrieve(self,state):
         if state.get('global_mode'): return self.retrieve_global(state)
+        structured=self.catalog.structured_query(state['question'],state['generation'],state['pokemon_id'],state.get('history'),self.settings.result_limit)
+        if structured:return self.number_structured(structured)
+
         pid=state['pokemon_id']; gen=state['generation']; question=state['question']
         row=self.catalog.index.get((pid,gen))
         if row is None: raise ServiceError('선택한 형태와 세대의 데이터가 없습니다.')
@@ -123,7 +128,14 @@ class RagService:
                     s['text']=comparison_snapshot(comparison,s['generation'])
         numbered=[dict(s,number=i) for i,s in enumerate(unique.values(),1)]
         return {'sources':numbered,'warnings':warnings}
+    @staticmethod
+    def number_structured(result):
+        return {k:v for k,v in dict(result,sources=[dict(s,number=i) for i,s in enumerate(result['sources'],1)]).items() if k!='move_matches'}
     def generate(self,state):
+        if state.get('verified_lines'):
+            answer='\n\n'.join(state['verified_lines'])
+            if not validate_citations(answer,state.get('sources',[])):raise ServiceError('구조화 데이터의 근거 번호가 일치하지 않네.')
+            return {'answer':answer}
         sources=state.get('sources',[])
         if not sources: return {'answer':state.get('answer','흠, 지금 가진 근거만으로는 확인하기 어렵구나.')}
         # Previous messages are conversational context, never evidence.
@@ -192,6 +204,8 @@ class RagService:
     def retrieve_global(self,state):
         from .natural_search import global_conditions,filter_rows
         question=state['question']
+        structured=self.catalog.structured_query(question,9,history=state.get('history'),limit=self.settings.result_limit)
+        if structured:return self.number_structured(structured)
         pids,generations,filters,constrained=global_conditions(self.catalog,question)
         if not pids and not constrained and re.match(r'\s*(?:그럼|그 포켓몬|이 포켓몬|걔)',question):
             for message in reversed(state.get('history',[])):
@@ -245,5 +259,4 @@ class RagService:
     def ask_global(self,question,history=None):
         return self.graph.invoke({'global_mode':True,'generation':9,'question':question.strip()[:2000],'history':history or []})
     def ask(self,pokemon_id,generation,question,history=None):
-        self.llm.check_key()
         return self.graph.invoke({'pokemon_id':pokemon_id,'generation':generation,'question':question[:2000],'history':history or []})

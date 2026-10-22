@@ -5,6 +5,10 @@ from .catalog import TYPE_KO, stat_total, STAT_KO
 from .llm import ServiceError
 from .document_service import prompt
 
+def structured_intent(question):
+    from .battle import intent
+    return intent(question)
+
 class Filters(BaseModel):
     model_config=ConfigDict(extra='forbid',strict=True)
     generation:int|None=None
@@ -152,6 +156,9 @@ def global_conditions(catalog,question):
 class NaturalSearch:
     def __init__(self,settings,catalog,llm): self.settings=settings; self.catalog=catalog; self.llm=llm
     def run(self,question,ui_generation):
+        if structured_intent(question)=='moves':
+            local=self.catalog.structured_query(question,ui_generation,limit=self.settings.result_limit)
+            return dict(local,selection_mode='local_moves',candidate_count=local['search_context']['candidate_count'],filters={},thresholds={},results=[])
         if re.search('이하|미만|제외|아닌|또는|이거나',question):
             raise ServiceError('현재 검색은 타입·특성, 최소값(이상), 높은/빠른 조건과 한 개 세대를 지원해요. 제외·이하·OR 조건은 문장을 바꿔 주세요.')
         local,simple=local_ability_filters(self.catalog,question)
