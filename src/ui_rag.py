@@ -8,7 +8,7 @@ from .llm import LanguageModel, ServiceError, error_diagnostic
 from .vector_store import VectorStore
 from .document_service import DocumentService
 from .natural_search import NaturalSearch
-from .rag import RagService, cited_sources
+from .rag import RagService, cited_sources, catch_targets
 from .catalog import TYPE_KO
 logger=logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ def render_sources(answer,sources,prefix='current'):
             st.text(s['text'][:1400])
             if s.get('license'): st.caption('이용 조건: '+s['license'])
 
-def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avatar=None,scrolling=False):
+def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avatar=None,scrolling=False,catalog=None):
     """Render only persisted messages; each turn keeps a stable DOM/source identity."""
     from uuid import uuid4
     for message in messages: message.setdefault('id',uuid4().hex)
@@ -67,6 +67,16 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
                         st.rerun()
                     st.markdown(message['content'])
                     if message['role']=='assistant':
+                        if catalog is not None and message.get('status')!='error':
+                            targets=message.setdefault('catch_targets',catch_targets(catalog,message['content'],message.get('sources',[])))
+                            if targets:
+                                choices={t['pokemon_id']:t['name']+(' · '+t['form'] if t['form']!='일반형' else '') for t in targets}
+                                pid=next(iter(choices)) if len(choices)==1 else st.selectbox('잡으러 갈 포켓몬',list(choices),format_func=choices.get,key=f'hunt_choice_{message["id"]}')
+                                label='이 포켓몬을 잡으러 가볼까?' if len(choices)==1 else '잡으러 가기'
+                                if st.button(label,key=f'hunt_{message["id"]}',disabled=busy):
+                                    from .game_ui import request_hunt
+                                    if request_hunt(catalog,pid,set(choices)): st.rerun(scope='app')
+                                    st.info('현재 9세대 일반형 출현 데이터에서 이 포켓몬이 등장할 지역을 확인하지 못했네.')
                         if message.get('basis'): st.caption(message['basis'])
                         if message.get('status')!='error': render_sources(message['content'],message.get('sources',[]),prefix=message['id'])
                         for warning in message.get('warnings',[]): st.caption(warning)
@@ -99,7 +109,7 @@ def render_global_chat(settings,catalog,key_prefix='global'):
             context=result.get('search_context',{})
             if 'candidate_count' in context: basis+=f" · 조건 일치 {context['candidate_count']}개 형태 · 최대 {settings.result_limit}개 근거 제시"
             return dict(result,basis=basis)
-        render_conversation(messages,reply,prefix=key_prefix,placeholder='포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',avatar=oak_avatar,scrolling=True)
+        render_conversation(messages,reply,prefix=key_prefix,placeholder='포켓몬 이름, 비교 또는 원하는 조건을 자유롭게 질문하세요.',avatar=oak_avatar,scrolling=True,catalog=catalog)
 
 
 def render_chat(settings,catalog,pokemon_id,generation):
@@ -130,7 +140,7 @@ def render_chat(settings,catalog,pokemon_id,generation):
     indexed=bool(rag.store.get_meta(pokemon_id,generation))
     if not settings.api_key: st.warning('AI 서비스 키가 없습니다. .env에서 LLM_PROVIDER와 해당 API 키를 설정하세요.')
     if not indexed: st.warning('선택한 포켓몬의 메타데이터 색인이 없습니다. scripts/index_pokemon.py를 먼저 실행하세요.')
-    render_conversation(messages,lambda question,prior:rag.ask(pokemon_id,generation,question,prior),prefix='selected',placeholder='선택한 포켓몬에 대해 질문하세요.',disabled=not settings.api_key or not indexed)
+    render_conversation(messages,lambda question,prior:rag.ask(pokemon_id,generation,question,prior),prefix='selected',placeholder='선택한 포켓몬에 대해 질문하세요.',disabled=not settings.api_key or not indexed,catalog=catalog)
 
 
 def render_natural_search(settings,catalog,ui_generation,image_dir):

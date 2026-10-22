@@ -32,3 +32,10 @@ def capture_fact(catalog,row):
     return {'id':row['pokemon_id'],'number':row['species_id'],'name':row['name_ko'],'generation':row['generation'],
             'types':[TYPE_KO.get(canonical_type(t),t) for t in row.get('types') or []],
             'stats':{k:v for k,v in row['stats'].items() if v is not None}}
+
+def target_regions(catalog,pokemon_id,current_region=None):
+    row=catalog.index.get((pokemon_id,9));variety=catalog.varieties.get(pokemon_id)
+    if not row or not variety or not variety['is_default']: return []
+    types={canonical_type(t) for t in row.get('types') or []}
+    regions=[r['id'] for r in REGIONS if types.intersection(r['types'])]
+    return sorted(regions,key=lambda region:region!=current_region)

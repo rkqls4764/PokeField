@@ -22,6 +22,41 @@ def citation_numbers(answer):
 def cited_sources(answer,sources):
     numbers=citation_numbers(answer)
     return [(i,s) for i,s in enumerate(sources,1) if i in numbers]
+def catch_targets(catalog,answer,sources):
+    """Intersect locally identified names with the exact sources cited by each claim."""
+    import json
+    from .natural_search import global_conditions
+    targets={};start=0
+    for marker in re.finditer(r'\[근거\s*[\d,\s]+\]',answer):
+        text=answer[start:marker.start()];start=marker.end()
+        # Adjacent citation groups belong to the same claim.
+        if not text.strip(): continue
+        tail=re.match(r'(?:\s*\[근거\s*[\d,\s]+\])*',answer[start:]).group()
+        used=[source for _,source in cited_sources(text+marker.group()+tail,sources)]
+        allowed=set()
+        for source in used:
+            evidence=source.get('text','');sid=source.get('species_id');pid=source.get('pokemon_id')
+            if pid in catalog.varieties and catalog.species[catalog.varieties[pid]['species_id']]['name_ko'] in evidence: allowed.add(pid)
+            if source.get('source_type')=='pokemon_metadata' and source['id'].startswith('species:'):
+                try: profile=json.loads(evidence)
+                except (ValueError,TypeError): continue
+                species={profile.get('species_id')}
+                for edge in profile.get('evolutions',[]): species.update((edge.get('from_species_id'),edge.get('to_species_id')))
+                allowed.update(pid for pid,v in catalog.varieties.items() if v['is_default'] and v['species_id'] in species and catalog.species[v['species_id']]['name_ko'] in evidence)
+            elif pid is None and sid in catalog.species and catalog.species[sid]['name_ko'] in evidence:
+                allowed.update(pid for pid,v in catalog.varieties.items() if v['is_default'] and v['species_id']==sid)
+        if not allowed: continue
+        evidence='\n'.join(source.get('text','') for source in used)
+        if 'red-blue' in evidence: text=re.sub(r'레드\s*[·/ㆍ]\s*(?:그린\s*[·/ㆍ]\s*)?블루','',text)
+        try: mentioned=global_conditions(catalog,text)[0]
+        except ServiceError: continue
+        for pid in mentioned:
+            variety=catalog.varieties[pid];species=catalog.species[variety['species_id']]
+            aliases=(species.get('name_ko'),species.get('name_en'),variety.get('api_name'))
+            exact=any(alias and re.search(r'(?<![가-힣A-Za-z])'+re.escape(alias)+r'(?=$|[^가-힣A-Za-z]|(?:일세|란다|라네|야|은|는|이|가|을|를|의|와|과|으로|로|에|도|만|랑))',text,re.I) for alias in aliases)
+            if pid in allowed and exact: targets.setdefault(pid,{'pokemon_id':pid,'name':catalog.species[catalog.varieties[pid]['species_id']]['name_ko'],'form':catalog.form_label(pid)})
+    return list(targets.values())
+
 def validate_citations(answer,sources):
     return citation_numbers(answer).issubset(set(range(1,len(sources)+1)))
 

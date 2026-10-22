@@ -10,7 +10,7 @@ import streamlit as st
 from PIL import Image
 from .collection import Collection,dex_rows
 from .catalog import TYPE_KO,STAT_KO
-from .regions import REGIONS,region_candidates,capture_fact
+from .regions import REGIONS,region_candidates,capture_fact,target_regions
 from .rotom_data import query_dex,DISPLAY
 
 ASSETS=Path(__file__).parent/'field'
@@ -56,6 +56,7 @@ def open_panel():
     action=state.get('action') if hasattr(state,'get') else None
     if action and action.get('panel') in ('dex','professor','tools'):
         st.session_state['lab_panel']=action['panel']
+        if action.get('region') in {r['id'] for r in REGIONS}: st.session_state['current_region']=action['region']
         if action['panel']=='tools' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
             st.session_state['pending_pokemon']={'pokemon_id':action['pokemon_id'],'generation':action.get('generation',9)}
         if action.get('panel')=='dex' and action.get('pokemon_id') in st.session_state.get('field_facts',{}):
@@ -76,9 +77,40 @@ def record_capture():
         ack['ok']=True
         ack['record']=record
         ack['detail']=st.session_state.get('field_facts',{}).get(event['pokemon_id'])
+        target=st.session_state.get('hunt_target')
+        if target and target['pokemon_id']==event['pokemon_id'] and target['region']==event.get('region') and (not event.get('target_request_id') or event['target_request_id']==target['request_id']): set_target(dict(target,status='captured'))
     except Exception as exc:
         logger.error('Capture persistence failure: %s',type(exc).__name__)
     st.session_state['capture_ack']=ack
+
+def set_target(target):
+    st.session_state['hunt_target']=target
+    active=bool(target and target.get('status') in ('requested','active'))
+    st.session_state['target_pokemon_id']=target.get('pokemon_id') if active else None
+    st.session_state['target_region']=target.get('region') if active else None
+    st.session_state['target_status']=target.get('status','none') if target else 'none'
+
+def request_hunt(catalog,pokemon_id,verified_ids):
+    from uuid import uuid4
+    if pokemon_id not in verified_ids: return False
+    regions=target_regions(catalog,pokemon_id,st.session_state.get('current_region'))
+    if not regions: return False
+    set_target({'pokemon_id':pokemon_id,'region':regions[0],'status':'requested','request_id':uuid4().hex})
+    st.session_state['lab_panel']=None
+    return True
+
+def update_tracking():
+    state=st.session_state.get('pokemon_field',{})
+    event=state.get('tracking') if hasattr(state,'get') else None
+    if not isinstance(event,dict): return
+    if event.get('region') in {r['id'] for r in REGIONS}: st.session_state['current_region']=event['region']
+    target=st.session_state.get('hunt_target')
+    if not target or event.get('request_id')!=target['request_id'] or target['status'] in ('captured','cancelled','unavailable'): return
+    status=event.get('status')
+    if status=='active': set_target(dict(target,status='active'))
+    elif status in ('cancelled','unavailable'): set_target(dict(target,status=status))
+    # A browser event cannot acknowledge persistence; only record_capture clears a caught target.
+
 
 def render_field(settings,catalog,image_dir):
     collection_path=settings.runtime_dir/'collection.sqlite3'
@@ -89,6 +121,10 @@ def render_field(settings,catalog,image_dir):
     allowed=[pid for pid,v in catalog.varieties.items() if v['is_default'] and catalog.records_for(pid)]
     if 'field_region_ids' not in st.session_state:
         st.session_state['field_region_ids']={r['id']:random.sample(ids,min(60,len(ids))) for r in REGIONS for ids in [[row['pokemon_id'] for row in region_candidates(catalog,r['id'])]]}
+    target=st.session_state.get('hunt_target')
+    if target and target['status'] in ('requested','active') and target['region'] in target_regions(catalog,target['pokemon_id']):
+        ids=st.session_state['field_region_ids'][target['region']]
+        if target['pokemon_id'] not in ids: ids.append(target['pokemon_id'])
     st.session_state['field_pool_ids']=sorted(set().union(*map(set,st.session_state['field_region_ids'].values())))
     pool=[]
     for pid in st.session_state['field_pool_ids']:
@@ -105,7 +141,7 @@ def render_field(settings,catalog,image_dir):
     </style>''',unsafe_allow_html=True)
     assets={'professor':'<img class="professor-photo" src="app/static/regions/professor.jpg" alt="오박사" draggable="false">','ball':'<img class="ball-photo" src="app/static/regions/ball.jpg" alt="몬스터볼" draggable="false">','dex':'<img src="app/static/rotom/closed.png" alt="닫힌 로토무 도감" draggable="false">'}
     rotom={'response':st.session_state.get('rotom_response'),'generations':catalog.generations,'types':TYPE_KO,'display':DISPLAY}
-    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets,'rotom':rotom},on_capture_change=record_capture,on_action_change=open_panel,on_rotom_change=request_rotom,height='content')
+    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets,'rotom':rotom,'target':st.session_state.get('hunt_target')},on_capture_change=record_capture,on_action_change=open_panel,on_rotom_change=request_rotom,on_tracking_change=update_tracking,height='content')
     if st.session_state.get('lab_panel'): render_panel(settings,catalog,image_dir,collection)
     return records
 
