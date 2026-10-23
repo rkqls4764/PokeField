@@ -72,6 +72,7 @@ def render_lab(config,db,image_dir):
         st.session_state['show_chat_hint'] = True
         st.session_state['preferred_tab'] = pending.get('tab','질문하기')
         st.session_state['chat_mode'] = '선택한 포켓몬 질문'
+        st.session_state['lab_active_tab'] = pending.get('tab','질문하기')
 
     with st.container(border=True):
         st.header("포켓몬 찾기")
@@ -125,7 +126,7 @@ def render_lab(config,db,image_dir):
         "세대 비교",
         "조건 검색",
         "질문하기"
-    ], default=st.session_state.get('preferred_tab','질문하기'))
+    ], default=st.session_state.get('preferred_tab','질문하기'), key='lab_active_tab', on_change='rerun')
 
 
     # ----------------------------------

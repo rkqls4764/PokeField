@@ -35,6 +35,35 @@ def render_sources(answer,sources,prefix='current'):
             st.text(s['text'][:1400])
             if s.get('license'): st.caption('이용 조건: '+s['license'])
 
+def chat_notice(error):
+    stage=getattr(error,'stage',None)
+    if stage=='api_key': return 'AI 서비스 키가 없구나. 환경변수 LLM_PROVIDER와 해당 GMS_KEY 또는 OPENAI_API_KEY를 설정해 주게. 타입 상성·기술 검색은 키 없이 사용할 수 있네.'
+    if stage=='metadata_index': return '메타데이터 색인이 없구나. scripts/index_pokemon.py로 데이터를 먼저 색인해 주게. 전체 모드의 타입 상성·기술 검색은 계속 사용할 수 있네.'
+    category=error_diagnostic(error)['category']
+    return '연결 또는 API 요청에 문제가 있구나. 잠시 후 다시 시도해 보게.' if category=='connection' else 'AI 연결 설정을 확인해 주게. API 키와 서비스 설정 확인 후 다시 시도해 보게.' if category=='configuration' else '근거 또는 답변 검증 중 문제가 생겼구나. 다시 질문해 주게.' if category=='validation' else '데이터 처리 중 오류가 발생했구나. 관리자에게 알려 주게.'
+
+
+def check_chat_request(settings,question,indexed):
+    from .natural_search import structured_intent
+    if structured_intent(question): return
+    if not indexed: raise ServiceError('색인 필요',stage='metadata_index',category='configuration')
+    if not settings.api_key: raise ServiceError('API 키 필요',stage='api_key',category='configuration')
+
+
+def chat_preflight(settings):
+    indexed=bool(index_counts(settings).get('pokemon_meta',0))
+    if not settings.api_key: st.warning(chat_notice(ServiceError('',stage='api_key')))
+    if not indexed: st.warning(chat_notice(ServiceError('',stage='metadata_index')))
+    return indexed
+
+
+def search_question_button(catalog,pid,generation):
+    if (pid,generation) not in catalog.index: return
+    if st.button('이 포켓몬 선택하고 질문하기',key=f'choose_{pid}'):
+        st.session_state['pending_pokemon']={'pokemon_id':pid,'generation':generation}
+        st.rerun()
+
+
 def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avatar=None,scrolling=False,catalog=None):
     """Render only persisted messages; each turn keeps a stable DOM/source identity."""
     from uuid import uuid4
@@ -62,7 +91,7 @@ def render_conversation(messages,reply,*,prefix,placeholder,disabled=False,avata
                                 try: Metrics(Settings.load().runtime_dir).record('chat_failure',**diagnostic)
                                 except OSError: logger.error('Chat diagnostic file unavailable')
                                 category=diagnostic['category']
-                                notice='연결이 잠시 원활하지 않구나. 잠시 후 다시 시도해 보게.' if category=='connection' else 'AI 연결 설정을 확인해야겠구나. 관리자에게 알려 주게.' if category=='configuration' else '근거 또는 답변 검증 중 문제가 생겼구나. 관리자에게 알려 주게.' if category=='validation' else '데이터 처리 중 오류가 발생했구나. 관리자에게 알려 주게.'
+                                notice=chat_notice(error)
                                 message.update(content=notice,sources=[],status='error',retryable=category in ('connection','validation'))
                         st.rerun()
                     st.markdown(message['content'])
@@ -111,7 +140,9 @@ def render_global_chat(settings,catalog,key_prefix='global',selected_context=Non
         messages=(st.session_state.setdefault('histories',{}).setdefault(f"{selected['pokemon_id']}:{selected['generation']}",[]) if selected else st.session_state.setdefault('global_history',[]))
         if st.button('이 포켓몬의 대화 지우기' if selected else '전체 포켓몬 대화 지우기',key=f'clear_{key_prefix}_chat'):
             messages.clear(); st.rerun()
+        indexed=chat_preflight(settings)
         def reply(question,prior):
+            check_chat_request(settings,question,indexed)
             rag,_=services(replace(settings,auto_collect=False),catalog)
             result=rag.ask(selected['pokemon_id'],selected['generation'],question,prior) if selected else rag.ask_global(question,prior)
             gens=sorted({source['generation'] for source in result.get('sources',[]) if source.get('generation')})
@@ -150,7 +181,10 @@ def render_chat(settings,catalog,pokemon_id,generation):
     indexed=bool(rag.store.get_meta(pokemon_id,generation))
     if not settings.api_key: st.warning('AI 서비스 키가 없습니다. .env에서 LLM_PROVIDER와 해당 API 키를 설정하세요.')
     if not indexed: st.warning('선택한 포켓몬의 메타데이터 색인이 없습니다. scripts/index_pokemon.py를 먼저 실행하세요.')
-    render_conversation(messages,lambda question,prior:rag.ask(pokemon_id,generation,question,prior),prefix='selected',placeholder='선택한 포켓몬에 대해 질문하세요.',disabled=not settings.api_key or not indexed,catalog=catalog)
+    def reply(question,prior):
+        check_chat_request(settings,question,indexed)
+        return rag.ask(pokemon_id,generation,question,prior)
+    render_conversation(messages,reply,prefix='selected',placeholder='선택한 포켓몬에 대해 질문하세요.',disabled=not indexed,catalog=catalog)
 
 
 def render_natural_search(settings,catalog,ui_generation,image_dir):
@@ -178,6 +212,11 @@ def render_natural_search(settings,catalog,ui_generation,image_dir):
     if result.get('selection_mode')=='local_moves':
         st.markdown('\n\n'.join(result['verified_lines']))
         render_sources('\n'.join(result['verified_lines']),result['sources'],prefix='natural_moves')
+        st.caption(f"{result['generation']}세대 기준 검색 결과")
+        matched={m['pokemon_id'] for group in result.get('move_matches',[]) for m in group}
+        for pid in sorted(matched):
+            st.write(catalog.label(pid))
+            search_question_button(catalog,pid,result['generation'])
         if result.get('more_question') and st.button('기술 검색 결과 더 보기',key='natural_more_moves'):
             st.session_state['natural_result']=NaturalSearch(settings,catalog,LanguageModel(settings)).run(result['more_question'],ui_generation);st.rerun()
         return
@@ -200,5 +239,4 @@ def render_natural_search(settings,catalog,ui_generation,image_dir):
             st.write(('조건 일치 이유: ' if result.get('selection_mode')=='local_ability' else 'AI 추천 이유: ')+item['reason'])
             if item['verified_reason']: st.caption('수치 검증: '+item['verified_reason'])
             st.link_button('추천 근거 · 포켓몬 메타데이터',r['source_url'],key=f'natural_source_{pid}')
-            if st.button('이 포켓몬 선택하고 질문하기',key=f'choose_{pid}'):
-                st.session_state['pending_pokemon']={'pokemon_id':pid,'generation':r['generation']}; st.rerun()
+            search_question_button(catalog,pid,r['generation'])

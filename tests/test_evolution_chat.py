@@ -14,7 +14,10 @@ class EvolutionTests(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory(ignore_cleanup_errors=True);self.addCleanup(self.tmp.cleanup)
         self.settings=Settings(data_dir=DATA,chroma_dir=Path(self.tmp.name)/'chroma',api_key='fake')
-        self.store=SimpleNamespace(get_meta=lambda *a:(_ for _ in ()).throw(AssertionError('Evolution must query JSON first')),search_docs=lambda *a:(_ for _ in ()).throw(AssertionError('No vector search needed')))
+        def metadata(pid,gen):
+            d=self.catalog.document(self.catalog.index[(pid,gen)])
+            return [dict(id=d['id'],text=d['text'],**d['metadata'])]
+        self.store=SimpleNamespace(get_meta=metadata,search_docs=lambda *a:(_ for _ in ()).throw(AssertionError('No vector search needed')))
     def service(self,text): return RagService(self.settings,self.catalog,self.store,FakeLLM({'generate_answer':Answer(claims=[Claim(text=text,citations=[1])])}))
     def test_evolution_questions_and_citations(self):
         cases=[('피카츄 진화하면 뭐야?','피카츄는 라이츄로 진화한단다.',(25,26)),('피카츄 진화 루트 알려줘.','피츄 → 피카츄 → 라이츄일세.',(172,25)),('라이츄 진화 전은?','라이츄의 진화 전은 피카츄일세.',(25,26)),('피츄는 어떻게 진화해?','피츄는 피카츄로 진화한단다.',(172,25)),('이브이 진화 종류 알려줘.','이브이는 샤미드, 쥬피썬더, 부스터로 진화하는 경로가 있네.',(133,134)),('파이리 진화 루트 알려줘.','파이리 → 리자드 → 리자몽일세.',(5,6))]

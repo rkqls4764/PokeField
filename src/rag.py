@@ -84,16 +84,21 @@ class RagService:
         self.graph=build_graph(self.retrieve,self.generate)
     def retrieve(self,state):
         if state.get('global_mode'): return self.retrieve_global(state)
-        structured=self.catalog.structured_query(state['question'],state['generation'],state['pokemon_id'],state.get('history'),self.settings.result_limit)
-        if structured:return self.number_structured(structured)
 
         pid=state['pokemon_id']; gen=state['generation']; question=state['question']
         row=self.catalog.index.get((pid,gen))
         if row is None: raise ServiceError('선택한 형태와 세대의 데이터가 없습니다.')
-        if '진화' in question and '메가' not in question:
-            return {'sources':[dict(self.catalog.profile_source(row['species_id'],full_chain=True),number=1)],'warnings':[]}
         sources=self.store.get_meta(pid,gen)
-        if not sources: raise ServiceError('선택한 포켓몬의 색인이 없습니다. 메타데이터 색인 스크립트를 실행하세요.')
+        if not sources: raise ServiceError('선택한 포켓몬의 색인이 없습니다. 메타데이터 색인 스크립트를 실행하세요.',stage='metadata_index',category='configuration')
+        structured=self.catalog.structured_query(question,gen,pid,state.get('history'),self.settings.result_limit)
+        if structured:
+            # Keep structured citation positions, then append the required indexed evidence.
+            merged={s['id']:s for s in structured['sources']}
+            for source in sources: merged.setdefault(source['id'],source)
+            return self.number_structured(dict(structured,sources=list(merged.values())))
+        if '진화' in question and '메가' not in question:
+            merged={s['id']:s for s in [self.catalog.profile_source(row['species_id'],full_chain=True),*sources]}
+            return {'sources':[dict(s,number=i) for i,s in enumerate(merged.values(),1)],'warnings':[]}
         mentioned={int(n) for n in re.findall(r'(\d+)\s*세대',question)} & set(self.catalog.generations)
         if not mentioned and re.search('언제|바뀌|변경|달라|세대별|부터|변했',question):
             mentioned={r['generation'] for r in self.catalog.records_for(pid)}

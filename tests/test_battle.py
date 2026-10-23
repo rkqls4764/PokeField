@@ -34,7 +34,12 @@ class BattleTests(unittest.TestCase):
   cls.catalog=Catalog(DATA);cls.b=cls.catalog.battle;cls.settings=Settings(DATA,Path('unused-test-chroma'))
  def service(self):
   forbidden=Mock();forbidden.check_key.side_effect=AssertionError('paid API');forbidden.structured.side_effect=AssertionError('paid API')
-  return RagService(self.settings,self.catalog,Mock(),forbidden)
+  store=Mock()
+  def metadata(pid,gen):
+   d=self.catalog.document(self.catalog.index[(pid,gen)])
+   return [dict(id=d['id'],text=d['text'],**d['metadata'])]
+  store.get_meta.side_effect=metadata
+  return RagService(self.settings,self.catalog,store,forbidden)
  def test_all_324_modern_combinations(self):
   for a,d in itertools.product(TYPE_KO,repeat=2):
    strong,weak,immune=EXPECTED[a];expected=0 if d in immune.split() else 2 if d in strong.split() else .5 if d in weak.split() else 1
