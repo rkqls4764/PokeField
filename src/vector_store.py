@@ -1,7 +1,6 @@
 """Chroma persistence with explicit embeddings and content-addressed skip logic."""
 import os
 from .llm import Embeddings, ServiceError
-from .storage import digest
 
 class VectorStore:
     def __init__(self,settings,embeddings=None):
