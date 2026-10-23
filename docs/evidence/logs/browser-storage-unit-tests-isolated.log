@@ -1,0 +1,204 @@
+2026-10-23 14:18:42.836 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-23 14:18:42.837 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+test_aliases_share_catalog_mapping_including_manual_file (test_ability_search.AbilityTests.test_aliases_share_catalog_mapping_including_manual_file) ... ok
+test_complex_ability_numeric_filter_uses_only_extraction_call (test_ability_search.AbilityTests.test_complex_ability_numeric_filter_uses_only_extraction_call) ... ok
+test_complex_known_ability_conditions_not_dropped (test_ability_search.AbilityTests.test_complex_known_ability_conditions_not_dropped) ... ok
+test_default_ui_generation_and_local_levitate (test_ability_search.AbilityTests.test_default_ui_generation_and_local_levitate) ... ok
+test_english_identifier_search (test_ability_search.AbilityTests.test_english_identifier_search) ... ok
+test_existing_numeric_electric_search (test_ability_search.AbilityTests.test_existing_numeric_electric_search) ... ok
+test_generation_seven_named_gengar_has_no_levitate (test_ability_search.AbilityTests.test_generation_seven_named_gengar_has_no_levitate) ... ok
+test_generation_six_includes_gengar_in_actual_matches (test_ability_search.AbilityTests.test_generation_six_includes_gengar_in_actual_matches) ... ok
+test_ghost_type_is_not_mistaken_for_haunter_species (test_ability_search.AbilityTests.test_ghost_type_is_not_mistaken_for_haunter_species) ... ok
+test_hidden_lightning_rod (test_ability_search.AbilityTests.test_hidden_lightning_rod) ... ok
+test_intimidate_uses_full_mapping (test_ability_search.AbilityTests.test_intimidate_uses_full_mapping) ... ok
+test_korean_ability_from_llm_is_normalized (test_ability_search.AbilityTests.test_korean_ability_from_llm_is_normalized) ... ok
+test_local_cards_and_navigation_without_key_or_llm (test_ability_search.AbilityTests.test_local_cards_and_navigation_without_key_or_llm) ... 2026-10-23 14:18:44.809 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:18:44.809 WARNING streamlit.runtime.scriptrunner_utils.script_run_context: Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_normal_and_hidden_filters_are_different (test_ability_search.AbilityTests.test_normal_and_hidden_filters_are_different) ... ok
+test_ui_empty_result_is_not_a_system_error (test_ability_search.AbilityTests.test_ui_empty_result_is_not_a_system_error) ... 2026-10-23 14:18:48.602 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_ui_error_logs_safe_diagnostics_not_secret_values (test_ability_search.AbilityTests.test_ui_error_logs_safe_diagnostics_not_secret_values) ... 2026-10-23 14:18:49.162 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_unknown_ability_is_not_invented (test_ability_search.AbilityTests.test_unknown_ability_is_not_invented) ... ok
+test_unknown_generation_ability_data_is_excluded (test_ability_search.AbilityTests.test_unknown_generation_ability_data_is_excluded) ... ok
+test_unsupported_condition_is_not_ignored (test_ability_search.AbilityTests.test_unsupported_condition_is_not_ignored) ... ok
+test_english_ability_and_missing_literals_are_localized (test_ability_search.ChatPresentationTests.test_english_ability_and_missing_literals_are_localized) ... ok
+test_gengar_comparison_keeps_both_generations_and_one_call (test_ability_search.ChatPresentationTests.test_gengar_comparison_keeps_both_generations_and_one_call) ... ok
+test_invalid_citations_still_blocked (test_ability_search.ChatPresentationTests.test_invalid_citations_still_blocked) ... ok
+test_mewtwo_type_question_gets_focused_localized_evidence (test_ability_search.ChatPresentationTests.test_mewtwo_type_question_gets_focused_localized_evidence) ... ok
+test_pikachu_ability_question_uses_korean_names (test_ability_search.ChatPresentationTests.test_pikachu_ability_question_uses_korean_names) ... ok
+test_selected_mega_form_does_not_use_default_form_metadata (test_ability_search.ChatPresentationTests.test_selected_mega_form_does_not_use_default_form_metadata) ... ok
+test_undefined_values_are_not_sent_as_null (test_ability_search.ChatPresentationTests.test_undefined_values_are_not_sent_as_null) ... ok
+test_all_324_modern_combinations (test_battle.BattleTests.test_all_324_modern_combinations) ... ok
+test_every_dual_type_and_generation_multiplies (test_battle.BattleTests.test_every_dual_type_and_generation_multiplies) ... ok
+test_legacy_chart_differences_and_unintroduced_types (test_battle.BattleTests.test_legacy_chart_differences_and_unintroduced_types) ... ok
+test_move_aliases_and_no_model_calls (test_battle.BattleTests.test_move_aliases_and_no_model_calls) ... ok
+test_native_dex_contains_calculated_matchups (test_battle.BattleTests.test_native_dex_contains_calculated_matchups) ... ok
+test_pokemon_generation_type_changes (test_battle.BattleTests.test_pokemon_generation_type_changes) ... ok
+test_requested_type_questions_in_both_graph_modes (test_battle.BattleTests.test_requested_type_questions_in_both_graph_modes) ... ok
+test_results_are_in_original_cache_and_correct_type_method_level (test_battle.BattleTests.test_results_are_in_original_cache_and_correct_type_method_level) ... ok
+test_unknown_and_unsupported_conditions_are_not_invented (test_battle.BattleTests.test_unknown_and_unsupported_conditions_are_not_invented) ... ok
+test_version_level_historical_move_stats_pagination (test_battle.BattleTests.test_version_level_historical_move_stats_pagination) ... ok
+test_capture_is_blocked_before_hydration (test_browser_collection.BrowserCollectionTests.test_capture_is_blocked_before_hydration) ... ok
+test_capture_is_proposal_until_browser_storage_confirms (test_browser_collection.BrowserCollectionTests.test_capture_is_proposal_until_browser_storage_confirms) ... ok
+test_conflict_and_invalid_payload (test_browser_collection.BrowserCollectionTests.test_conflict_and_invalid_payload) ... ok
+test_invalid_snapshot_rejected_and_new_session_restores (test_browser_collection.BrowserCollectionTests.test_invalid_snapshot_rejected_and_new_session_restores) ... ok
+test_order_independent_records_and_signature (test_browser_collection.BrowserCollectionTests.test_order_independent_records_and_signature) ... ok
+test_restore_counts_and_idempotent_retry (test_browser_collection.BrowserCollectionTests.test_restore_counts_and_idempotent_retry) ... ok
+test_two_sessions_never_inherit_shared_sqlite (test_browser_collection.BrowserCollectionTests.test_two_sessions_never_inherit_shared_sqlite) ... ok
+test_unavailable_storage_does_not_fall_back_or_clear_existing (test_browser_collection.BrowserCollectionTests.test_unavailable_storage_does_not_fall_back_or_clear_existing) ... ok
+test_all_dex_open_without_capture_and_filters (test_collection_game.CollectionGameTests.test_all_dex_open_without_capture_and_filters) ... ok
+test_bad_event_does_not_write (test_collection_game.CollectionGameTests.test_bad_event_does_not_write) ... ok
+test_callback_ack_after_commit (test_collection_game.CollectionGameTests.test_callback_ack_after_commit) ... ok
+test_callback_failure_never_reports_success (test_collection_game.CollectionGameTests.test_callback_failure_never_reports_success) ... ok
+test_concurrent_catches_not_lost (test_collection_game.CollectionGameTests.test_concurrent_catches_not_lost) ... ok
+test_detail_uses_existing_raw_cache_without_network (test_collection_game.CollectionGameTests.test_detail_uses_existing_raw_cache_without_network) ... 2026-10-23 14:19:01.137 No runtime found, using MemoryCacheStorageManager
+ok
+test_existing_transparency_preserved_without_source_write (test_collection_game.CollectionGameTests.test_existing_transparency_preserved_without_source_write) ... C:\SSAFY\pennant_race_ai_core_2\tests\test_collection_game.py:69: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+  self.assertTrue(any(r>220 and g>220 and b>220 and a>200 for r,g,b,a in image.getdata()))
+ok
+test_first_repeat_and_reload (test_collection_game.CollectionGameTests.test_first_repeat_and_reload) ... ok
+test_panel_event (test_collection_game.CollectionGameTests.test_panel_event) ... ok
+test_relative_search_examples (test_collection_game.CollectionGameTests.test_relative_search_examples) ... ok
+test_retry_idempotent_and_conflict_atomic (test_collection_game.CollectionGameTests.test_retry_idempotent_and_conflict_atomic) ... ok
+test_failure_retry_replaces_only_matching_answer (test_evolution_chat.ChatLifecycleTests.test_failure_retry_replaces_only_matching_answer) ... 2026-10-23 14:19:01.597 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:01.597 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+Chat request failed: {'stage': 'chat', 'category': 'validation', 'error_type': 'ServiceError', 'code': 'ServiceError', 'traceback': [{'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\src\\ui_rag.py', 'line': 84, 'function': 'render_conversation'}, {'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\tests\\test_evolution_chat.py', 'line': 83, 'function': 'reply'}], 'cause': None}
+ok
+test_three_turns_rerun_and_reentry (test_evolution_chat.ChatLifecycleTests.test_three_turns_rerun_and_reentry) ... 2026-10-23 14:19:01.717 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:01.717 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_cycles_missing_data_and_version_conditions (test_evolution_chat.EvolutionTests.test_cycles_missing_data_and_version_conditions) ... ok
+test_evolution_questions_and_citations (test_evolution_chat.EvolutionTests.test_evolution_questions_and_citations) ... ok
+test_failed_evolution_cache_is_not_reused (test_evolution_chat.EvolutionTests.test_failed_evolution_cache_is_not_reused) ... ok
+test_selected_and_followup_use_species_id (test_evolution_chat.EvolutionTests.test_selected_and_followup_use_species_id) ... ok
+test_default_map_has_no_legacy_controls_or_rag_calls (test_fullscreen_ui.FullscreenUITests.test_default_map_has_no_legacy_controls_or_rag_calls) ... 2026-10-23 14:19:03.629 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_research_overlay_preserves_tools_and_closes (test_fullscreen_ui.FullscreenUITests.test_research_overlay_preserves_tools_and_closes) ... 2026-10-23 14:19:04.677 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:04.677 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_analysis_cache_avoids_llm_and_query_embedding (test_generation_compare.ComparisonTests.test_analysis_cache_avoids_llm_and_query_embedding) ... ok
+test_cache_invalidates_for_search_settings_and_corpus (test_generation_compare.ComparisonTests.test_cache_invalidates_for_search_settings_and_corpus) ... ok
+test_clefairy_type_change (test_generation_compare.ComparisonTests.test_clefairy_type_change) ... ok
+test_exact_external_reason_quote_and_source_number (test_generation_compare.ComparisonTests.test_exact_external_reason_quote_and_source_number) ... ok
+test_external_fact_is_not_accepted_as_reason (test_generation_compare.ComparisonTests.test_external_fact_is_not_accepted_as_reason) ... ok
+test_gen_one_special_and_total_not_directly_compared (test_generation_compare.ComparisonTests.test_gen_one_special_and_total_not_directly_compared) ... ok
+test_gengar_ability_change (test_generation_compare.ComparisonTests.test_gengar_ability_change) ... ok
+test_hidden_abilities_are_separate (test_generation_compare.ComparisonTests.test_hidden_abilities_are_separate) ... ok
+test_invalid_citation_reuses_existing_guard (test_generation_compare.ComparisonTests.test_invalid_citation_reuses_existing_guard) ... ok
+test_invented_reason_quote_is_not_displayed (test_generation_compare.ComparisonTests.test_invented_reason_quote_is_not_displayed) ... ok
+test_missing_generation_skips_every_api (test_generation_compare.ComparisonTests.test_missing_generation_skips_every_api) ... ok
+test_missing_second_metadata_stops_before_llm (test_generation_compare.ComparisonTests.test_missing_second_metadata_stops_before_llm) ... ok
+test_missing_stat_is_unknown_not_a_change (test_generation_compare.ComparisonTests.test_missing_stat_is_unknown_not_a_change) ... ok
+test_only_two_metadata_generations_and_one_llm_call (test_generation_compare.ComparisonTests.test_only_two_metadata_generations_and_one_llm_call) ... ok
+test_pikachu_numeric_differences (test_generation_compare.ComparisonTests.test_pikachu_numeric_differences) ... ok
+test_reason_disguised_as_change_is_dropped (test_generation_compare.ComparisonTests.test_reason_disguised_as_change_is_dropped) ... ok
+test_reason_without_external_evidence_is_dropped (test_generation_compare.ComparisonTests.test_reason_without_external_evidence_is_dropped) ... ok
+test_reversed_generation_is_not_analyzed (test_generation_compare.ComparisonTests.test_reversed_generation_is_not_analyzed) ... ok
+test_same_generation_skips_every_api (test_generation_compare.ComparisonTests.test_same_generation_skips_every_api) ... ok
+test_streamlit_selectors_no_call_button_one_call_and_cache (test_generation_compare.ComparisonTests.test_streamlit_selectors_no_call_button_one_call_and_cache) ... 2026-10-23 14:19:07.604 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:07.604 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_unchanged_data_skips_every_api (test_generation_compare.ComparisonTests.test_unchanged_data_skips_every_api) ... ok
+test_change_reasons_without_evidence_dropped (test_global_chat.GlobalChatTests.test_change_reasons_without_evidence_dropped) ... ok
+test_conditions (test_global_chat.GlobalChatTests.test_conditions) ... ok
+test_generation_filter_and_no_calls (test_global_chat.GlobalChatTests.test_generation_filter_and_no_calls) ... ok
+test_global_graph_citations_cache (test_global_chat.GlobalChatTests.test_global_graph_citations_cache) ... ok
+test_global_semantic_store (test_global_chat.GlobalChatTests.test_global_semantic_store) ... ok
+test_history_and_multiple (test_global_chat.GlobalChatTests.test_history_and_multiple) ... ok
+test_invalid_citations_and_api_error (test_global_chat.GlobalChatTests.test_invalid_citations_and_api_error) ... ok
+test_names_and_types (test_global_chat.GlobalChatTests.test_names_and_types) ... ok
+test_ui_default_no_selection_and_separate_history (test_global_chat.GlobalChatTests.test_ui_default_no_selection_and_separate_history) ... 2026-10-23 14:19:13.519 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:13.519 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+Chat request failed: {'stage': 'metadata_index', 'category': 'configuration', 'error_type': 'ServiceError', 'code': 'ServiceError', 'traceback': [{'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\src\\ui_rag.py', 'line': 84, 'function': 'render_conversation'}, {'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\src\\ui_rag.py', 'line': 145, 'function': 'reply'}, {'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\src\\ui_rag.py', 'line': 49, 'function': 'check_chat_request'}], 'cause': None}
+ok
+test_unsupported (test_global_chat.GlobalChatTests.test_unsupported) ... ok
+test_buttons_remain_attached_to_messages (test_hunt.HuntTests.test_buttons_remain_attached_to_messages) ... 2026-10-23 14:19:15.729 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_capture_commit_controls_target_clear (test_hunt.HuntTests.test_capture_commit_controls_target_clear) ... Capture persistence failure: OSError
+ok
+test_exact_cited_targets_not_uncited_candidates (test_hunt.HuntTests.test_exact_cited_targets_not_uncited_candidates) ... ok
+test_game_name_is_not_species_and_form_is_not_substituted (test_hunt.HuntTests.test_game_name_is_not_species_and_form_is_not_substituted) ... ok
+test_region_rules_and_current_preference (test_hunt.HuntTests.test_region_rules_and_current_preference) ... ok
+test_request_and_late_events (test_hunt.HuntTests.test_request_and_late_events) ... ok
+test_empty_global_evidence_is_not_an_api_error (test_mandatory_fixes.MandatoryFixTests.test_empty_global_evidence_is_not_an_api_error) ... ok
+test_keyless_local_graphs_never_call_model (test_mandatory_fixes.MandatoryFixTests.test_keyless_local_graphs_never_call_model) ... ok
+test_missing_selected_index_is_explicit_in_all_paths (test_mandatory_fixes.MandatoryFixTests.test_missing_selected_index_is_explicit_in_all_paths) ... ok
+test_move_first_and_more_page_question_selection (test_mandatory_fixes.MandatoryFixTests.test_move_first_and_more_page_question_selection) ... 2026-10-23 14:19:21.300 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_preflight_safe_messages_and_local_exemption (test_mandatory_fixes.MandatoryFixTests.test_preflight_safe_messages_and_local_exemption) ... ok
+test_selected_evolution_type_move_and_general_require_index (test_mandatory_fixes.MandatoryFixTests.test_selected_evolution_type_move_and_general_require_index) ... ok
+test_top_k_merge_dedup_and_numbering (test_mandatory_fixes.MandatoryFixTests.test_top_k_merge_dedup_and_numbering) ... ok
+test_cached_wiki_response_works_without_contact (test_nonfunctional.NonfunctionalTests.test_cached_wiki_response_works_without_contact) ... ok
+test_chat_ui_never_exposes_error_body_or_prompt (test_nonfunctional.NonfunctionalTests.test_chat_ui_never_exposes_error_body_or_prompt) ... 2026-10-23 14:19:24.625 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+Chat request failed: {'stage': 'chat', 'category': 'code', 'error_type': 'RuntimeError', 'code': 'RuntimeError', 'traceback': [{'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\src\\ui_rag.py', 'line': 84, 'function': 'render_conversation'}, {'file': 'C:\\Users\\SSAFY\\Documents\\Codex\\browser_collection_fix\\test-temp\\tmp985kgybo\\8afe22f26ea72045133f4540ea127615', 'line': 3, 'function': 'reply'}], 'cause': None}
+ok
+test_contact_is_sent_and_repeated_request_cached (test_nonfunctional.NonfunctionalTests.test_contact_is_sent_and_repeated_request_cached) ... ok
+test_invalid_contact_never_reaches_http (test_nonfunctional.NonfunctionalTests.test_invalid_contact_never_reaches_http) ... ok
+test_long_retry_after_does_not_retry_early (test_nonfunctional.NonfunctionalTests.test_long_retry_after_does_not_retry_early) ... ok
+test_missing_contact_blocks_only_new_http (test_nonfunctional.NonfunctionalTests.test_missing_contact_blocks_only_new_http) ... ok
+test_retry_after_and_spacing_preserved (test_nonfunctional.NonfunctionalTests.test_retry_after_and_spacing_preserved) ... ok
+test_timeout_retries_are_bounded (test_nonfunctional.NonfunctionalTests.test_timeout_retries_are_bounded) ... ok
+test_assets_are_real_files_and_static_serving_enabled (test_regions.RegionTests.test_assets_are_real_files_and_static_serving_enabled) ... ok
+test_capture_facts_come_from_data (test_regions.RegionTests.test_capture_facts_come_from_data) ... ok
+test_dual_type_matches_either (test_regions.RegionTests.test_dual_type_matches_either) ... ok
+test_each_region_only_matching_unique_generation_nine_defaults (test_regions.RegionTests.test_each_region_only_matching_unique_generation_nine_defaults) ... ok
+test_korean_and_english_types (test_regions.RegionTests.test_korean_and_english_types) ... ok
+test_nine_regions_cover_all_eighteen_types (test_regions.RegionTests.test_nine_regions_cover_all_eighteen_types) ... ok
+test_popup_opens_correct_dex_detail (test_regions.RegionTests.test_popup_opens_correct_dex_detail) ... ok
+test_prefilled_dex_detail_has_no_widget_warning (test_regions.RegionTests.test_prefilled_dex_detail_has_no_widget_warning) ... 2026-10-23 14:19:24.875 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:24.875 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:24.875 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:24.875 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:24.875 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_region_validation_commit_ack_and_duplicate_count (test_regions.RegionTests.test_region_validation_commit_ack_and_duplicate_count) ... ok
+test_unknown_region_and_missing_generation (test_regions.RegionTests.test_unknown_region_and_missing_generation) ... ok
+test_combined_generation_and_type (test_rotom.RotomTests.test_combined_generation_and_type) ... ok
+test_complete_evolution_routes_and_branching (test_rotom.RotomTests.test_complete_evolution_routes_and_branching) ... ok
+test_detail_chat_action_and_direct_tool_tab (test_rotom.RotomTests.test_detail_chat_action_and_direct_tool_tab) ... ok
+test_entire_uncaught_catalog_and_pagination (test_rotom.RotomTests.test_entire_uncaught_catalog_and_pagination) ... ok
+test_explicit_capture_reveal_moves_page_but_normal_selection_does_not (test_rotom.RotomTests.test_explicit_capture_reveal_moves_page_but_normal_selection_does_not) ... ok
+test_invalid_filters_rejected (test_rotom.RotomTests.test_invalid_filters_rejected) ... ok
+test_measured_screen_does_not_cross_outer_image (test_rotom.RotomTests.test_measured_screen_does_not_cross_outer_image) ... ok
+test_name_number_and_unknown_search (test_rotom.RotomTests.test_name_number_and_unknown_search) ... ok
+test_record_filters_and_detail_actual_count (test_rotom.RotomTests.test_record_filters_and_detail_actual_count) ... ok
+test_selected_detail_abilities_evolutions_and_no_unknown_values (test_rotom.RotomTests.test_selected_detail_abilities_evolutions_and_no_unknown_values) ... ok
+test_actual_model_game_title_is_not_a_pokemon_claim (test_runtime_diagnostics.RuntimeRegressionTests.test_actual_model_game_title_is_not_a_pokemon_claim) ... ok
+test_cached_old_catalog_is_replaced_by_implementation_revision (test_runtime_diagnostics.RuntimeRegressionTests.test_cached_old_catalog_is_replaced_by_implementation_revision) ... 2026-10-23 14:19:25.425 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+2026-10-23 14:19:25.633 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+ok
+test_code_failure_is_not_offered_as_connection_retry (test_runtime_diagnostics.RuntimeRegressionTests.test_code_failure_is_not_offered_as_connection_retry) ... 2026-10-23 14:19:25.865 Thread 'MainThread': missing ScriptRunContext! This warning can be ignored when running in bare mode.
+Chat request failed: {'stage': 'chat', 'category': 'code', 'error_type': 'TypeError', 'code': 'TypeError', 'traceback': [{'file': 'C:\\SSAFY\\pennant_race_ai_core_2\\src\\ui_rag.py', 'line': 84, 'function': 'render_conversation'}, {'file': 'C:\\Users\\SSAFY\\Documents\\Codex\\browser_collection_fix\\test-temp\\tmp985kgybo\\3ab531bef3575c98d5106170a37e113f', 'line': 3, 'function': 'reply'}], 'cause': None}
+ok
+test_diagnostics_keep_traceback_and_omit_secret_bodies (test_runtime_diagnostics.RuntimeRegressionTests.test_diagnostics_keep_traceback_and_omit_secret_bodies) ... ok
+test_json_direction_is_explicit_not_reversed (test_runtime_diagnostics.RuntimeRegressionTests.test_json_direction_is_explicit_not_reversed) ... ok
+test_actual_catalog_counts (test_services.CoreTests.test_actual_catalog_counts) ... ok
+test_actual_langgraph_nodes (test_services.CoreTests.test_actual_langgraph_nodes) ... ok
+test_citation_validation (test_services.CoreTests.test_citation_validation) ... ok
+test_duplicate_index_skips_embedding (test_services.CoreTests.test_duplicate_index_skips_embedding) ... ok
+test_evolution_profile_uses_actual_data (test_services.CoreTests.test_evolution_profile_uses_actual_data) ... ok
+test_explicit_low_minimum_is_not_raised (test_services.CoreTests.test_explicit_low_minimum_is_not_raised) ... ok
+test_filter_numeric_and_type (test_services.CoreTests.test_filter_numeric_and_type) ... ok
+test_graph_comparison (test_services.CoreTests.test_graph_comparison) ... ok
+test_history_and_korean_abilities (test_services.CoreTests.test_history_and_korean_abilities) ... ok
+test_inline_valid_citation_is_normalized (test_services.CoreTests.test_inline_valid_citation_is_normalized) ... ok
+test_missing_gen_one_special_stats_not_recommended (test_services.CoreTests.test_missing_gen_one_special_stats_not_recommended) ... ok
+test_missing_index_explained (test_services.CoreTests.test_missing_index_explained) ... ok
+test_natural_no_invented_minimum (test_services.CoreTests.test_natural_no_invented_minimum) ... ok
+test_natural_preserves_valid_candidate (test_services.CoreTests.test_natural_preserves_valid_candidate) ... ok
+test_natural_search_rejects_outside_candidate (test_services.CoreTests.test_natural_search_rejects_outside_candidate) ... ok
+test_no_fabricated_answer_without_evidence (test_services.CoreTests.test_no_fabricated_answer_without_evidence) ... ok
+test_relative_conditions (test_services.CoreTests.test_relative_conditions) ... ok
+test_species_filter_excludes_unrelated_docs (test_services.CoreTests.test_species_filter_excludes_unrelated_docs) ... ok
+test_unknown_citation_blocks_answer (test_services.CoreTests.test_unknown_citation_blocks_answer) ... ok
+test_unknown_generation_rejected (test_services.CoreTests.test_unknown_generation_rejected) ... ok
+test_wrong_species_name_is_rejected (test_services.CoreTests.test_wrong_species_name_is_rejected) ... ok
+test_chunk_replacement_removes_stale (test_services.DocumentTests.test_chunk_replacement_removes_stale) ... ok
+test_own_document_cannot_be_rejected_by_model (test_services.DocumentTests.test_own_document_cannot_be_rejected_by_model) ... ok
+
+----------------------------------------------------------------------
+Ran 163 tests in 45.941s
+
+OK

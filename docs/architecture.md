@@ -1,6 +1,6 @@
 # PokéField RAG 파이프라인 설계서
 
-> 제출 문서 보완 기준: 2026-10-23의 기존 실행 기록과 공식 셀프 점검 결과입니다. 이번 문서 보완에서는 테스트·유료 API·재색인을 실행하지 않았습니다. 실제 GMS, 로컬 Python, 응답 캐시, 저장 응답 재생, FakeLLM/FakeEmbeddings를 구분합니다. 심화 F2013~F2016은 **미선택**입니다.
+> 제출 문서 보완 기준: 2026-10-23의 기존 실행 기록과 공식 셀프 점검 결과입니다. 기존 검증 이력은 보존합니다. 이번 갱신에서는 브라우저 저장 관련 8개 테스트와 Cloud 읽기 검사만 수행했으며, 유료 API·재색인은 실행하지 않았습니다. 실제 GMS, 로컬 Python, 응답 캐시, 저장 응답 재생, FakeLLM/FakeEmbeddings를 구분합니다. 심화 F2013~F2016은 **미선택**입니다.
 
 기준일: 2026-10-23. 구현 근거는 `src/`·`prompts/`·`scripts/`이며 검증 수치는 [검증 요약](VERIFICATION_SUMMARY.md)에서 구분합니다. 실제 코드를 설명하며 아래 다이어그램의 노드를 별도 신규 파이프라인으로 구현했다는 뜻은 아닙니다.
 
@@ -23,7 +23,7 @@
 | 캐시·내용 해시·측정 | `src/storage.py` |
 | Streamlit UI/필드/도감 | `app.py`, `src/ui_rag.py`, `src/lab_ui.py`, `src/field/`, `src/rotom_data.py` 등 |
 
-게임 이동·투척은 JavaScript, 포획 기록의 영속 저장은 `src/collection.py`의 SQLite와 Python 컴포넌트 이벤트 처리 책임입니다. RAG 그래프에 게임 루프나 별도 에이전트 그래프를 넣지 않습니다.
+게임 이동·투척과 포획 기록의 영속 저장은 JavaScript와 브라우저 localStorage가 담당합니다. `src/collection.py`의 BrowserCollection은 세션 복제본을 검증·집계하며, 공용 SQLite를 공개 필드의 기록 원천으로 사용하지 않습니다. RAG 그래프에 게임 루프나 별도 에이전트 그래프를 넣지 않습니다.
 
 ## 2. 두 컬렉션과 데이터 구분
 
@@ -162,3 +162,19 @@ Answer의 claim은 text와 citations(StrictInt 목록), not_found로 구성하�
 
 
 
+
+## 10. 브라우저 저장·Cloud 배포 아키텍처 갱신
+
+공개 필드의 포획 기록은 브라우저 `localStorage`에 저장합니다. 브라우저 프로필·사이트(origin)별로 분리되며 같은 프로필의 탭은 공유합니다. 새로고침 시 복원하고 수집 수·도감·중복 포획 횟수에 반영합니다. 기존 공용 SQLite 포획 기록은 자동으로 가져오지 않습니다.
+
+1. Component v2가 앱 origin의 `localStorage`를 읽고 쓰기 가능 여부를 확인합니다. 키는 `pokefield:capture:v1:<event_id>`이며 값은 `version`, `event_id`, `pokemon_id`, `caught_at`입니다. 같은 이벤트 ID 재처리는 멱등 처리하고, 별개 이벤트는 중복 포획 횟수에 누적합니다. 이벤트당 한 키로 같은 프로필의 동시 탭 덮어쓰기를 줄입니다.
+2. 초기 복원·focus·storage 이벤트에서 snapshot을 `on_collection_change`로 Python에 전달합니다. `BrowserCollection`은 ID·시간·중복 충돌과 최대 50,000개 이벤트 제한을 검사합니다. Streamlit session_state는 개인 스냅샷의 임시 복제본이며 영속 저장 원천이 아닙니다.
+3. 포획 시 Python이 지역별 허용 ID를 검증하고 `persist_event`를 응답합니다. 브라우저 쓰기가 성공한 후에만 성공 팝업·파티클·수집 수를 반영하고 snapshot을 보냅니다. 확인된 snapshot에 포함된 이벤트에서 추적 완료를 처리합니다.
+4. 도감은 같은 세션 복제본으로 `query_dex`를 호출합니다. 브라우저 snapshot이 바뀌면 기존 요청을 재조회하여 수집 표시를 갱신합니다. 포획→팝업→도감 이동 동작은 유지합니다.
+5. 저장소 차단·손상·용량 초과는 명시적으로 안내하고 기존 기록을 보존합니다. 공용 SQLite로 fallback하지 않습니다. SQLite 시대의 대기 포획·성공 팝업을 새 저장 방식에 자동 이관하지 않습니다.
+
+`Collection` 클래스는 명시적인 오프라인 소비자와 기존 테스트용 SQLite 구현으로 유지합니다. 별개의 `src/storage.py` SQLite는 RAG 캐시·계측이며 브라우저 포획 저장으로 교체한 대상이 아닙니다. 서버는 기록을 일시적으로 수신하므로 서버가 전혀 처리하지 않는 구조는 아닙니다. localStorage는 인증·서버 신뢰 원장이 아니며 사용자가 자신의 브라우저 값을 편집할 수 있습니다.
+
+계층 흐름은 브라우저(localStorage·필드·도감) ↔ Component v2 callback ↔ Streamlit(session_state·검증·집계)와 Streamlit ↔ 기존 ChromaDB/JSONL·RAG 캐시 ↔ 기존 LLM API입니다. 신규 DB·로그인·LLM 파이프라인은 추가하지 않았습니다. Cloud의 바깥 호스팅 프레임과 앱 내부 Component v2를 구분하며 저장 origin은 실제 앱 프레임 기준입니다.
+
+Cloud는 저장소의 `app.py`·고정 requirements·정적 이미지·JSONL·기존 Chroma 폴더를 필요로 합니다. 배포 관리·Secrets는 운영 영역이며 현재 코드에서 자동 Secrets 중첩 변환·색인 다운로드 로직은 없습니다. [운영 절차](RAG_IMPLEMENTATION.md#cloud-배포와-현재-확인-상태)를 따릅니다. 실제 Cloud 화면은 로컬 수정본과 차이가 있어 배포 적용 확인이 남았습니다. [검증 요약](VERIFICATION_SUMMARY.md#브라우저-포획-저장-및-cloud-확인-2026-10-23)을 참조합니다.

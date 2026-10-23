@@ -1,0 +1,43 @@
+{
+  "modified_md": [
+    "README.md",
+    "docs/architecture.md",
+    "docs/NF_VERIFICATION.md",
+    "docs/RAG_IMPLEMENTATION.md",
+    "docs/requirements.md",
+    "docs/VERIFICATION_SUMMARY.md"
+  ],
+  "pdfs": [
+    {
+      "file": "architecture.pdf",
+      "pages": 9
+    },
+    {
+      "file": "NF_VERIFICATION.pdf",
+      "pages": 4
+    },
+    {
+      "file": "RAG_IMPLEMENTATION.pdf",
+      "pages": 4
+    },
+    {
+      "file": "requirements.pdf",
+      "pages": 6
+    },
+    {
+      "file": "VERIFICATION_SUMMARY.pdf",
+      "pages": 12
+    }
+  ],
+  "local_link_count": 162,
+  "broken_links": [],
+  "actual_secret_matches": 0,
+  "protected_files_unchanged": 107,
+  "targeted_tests": 8,
+  "paid_api_calls": 0,
+  "cloud_readonly_result": "fresh A/B both 22/1025 with no personal keys; deployment revision unconfirmed",
+  "preserved_documents": [
+    "RAG_RESULTS.md/pdf",
+    "SOURCES_AND_LICENSES.md/pdf"
+  ]
+}

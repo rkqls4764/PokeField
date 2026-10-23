@@ -33,7 +33,7 @@
 | Vector DB | ChromaDB |
 | LLM | GMS (OpenAI 호환 API) |
 | Embedding | text-embedding-3-small |
-| Database | SQLite |
+| 저장 | 브라우저 localStorage(포획), SQLite(RAG 캐시·기존 오프라인 기록) |
 | Data | PokéAPI, Wikipedia |
 
 자세한 패키지 버전은 [requirements.txt](requirements.txt)에 정리되어 있습니다.
@@ -56,7 +56,7 @@
 
 각 지역에서는 해당 환경과 관련된 타입의 포켓몬이 등장하며, 한 번에 3~10마리의 포켓몬이 나타나는 방식입니다.
 
-포획한 포켓몬은 SQLite에 기록되며 도감에서 확인할 수 있는 구조입니다.
+공개 필드의 포획 기록은 브라우저 `localStorage`에 저장합니다. 브라우저 프로필·사이트(origin)별로 분리되며 같은 프로필의 탭은 공유합니다. 새로고침 시 복원하고 수집 수·도감·중복 포획 횟수에 반영합니다. 기존 공용 SQLite 포획 기록은 자동으로 가져오지 않습니다.
 
 ### 📖 2. 포켓몬 도감
 
@@ -224,6 +224,29 @@ API 키는 GitHub에 업로드하지 않고 환경변수로 관리하는 방식�
 
 ---
 
+## Cloud 배포와 현재 확인 상태
+
+서비스 주소는 [PokéField](https://pokefield.streamlit.app/)입니다. 2026-10-23 실제 읽기 검사에서 새 독립 프로필 A·B 모두 최초·새로고침 후 `22 / 1025`를 표시했고, 앱 프레임의 개인 포획 저장 키는 없었습니다. **로컬 수정본의 사용자별 저장이 Cloud에 적용됐다고 판정하지 않습니다.** 배포 커밋·Cloud Python 버전·Secrets·색인 로드는 [추가 검증 필요]입니다. 운영 기록 보존을 위해 Cloud에서는 포획·채팅을 하지 않았습니다.
+
+배포 진입점은 `app.py`이며 의존성은 루트 `requirements.txt`, 정적 제공은 `.streamlit/config.toml`을 사용합니다. Python은 로컬 검증 환경 3.11과 맞춰 확인합니다. Linux의 설치·실행 예시는 아래와 같으며 이번에 Linux 설치를 실행한 결과는 아닙니다.
+
+```bash
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m streamlit run app.py
+```
+
+Cloud의 App settings → Secrets에 기존 환경변수 이름을 최상위 TOML 키로 설정합니다. 공급자와 모델은 기존 값을 유지하고 인증 키 값은 문서·Git에 기록하지 않습니다. `Settings.load()`는 환경변수를 읽으므로 임의 중첩 테이블을 사용하지 않습니다. Linux 경로는 다음처럼 프로젝트 기준 상대경로를 사용합니다.
+
+```toml
+POKEMON_DATA_DIR = "pokemon-data/data/processed"
+CHROMA_DIR = "chroma_db"
+```
+
+`chroma_db/`는 ignore 규칙과 별개로 현재 Git 추적 파일에 SQLite·HNSW 파일이 포함됩니다. 앱은 기존 디렉터리를 직접 로드하며 자동 다운로드·자동 색인 코드는 없습니다. 로컬 추적 상태가 원격 배포 완료를 뜻하지는 않습니다. 일관된 전체 색인 디렉터리, 임베딩 signature 및 Linux 호환성 확인은 [Cloud 운영·색인 절차](docs/RAG_IMPLEMENTATION.md#cloud-배포와-현재-확인-상태)를 따릅니다. 설정 원칙은 [공식 Cloud 안내](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy)를 참고합니다.
+
+---
+
 <a id="data"></a>
 
 ## 🗂️ 데이터 및 색인 준비
@@ -272,7 +295,7 @@ API 키는 GitHub에 업로드하지 않고 환경변수로 관리하는 방식�
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-2026년 10월 23일 기준으로 격리된 테스트 환경에서 155개 단위 테스트를 통과한 상태입니다.
+2026년 10월 23일 기존 격리 회귀는 155개이며, 브라우저 저장 보완 후 전체 163개가 45.941초에 통과했습니다. 이번 문서 갱신에서는 관련 8개 테스트만 다시 통과했습니다. 전체 회귀는 FakeLLM·격리 저장소를 사용했고 실제 LLM 호출 결과가 아닙니다.
 
 > 필수 요구사항 F2001~F2012는 검증 및 재검증을 통해 모두 통과한 상태입니다. 다만 실제 외부 LLM을 사용하는 전체 사용자 흐름과 모바일 실기기 환경까지 모두 검증한 결과는 아닙니다.
 
@@ -284,7 +307,7 @@ API 키는 GitHub에 업로드하지 않고 환경변수로 관리하는 방식�
 
 ## 📌 참고 사항
 
-- 포켓몬 수집 기록은 SQLite에 저장되며, 별도의 사용자 계정 기능은 제공하지 않는 구조입니다.
+- 공개 필드의 포획 기록은 브라우저 `localStorage`에 저장합니다. 브라우저 프로필·사이트(origin)별로 분리되며 같은 프로필의 탭은 공유합니다. 새로고침 시 복원하고 수집 수·도감·중복 포획 횟수에 반영합니다. 기존 공용 SQLite 포획 기록은 자동으로 가져오지 않습니다. 로그인·계정·기기 간 동기화는 없습니다. 사이트 데이터 삭제, 주소 변경, 시크릿 창 종료 시 기록이 사라질 수 있습니다. 저장소가 차단되거나 가득 차면 안내 후 포획 저장을 중단하며 공용 DB로 대체하지 않습니다.
 - 채팅 기록은 Streamlit 세션 상태를 사용하므로 장기 보관을 위한 계정별 대화 저장 기능은 제공하지 않습니다.
 - RAG 답변에는 API 키가 필요하지만, 도감과 로컬 타입 상성·기술 검색 등은 LLM 호출 없이 사용할 수 있는 기능입니다.
 - 외부 문서 수집에는 Wikipedia API를 사용하며, 새로운 요청에는 운영자 연락처 설정이 필요합니다.

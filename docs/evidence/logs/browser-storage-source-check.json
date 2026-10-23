@@ -1,0 +1,13 @@
+{
+  "source_matches_prior_browser_test": {
+    "src\\collection.py": true,
+    "src\\game_ui.py": true,
+    "src\\field\\field.js": true,
+    "tests\\browser_collection.cjs": true,
+    "tests\\browser_collection_storage.cjs": true,
+    "tests\\test_browser_collection.py": true
+  },
+  "paid_api_calls": 0,
+  "cloud_deployed_revision": "not confirmed",
+  "targeted_unit_tests": 8
+}

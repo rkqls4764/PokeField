@@ -1,0 +1,15 @@
+2026-10-23 14:44:42.906 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+2026-10-23 14:44:42.908 WARNING streamlit.runtime.caching.cache_data_api: No runtime found, using MemoryCacheStorageManager
+test_capture_is_blocked_before_hydration (test_browser_collection.BrowserCollectionTests.test_capture_is_blocked_before_hydration) ... ok
+test_capture_is_proposal_until_browser_storage_confirms (test_browser_collection.BrowserCollectionTests.test_capture_is_proposal_until_browser_storage_confirms) ... ok
+test_conflict_and_invalid_payload (test_browser_collection.BrowserCollectionTests.test_conflict_and_invalid_payload) ... ok
+test_invalid_snapshot_rejected_and_new_session_restores (test_browser_collection.BrowserCollectionTests.test_invalid_snapshot_rejected_and_new_session_restores) ... ok
+test_order_independent_records_and_signature (test_browser_collection.BrowserCollectionTests.test_order_independent_records_and_signature) ... ok
+test_restore_counts_and_idempotent_retry (test_browser_collection.BrowserCollectionTests.test_restore_counts_and_idempotent_retry) ... ok
+test_two_sessions_never_inherit_shared_sqlite (test_browser_collection.BrowserCollectionTests.test_two_sessions_never_inherit_shared_sqlite) ... ok
+test_unavailable_storage_does_not_fall_back_or_clear_existing (test_browser_collection.BrowserCollectionTests.test_unavailable_storage_does_not_fall_back_or_clear_existing) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.079s
+
+OK

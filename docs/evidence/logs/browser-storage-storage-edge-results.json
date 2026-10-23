@@ -1,0 +1,12 @@
+{
+  "success": true,
+  "mode": "production JavaScript + real localStorage; isolated simulated validation acknowledgements, not a live backend",
+  "checks": [
+    "duplicate Pokémon increments catch_count to 2 but unique count stays 1",
+    "replayed event id is idempotent after component remount",
+    "legacy SQLite pending capture and popup are not migrated into browser records",
+    "quota failure produces no success popup/particles and preserves earlier records",
+    "corrupt stored event is preserved, never overwritten or replaced by shared data"
+  ],
+  "errors": []
+}
