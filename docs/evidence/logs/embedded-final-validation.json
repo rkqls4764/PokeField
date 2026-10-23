@@ -1,0 +1,23 @@
+{
+  "source_settings_data_original_evidence_unchanged": true,
+  "pdf": [
+    {
+      "file": "requirements.pdf",
+      "pages": 7,
+      "embedded_image_placements": 0
+    },
+    {
+      "file": "VERIFICATION_SUMMARY.pdf",
+      "pages": 51,
+      "embedded_image_placements": 33
+    }
+  ],
+  "all_pages_rendered_and_visually_reviewed": 58,
+  "missing_visible_words": 0,
+  "replacement_glyphs": 0,
+  "broken_local_document_links": 0,
+  "paid_api_calls": 0,
+  "new_actual_isolated_screenshots": 2,
+  "xlsx_embedded_images": 27,
+  "full_tests_reused": "163/163; 49.702s; source identity checked, not rerun"
+}

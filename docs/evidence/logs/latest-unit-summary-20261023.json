@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-23",
+  "mode": "isolated temporary stores; FakeLLM/FakeEmbeddings/mocked HTTP; unmocked requests blocked",
+  "tests": 163,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 49.702,
+  "paid_api_calls": 0
+}

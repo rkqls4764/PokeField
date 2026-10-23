@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "checks": [
+    "fresh independent profiles ignore the seeded shared SQLite record",
+    {
+      "independentCaptures": true,
+      "A": "#0649 게노세크트",
+      "B": "#0398 찌르호크"
+    },
+    "A and B survive full refresh and new Streamlit sessions",
+    "new tab in A restores A collection",
+    "restored captured Pokémon detail contains its own catch record",
+    {
+      "sameBrowserTabSync": true,
+      "second": "#0588 딱정곤"
+    },
+    {
+      "capturePopupAndDex": true,
+      "popupName": "#0212 핫삼"
+    },
+    "blocked storage gives explicit notice and disables capture without SQLite fallback"
+  ],
+  "consoleErrors": [],
+  "paidRequests": []
+}

@@ -1,0 +1,218 @@
+[
+  {
+    "number": 1,
+    "row": 9,
+    "status": "통과",
+    "evidence": "IMG-01 · 증빙!B50",
+    "note": "2026-10-23. IMG-01의 실제 격리 QA 진단으로 현재 로드·그래프 확인. 생성 호출 없음. 실서비스 UI와 구분.",
+    "original_file_evidence": "docs/evidence/logs/latest-backend-security-results.json"
+  },
+  {
+    "number": 2,
+    "row": 10,
+    "status": "통과",
+    "evidence": "IMG-03 · 증빙!B116",
+    "note": "2026-10-23 재점검. 최신 격리 FakeEmbeddings 중복 색인 회귀 통과. 기존 복사 DB 2회 changed=0 이력과 구분. IMG-03은 앱 화면이 아닌 기존 로그 시각화.",
+    "original_file_evidence": "docs/evidence/logs/latest-unit-tests-20261023.log\ndocs/evidence/logs/current-backend-results.json"
+  },
+  {
+    "number": 3,
+    "row": 11,
+    "status": "통과",
+    "evidence": "IMG-03 · 증빙!B116",
+    "note": "2026-10-23 재점검. 기존 저장 Wiki 응답·모델 JSON 재생: 검색어3개/후보8개 중61168 선택. 신규 실제 API 아님. IMG-03은 앱 화면이 아닌 기존 로그 시각화.",
+    "original_file_evidence": "docs/evidence/logs/current-backend-results.json\ndocs/evidence/logs/latest-unit-tests-20261023.log"
+  },
+  {
+    "number": 4,
+    "row": 12,
+    "status": "통과",
+    "evidence": "IMG-03 · 증빙!B116",
+    "note": "2026-10-23 재점검. 기존 반복 수집 신규 HTTP/임베딩0·변경0. 최신 캐시 회귀 통과. 운영 재수집 미실행. IMG-03은 앱 화면이 아닌 기존 로그 시각화.",
+    "original_file_evidence": "docs/evidence/logs/current-backend-results.json\ndocs/evidence/logs/latest-unit-tests-20261023.log"
+  },
+  {
+    "number": 5,
+    "row": 13,
+    "status": "통과",
+    "evidence": "IMG-03 · 증빙!B116",
+    "note": "2026-10-23 재점검. 기존 동일 문서 1000/200→18,500/100→36,200/20→79. 격리 FakeEmbeddings. 이번 재색인 없음. IMG-03은 앱 화면이 아닌 기존 로그 시각화.",
+    "original_file_evidence": "docs/evidence/logs/current-backend-results.json"
+  },
+  {
+    "number": 6,
+    "row": 14,
+    "status": "통과",
+    "evidence": "IMG-03 · 증빙!B116",
+    "note": "2026-10-23 재점검. 기존 k=1/3/5→필수 meta 포함2/4/6개. 최신 선택형 메타 병합·인용 회귀 통과. Cloud 미검증. IMG-03은 앱 화면이 아닌 기존 로그 시각화.",
+    "original_file_evidence": "docs/evidence/logs/current-backend-results.json\ndocs/evidence/logs/latest-unit-tests-20261023.log"
+  },
+  {
+    "number": 7,
+    "row": 15,
+    "status": "통과",
+    "evidence": "IMG-01 · 증빙!B50",
+    "note": "2026-10-23. IMG-01의 실제 격리 QA 진단으로 현재 로드·그래프 확인. 생성 호출 없음. 실서비스 UI와 구분.",
+    "original_file_evidence": "docs/evidence/logs/latest-backend-security-results.json"
+  },
+  {
+    "number": 8,
+    "row": 16,
+    "status": "통과",
+    "evidence": "IMG-04 · 증빙!B211\nIMG-05 · 증빙!B244",
+    "note": "2026-10-23 재점검. 기존 FakeLLM UI 번호·유형·제목·링크와 실제 GMS 인용 로그. 최신 인용 검증 회귀 통과.",
+    "original_file_evidence": "docs/evidence/screenshots/04b-external-citations-FakeLLM-current.png\ndocs/evidence/logs/gms-live-results-20261023.json"
+  },
+  {
+    "number": 9,
+    "row": 17,
+    "status": "통과",
+    "evidence": "IMG-06 · 증빙!B277",
+    "note": "2026-10-23 재점검. 기존 실제 GMS 확인 불가 답변과 별도 FakeLLM 무인용 안내. 최신 근거 검증 회귀 통과.",
+    "original_file_evidence": "docs/evidence/screenshots/07-no-evidence-FakeLLM-current.png\ndocs/evidence/logs/gms-live-results-20261023.json"
+  },
+  {
+    "number": 10,
+    "row": 18,
+    "status": "통과",
+    "evidence": "IMG-07 · 증빙!B310",
+    "note": "2026-10-23 재점검. 최신 전체/선택 대화·순서 회귀 통과. 기존 Chrome 전환·재진입 기록. 계정별 장기 보관 아님.",
+    "original_file_evidence": "docs/evidence/logs/latest-unit-tests-20261023.log\ndocs/evidence/logs/game-results.json"
+  },
+  {
+    "number": 11,
+    "row": 19,
+    "status": "통과",
+    "evidence": "IMG-08 · 증빙!B343\nIMG-09 · 증빙!B376",
+    "note": "2026-10-23 재점검. 최신 타입·특성·수치·기술 필터 회귀 통과. 첫/추가 페이지 질문 연결은 기존 로컬 Chrome 이력.",
+    "original_file_evidence": "docs/evidence/logs/latest-unit-tests-20261023.log\ndocs/evidence/logs/browser-results.json"
+  },
+  {
+    "number": 12,
+    "row": 20,
+    "status": "통과",
+    "evidence": "IMG-02 · 증빙!B83",
+    "note": "2026-10-23. IMG-02 실제 로컬 비교: 부유→저주받은바디. AI 버튼 비활성·새 GMS 없음. 기존 실제 GMS 인용은 원본 로그, 모순 문구 미해결.",
+    "original_file_evidence": "docs/evidence/logs/latest-unit-tests-20261023.log\ndocs/evidence/logs/gms-live-results-20261023.json"
+  },
+  {
+    "number": 13,
+    "row": 21,
+    "status": "통과",
+    "evidence": "IMG-10 · 증빙!B409\nIMG-11 · 증빙!B442\nIMG-12 · 증빙!B475",
+    "note": "2026-10-23 재점검. 최신 진행/키·색인 안내 회귀와 기존 FakeLLM 스피너·격리 오류 UI. 실제 신규 수집 화면 미확보.",
+    "original_file_evidence": "docs/evidence/logs/latest-unit-tests-20261023.log\ndocs/evidence/screenshots/06-missing-key-current.png"
+  },
+  {
+    "number": 14,
+    "row": 22,
+    "status": "해당없음",
+    "evidence": "해당없음 · 이미지 없음\n증빙!B38 (미선택·비해당)",
+    "note": "2026-10-23 재점검. 포켓몬 게임 도메인. 건강·금융 등 판단 위험 도메인 항목 비해당.",
+    "original_file_evidence": "README.md"
+  },
+  {
+    "number": 15,
+    "row": 23,
+    "status": "해당없음",
+    "evidence": "해당없음 · 이미지 없음\n증빙!B38 (미선택·비해당)",
+    "note": "2026-10-23 재점검. 심화 F2013 미선택. 맵/도감 직접 UI만 부분 구현. 전체 프론트·서버 분리 완료 아님.",
+    "original_file_evidence": "docs/requirements.md"
+  },
+  {
+    "number": 16,
+    "row": 24,
+    "status": "해당없음",
+    "evidence": "해당없음 · 이미지 없음\n증빙!B38 (미선택·비해당)",
+    "note": "2026-10-23 재점검. 심화 F2014 미선택·MMR 미구현. 비교 결과 생성 안 함.",
+    "original_file_evidence": "docs/architecture.md"
+  },
+  {
+    "number": 17,
+    "row": 25,
+    "status": "해당없음",
+    "evidence": "해당없음 · 이미지 없음\n증빙!B38 (미선택·비해당)",
+    "note": "2026-10-23 재점검. 심화 F2015 미선택·전후 5문항 비교 미구현. 기존 GMS4회는 대조 실험 아님.",
+    "original_file_evidence": "docs/requirements.md"
+  },
+  {
+    "number": 18,
+    "row": 26,
+    "status": "해당없음",
+    "evidence": "해당없음 · 이미지 없음\n증빙!B38 (미선택·비해당)",
+    "note": "2026-10-23 재점검. 심화 F2015 미선택. 전후 비교 제출 문서 없음.",
+    "original_file_evidence": "docs/requirements.md"
+  },
+  {
+    "number": 19,
+    "row": 27,
+    "status": "해당없음",
+    "evidence": "해당없음 · 이미지 없음\n증빙!B38 (미선택·비해당)",
+    "note": "2026-10-23 재점검. 심화 F2016 미선택·미충족. pokemon_docs는 한국어 Wikipedia 한 출처. meta 유형과 구분.",
+    "original_file_evidence": "docs/evidence/logs/latest-backend-security-results.json\ndocs/evidence/logs/current-backend-results.json"
+  },
+  {
+    "number": 20,
+    "row": 28,
+    "status": "미확인",
+    "evidence": "이미지 없음 · 증빙!B39\n[추가 증빙 필요] 사용성 확인",
+    "note": "2026-10-23 재점검. 기존 실제 GMS2.016~6.031초. 사용자 사용성 합격·Cloud 처리시간·부하/p95 미검증. 새 유료 호출 없음.",
+    "original_file_evidence": "docs/evidence/logs/nf-audit-results.json\ndocs/evidence/logs/gms-live-results-20261023.json"
+  },
+  {
+    "number": 21,
+    "row": 29,
+    "status": "통과",
+    "evidence": "IMG-11 · 증빙!B442\nIMG-12 · 증빙!B475",
+    "note": "2026-10-23 재점검. 현재 텍스트102개 실제 설정 키 일치0·최신 UI 비노출 AppTest 통과. 최종 제출 패키지 전수 검사는 별도.",
+    "original_file_evidence": "docs/evidence/logs/latest-backend-security-results.json\ndocs/evidence/logs/latest-unit-tests-20261023.log"
+  },
+  {
+    "number": 22,
+    "row": 30,
+    "status": "통과",
+    "evidence": "IMG-01 · 증빙!B50",
+    "note": "2026-10-23 재점검. 현재 수집/색인/검색/생성/UI 모듈과 retrieve→generate 구조 확인. 최신 격리163개 통과.",
+    "original_file_evidence": "docs/evidence/logs/latest-backend-security-results.json\ndocs/architecture.md"
+  },
+  {
+    "number": 23,
+    "row": 31,
+    "status": "미확인",
+    "evidence": "이미지 없음 · 증빙!B40\n[추가 증빙 필요] 실제 위키 식별 전송",
+    "note": "2026-10-23 재점검. WIKI_CONTACT 미설정. 최신 간격·재시도·헤더 모의 테스트 통과. 실제 운영 연락처 적용·송신 미실행.",
+    "original_file_evidence": "docs/evidence/logs/latest-backend-security-results.json\ndocs/evidence/logs/latest-unit-tests-20261023.log"
+  },
+  {
+    "number": 24,
+    "row": 32,
+    "status": "통과",
+    "evidence": "증빙!B41 (출처 문서 근거)\n앱 이미지 없음",
+    "note": "2026-10-23 재점검. 위키15개·자산15개 출처/조건 기록 존재. 기록 여부 통과이며 실제 권리 확보·공개 배포 허락은 미확인.",
+    "original_file_evidence": "docs/SOURCES_AND_LICENSES.md\ndocs/asset_provenance.json"
+  },
+  {
+    "number": 25,
+    "row": 33,
+    "status": "미확인",
+    "evidence": "IMG-13 · 증빙!B508\nIMG-16 · 증빙!B607\nIMG-17 · 증빙!B640",
+    "note": "2026-10-23 재점검. 로컬163/163 통과. Cloud 새A/B0건·재접속만 확인. 실제 Cloud 포획 저장·Chroma/RAG 미검증. 심화 미선택.",
+    "original_file_evidence": "docs/evidence/logs/latest-unit-tests-20261023.log\ndocs/evidence/logs/latest-cloud-readonly-results.json"
+  },
+  {
+    "number": 26,
+    "row": 34,
+    "status": "실패",
+    "evidence": "증빙!B42 (누락 목록)\n[추가 증빙 필요] 실제 위키·GMS UI",
+    "note": "2026-10-23 재점검. 전체 첨부 미완료 확인: 실제 신규 Wiki 수집 진행/완료·실제 GMS 팬텀 비교 UI 없음. 기존 캡처로 대체 불가.",
+    "original_file_evidence": "docs/VERIFICATION_SUMMARY.md"
+  },
+  {
+    "number": 27,
+    "row": 35,
+    "status": "실패",
+    "evidence": "증빙!B43 (누락 목록)\n[추가 증빙 필요] 실제 상호 결과",
+    "note": "2026-10-23 재점검. 현재 정의서·설계·소스·README·셀프는 존재. 실제 다른 교육생의 상호 결과가 없고 빈 양식뿐이므로 전체 자료 미완료.",
+    "original_file_evidence": "docs/VERIFICATION_SUMMARY.md\ndocs/evidence/checklists/상호체크리스트_빈양식.md"
+  }
+]

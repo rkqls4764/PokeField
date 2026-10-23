@@ -1,0 +1,29 @@
+{
+  "url": "https://pokefield.streamlit.app/",
+  "mode": "read-only fresh independent browser contexts; no captures/chat/API actions",
+  "checks": [
+    {
+      "profile": "A",
+      "before": {
+        "count": "0 / 1025",
+        "storage": []
+      },
+      "after": {
+        "count": "0 / 1025",
+        "storage": []
+      }
+    },
+    {
+      "profile": "B",
+      "before": {
+        "count": "0 / 1025",
+        "storage": []
+      },
+      "after": {
+        "count": "0 / 1025",
+        "storage": []
+      }
+    }
+  ],
+  "errors": []
+}

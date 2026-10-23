@@ -1,0 +1,8 @@
+{
+  "mode": "actual isolated QA wrapper running project functions; not production UI",
+  "dataGraph": true,
+  "localGenerationComparison": true,
+  "AIButtonDisabled": true,
+  "errors": [],
+  "paidRequests": 0
+}

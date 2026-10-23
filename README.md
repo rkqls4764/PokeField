@@ -44,6 +44,38 @@
 
 ## ✨ 주요 기능
 
+### 필수 기능(F2001~F2012)
+
+아래 표는 요구사항과 현재 구현을 연결합니다. 기존 12/12 판정은 기록된 검증 범위이며, Cloud 전체 재검증 완료를 뜻하지 않습니다. 실행 종류와 미확보 화면은 [4장 항목별 증빙](docs/VERIFICATION_SUMMARY.md#chapter4-evidence)을 따릅니다.
+
+| 번호 | 요구사항 | 구현 기능 | 관련 문서 |
+|---|---|---|---|
+| F2001 | 항목 메타데이터 준비 | JSONL 로드·형태/세대별 검색 텍스트 생성 | [요구사항](docs/pdf/requirements.pdf) · [4.1 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-1) |
+| F2002 | 메타데이터 임베딩·색인 | pokemon_meta, ID·내용 해시 기반 중복 방지 | [설계](docs/pdf/architecture.pdf) · [4.1 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-1) |
+| F2003 | 전문가 프롬프트로 검색어 추출 | QueryPlan 구조화·포켓몬 자체 이름 포함 | [설계](docs/pdf/architecture.pdf) · [4.2 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-2) |
+| F2004 | 후보 문서 선별·본문 수집 | 후보 ID 검증·자체 문서 포함·원문/출처 보존 | [운영](docs/pdf/RAG_IMPLEMENTATION.pdf) · [4.2 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-2) |
+| F2005 | 문서 청킹·별도 색인 | pokemon_docs, 청크 크기·중복 길이 설정 | [설계](docs/pdf/architecture.pdf) · [4.2 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-2) |
+| F2006 | 두 컬렉션 검색·근거 병합 | 필수 선택 메타데이터, 외부 Top-k·ID 중복 제거 | [설계](docs/pdf/architecture.pdf) · [4.3 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-3) |
+| F2007 | LangGraph 근거 기반 답변 | retrieve→generate, 구조화 답변·근거 없는 설명 제한 | [설계](docs/pdf/architecture.pdf) · [4.3 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-3) |
+| F2008 | 인용·출처 표시 | 실제 인용 번호·유형·제목·원문 링크 검증 | [4.3 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-3) |
+| F2009 | 항목 선택·대화 분리 | 전체/선택 포켓몬·세대별 대화 문맥과 기록 분리 | [4.4 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-4) |
+| F2010 | 도메인 특화 기능 | 세대 변화 계산·AI 설명·근거, 타입 상성·기술 조회 | [요구사항](docs/pdf/requirements.pdf) · [4.4 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-4) |
+| F2011 | 자연어 조건 탐색 | 타입·특성·종족값·기술 필터, 결과 선택→질문 | [4.4 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-4) |
+| F2012 | 진행 상태·오류 안내 | 생성/수집 진행, 키·색인 누락·연결 오류 안내 | [4.4 증빙](docs/VERIFICATION_SUMMARY.md#verify-4-4) |
+
+### 심화 기능(F2013~F2016) — 미선택
+
+제출 심화 과제는 **미선택**입니다. 아래는 코드의 실제 구현 수준이며 심화 과제 완료·통과 판정이 아닙니다. 미선택 실험 결과는 생성하지 않았습니다.
+
+| 번호 | 요구사항 | 현재 수준 | 구분 근거 |
+|---|---|---|---|
+| F2013 | HTML·CSS·JavaScript 프론트 및 서버 분리 | 부분 구현 | 맵·도감은 Component v2 직접 UI입니다. 채팅·근거는 Streamlit이며 별도 API 서버로 분리된 전체 프론트 요건은 충족하지 않습니다. |
+| F2014 | 유사도·MMR 검색 비교 | 미구현 | 유사도 Top-k만 사용하며 MMR 경로·비교 결과가 없습니다. |
+| F2015 | RAG 전후 5개 이상 질문 품질 비교 | 미구현 | 동일 질문의 비RAG/RAG 대조 실험·비교 문서가 없습니다. |
+| F2016 | 서로 다른 종류의 외부 문서 출처 결합 | 미충족 | pokemon_docs는 한국어 Wikipedia 한 출처입니다. PokéAPI 메타데이터 추가만으로 충족하지 않습니다. |
+
+상세 상태는 [요구사항 정의서](docs/pdf/requirements.pdf), [미선택 검증 범위](docs/VERIFICATION_SUMMARY.md#verify-4-5)에 정리했습니다. 아래 서비스 기능 설명과 실행·배포 방법은 그대로 유지합니다.
+
 ### 🌿 1. 포켓몬 필드
 
 포켓몬이 자유롭게 돌아다니는 필드에서 직접 포켓몬을 포획할 수 있는 기능입니다.
@@ -226,7 +258,7 @@ API 키는 GitHub에 업로드하지 않고 환경변수로 관리하는 방식�
 
 ## Cloud 배포와 현재 확인 상태
 
-서비스 주소는 [PokéField](https://pokefield.streamlit.app/)입니다. 2026-10-23 실제 읽기 검사에서 새 독립 프로필 A·B 모두 최초·새로고침 후 `22 / 1025`를 표시했고, 앱 프레임의 개인 포획 저장 키는 없었습니다. **로컬 수정본의 사용자별 저장이 Cloud에 적용됐다고 판정하지 않습니다.** 배포 커밋·Cloud Python 버전·Secrets·색인 로드는 [추가 검증 필요]입니다. 운영 기록 보존을 위해 Cloud에서는 포획·채팅을 하지 않았습니다.
+서비스 주소는 [PokéField](https://pokefield.streamlit.app/)입니다. 선행 읽기 검사는 새 A/B 모두 `22 / 1025`였으나, 최신 2026-10-23 읽기 검사는 두 프로필 모두 최초·새로고침 후 `0 / 1025`이고 개인 포획 키가 없었습니다. 과거 화면은 이력으로 보존합니다. **최신 로컬 A/B 포획·복원·도감은 통과했지만 Cloud에서는 읽기만 했으므로 실제 개인 포획 저장 적용을 통과로 판정하지 않습니다.** 배포 커밋·Cloud Python 버전·Secrets·색인 로드는 [추가 검증 필요]입니다. 운영 기록 보존을 위해 Cloud에서는 포획·채팅을 하지 않았습니다.
 
 배포 진입점은 `app.py`이며 의존성은 루트 `requirements.txt`, 정적 제공은 `.streamlit/config.toml`을 사용합니다. Python은 로컬 검증 환경 3.11과 맞춰 확인합니다. Linux의 설치·실행 예시는 아래와 같으며 이번에 Linux 설치를 실행한 결과는 아닙니다.
 
@@ -295,9 +327,9 @@ CHROMA_DIR = "chroma_db"
 .\.venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-2026년 10월 23일 기존 격리 회귀는 155개이며, 브라우저 저장 보완 후 전체 163개가 45.941초에 통과했습니다. 이번 문서 갱신에서는 관련 8개 테스트만 다시 통과했습니다. 전체 회귀는 FakeLLM·격리 저장소를 사용했고 실제 LLM 호출 결과가 아닙니다.
+2026년 10월 23일 기존 격리 회귀는 155개이며, 브라우저 저장 보완 후 전체 163개가 45.941초에 통과했습니다. 선행 브라우저 저장 문서 갱신에서는 관련 8개 테스트를 다시 통과했습니다. 이번 최신 재점검에서는 전체 163개가 49.702초에 통과했습니다. 이전 실행과 합산하지 않습니다. 전체 회귀는 FakeLLM·격리 저장소를 사용했고 실제 LLM 호출 결과가 아닙니다.
 
-> 필수 요구사항 F2001~F2012는 검증 및 재검증을 통해 모두 통과한 상태입니다. 다만 실제 외부 LLM을 사용하는 전체 사용자 흐름과 모바일 실기기 환경까지 모두 검증한 결과는 아닙니다.
+> 필수 요구사항 F2001~F2012는 기록된 로컬 검증 범위에서 12/12입니다. 최신 공식 셀프는 통과 16·실패 2·미확인 3·해당없음 6이며, 전체 첨부·실제 상호 결과가 부족해 제출 전체 완료는 아닙니다. 다만 실제 외부 LLM을 사용하는 전체 사용자 흐름과 모바일 실기기 환경까지 모두 검증한 결과는 아닙니다.
 
 테스트 결과는 [검증 결과 문서](docs/pdf/VERIFICATION_SUMMARY.pdf)에 정리되어 있습니다.
 
@@ -325,3 +357,12 @@ CHROMA_DIR = "chroma_db"
 - [프로젝트 검증 결과](docs/pdf/VERIFICATION_SUMMARY.pdf)
 - [비기능 요구사항 검증](docs/pdf/NF_VERIFICATION.pdf)
 - [데이터 출처 및 이용 조건](docs/pdf/SOURCES_AND_LICENSES.pdf)
+
+### 최신 셀프 점검과 제출 범위
+
+[수정한 공식 XLSX](docs/evidence/checklists/Pokefield_셀프점검결과_20261023.xlsx)와 [최신 27개 판정](docs/VERIFICATION_SUMMARY.md#latest-selfcheck)을 연결합니다. 실패는 26번 전체 화면 첨부와 27번 실제 상호 결과 포함, 미확인은 20번 사용성·23번 실제 위키 식별자·25번 전체 서비스 검증입니다. 14~19번은 위험 도메인 비해당·심화 미선택입니다. 기존 18/0/3/6은 선행 이력으로 보존합니다.
+
+
+### 제출용 셀프 점검 증빙 내장
+
+[셀프 체크리스트](docs/evidence/checklists/Pokefield_셀프점검결과_20261023.xlsx)의 `증빙` 시트에 실제 이미지 27개를 내장했습니다. H열의 이미지 번호·셀 위치로 확인합니다. 실제 GMS, FakeLLM, 로컬 계산, 격리 QA, 과거 로그를 구분하며 [검증 요약](docs/VERIFICATION_SUMMARY.md)의 설명 아래 실제 화면을 첨부했습니다. 최신 판정은 통과 16·실패 2·미확인 3·해당없음 6입니다. 심화 F2013~F2016은 미선택이며 기존 부분 구현·미구현 구분을 유지합니다.

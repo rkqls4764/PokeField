@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-23",
+  "mode": "actual isolated QA diagnostic; not production UI; no LLM/FakeLLM answer generation",
+  "catalog_records": 6260,
+  "chroma_counts": {
+    "pokemon_meta": 6260,
+    "pokemon_docs": 64
+  },
+  "sample": {
+    "ids": [
+      "pokemon:25:gen:9"
+    ],
+    "embeddings": null,
+    "documents": [
+      "피카츄 (pikachu) | species_id=25, pokemon_id=25 | 9세대\n타입: 전기(electric)\n종족값: {\"HP\": 35, \"공격\": 55, \"방어\": 40, \"특수\": null, \"특수공격\": 50, \"특수방어\": 50, \"스피드\": 90}\n특성: [{\"name\": \"static\", \"name_ko\": \"정전기\", \"is_hidden\": false}, {\"name\": \"lightning-rod\", \"name_ko\": \"피뢰침\", \"is_hidden\": true}]\n게임별 등장 여부: 미확인. 이력 상태: api_history_reconstructed"
+    ],
+    "uris": null,
+    "included": [
+      "metadatas",
+      "documents"
+    ],
+    "data": null,
+    "metadatas": [
+      {
+        "source_type": "pokemon_metadata",
+        "source_url": "https://pokeapi.co/api/v2/pokemon/25/",
+        "pokemon_id": 25,
+        "title": "피카츄 (pikachu) · 9세대",
+        "content_hash": "d837e6f90472d25921464aff81ff7e7f17871a2193fdae22c9d7de5211687592",
+        "species_id": 25,
+        "generation": 9
+      }
+    ]
+  },
+  "graph": [
+    "__start__",
+    "retrieve",
+    "generate",
+    "__end__"
+  ],
+  "local_comparison": {
+    "pokemon_id": 94,
+    "before_generation": 6,
+    "after_generation": 7,
+    "status": "ready",
+    "has_changes": true,
+    "fields": [
+      {
+        "key": "types",
+        "label": "타입",
+        "before": [
+          "ghost",
+          "poison"
+        ],
+        "after": [
+          "ghost",
+          "poison"
+        ],
+        "status": "unchanged",
+        "delta": null,
+        "note": "",
+        "before_display": "고스트 / 독",
+        "after_display": "고스트 / 독"
+      },
+      {
+        "key": "abilities",
+        "label": "일반 특성",
+        "before": [
+          "levitate"
+        ],
+        "after": [
+          "cursed-body"
+        ],
+        "status": "changed",
+        "delta": null,
+        "note": "",
+        "before_display": "부유",
+        "after_display": "저주받은바디"
+      },
+      {
+        "key": "hidden_abilities",
+        "label": "숨겨진 특성",
+        "before": [],
+        "after": [],
+        "status": "unchanged",
+        "delta": null,
+        "note": "",
+        "before_display": "없음",
+        "after_display": "없음"
+      },
+      {
+        "key": "hp",
+        "label": "HP",
+        "before": 60,
+        "after": 60,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "60",
+        "after_display": "60"
+      },
+      {
+        "key": "attack",
+        "label": "공격",
+        "before": 65,
+        "after": 65,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "65",
+        "after_display": "65"
+      },
+      {
+        "key": "defense",
+        "label": "방어",
+        "before": 60,
+        "after": 60,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "60",
+        "after_display": "60"
+      },
+      {
+        "key": "special_attack",
+        "label": "특수공격",
+        "before": 130,
+        "after": 130,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "130",
+        "after_display": "130"
+      },
+      {
+        "key": "special_defense",
+        "label": "특수방어",
+        "before": 75,
+        "after": 75,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "75",
+        "after_display": "75"
+      },
+      {
+        "key": "speed",
+        "label": "스피드",
+        "before": 110,
+        "after": 110,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "110",
+        "after_display": "110"
+      },
+      {
+        "key": "total",
+        "label": "종족값 합계",
+        "before": 500,
+        "after": 500,
+        "status": "unchanged",
+        "delta": 0,
+        "note": "",
+        "before_display": "500",
+        "after_display": "500"
+      }
+    ],
+    "species_id": 94,
+    "name_ko": "팬텀",
+    "input_hash": "6bda6a6dbc78204fab5bdf1fed12a3e79ed848f07b12301af593b36c4d63b7ac"
+  },
+  "paid_api_calls": 0
+}

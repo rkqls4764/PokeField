@@ -1,0 +1,17 @@
+{
+  "original_sheets_preserved": true,
+  "images_embedded": 27,
+  "evaluation_counts": {
+    "통과": 16,
+    "해당없음": 6,
+    "미확인": 3,
+    "실패": 2
+  },
+  "native_excel": {
+    "ExcelOpened": true,
+    "Sheets": 3,
+    "EvidenceImages": 27,
+    "Counts": "16,2,3,6,0,27",
+    "Method": "Artifact authored; native Excel copies added evidence sheet and GHI values into original template"
+  }
+}
