@@ -1,0 +1,122 @@
+{
+  "as_of": "2026-10-23",
+  "mandatory_revalidated_passed": 12,
+  "mandatory_total": 12,
+  "mandatory_pass_is_scoped_not_all_quality_clear": true,
+  "unit": {
+    "testsRun": 155,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "paid_api_forbidden": true,
+    "default_runtime_isolated": true
+  },
+  "paid_llm_test": {
+    "date": "2026-10-23",
+    "model": "gpt-6.1-sol",
+    "provider": "gms",
+    "http_requests": 4,
+    "input_tokens": 14413,
+    "output_tokens": 252,
+    "total_tokens": 14665,
+    "embedding_requests": 0,
+    "cases": [
+      {
+        "name": "특성",
+        "returned": true,
+        "mode": "실제 LLM",
+        "seconds": 5.266,
+        "citation_numbers_valid": true
+      },
+      {
+        "name": "약점",
+        "returned": true,
+        "mode": "로컬/캐시 (LLM 요청 없음)",
+        "seconds": 0.125,
+        "citation_numbers_valid": true
+      },
+      {
+        "name": "진화",
+        "returned": true,
+        "mode": "실제 LLM",
+        "seconds": 6.031,
+        "citation_numbers_valid": true
+      },
+      {
+        "name": "기술 검색",
+        "returned": true,
+        "mode": "로컬/캐시 (LLM 요청 없음)",
+        "seconds": 0.938,
+        "citation_numbers_valid": true
+      },
+      {
+        "name": "세대 비교",
+        "returned": true,
+        "mode": "실제 LLM",
+        "seconds": 5.062,
+        "citation_numbers_valid": true
+      },
+      {
+        "name": "근거 없는 질문",
+        "returned": true,
+        "mode": "실제 LLM",
+        "seconds": 2.016,
+        "citation_numbers_valid": true
+      }
+    ]
+  },
+  "chunk_experiment_20261022": [
+    {
+      "size": 1000,
+      "overlap": 200,
+      "chunks": 18,
+      "count": 18
+    },
+    {
+      "size": 500,
+      "overlap": 100,
+      "chunks": 36,
+      "count": 36
+    },
+    {
+      "size": 200,
+      "overlap": 20,
+      "chunks": 79,
+      "count": 79
+    }
+  ],
+  "top_k_experiment": [
+    {
+      "k": 1,
+      "seconds": 0.0,
+      "sources": 2,
+      "unique": true
+    },
+    {
+      "k": 3,
+      "seconds": 0.016,
+      "sources": 4,
+      "unique": true
+    },
+    {
+      "k": 5,
+      "seconds": 0.0,
+      "sources": 6,
+      "unique": true
+    }
+  ],
+  "new_document_work_paid_calls": 0,
+  "advanced": {
+    "F2013": "partial",
+    "F2014": "not implemented",
+    "F2015": "not implemented",
+    "F2016": "not fulfilled"
+  },
+  "open_items": [
+    "Contradictory not-found sentence in actual generation comparison answer",
+    "WIKI_CONTACT is empty; new Wikipedia requests blocked",
+    "Image/content redistribution rights unconfirmed",
+    "No defined SLA/load/p95 acceptance",
+    "No physical mobile device test or final ZIP security scan"
+  ]
+}

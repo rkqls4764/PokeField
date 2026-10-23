@@ -1,0 +1,193 @@
+{
+  "model": "gpt-6.1-sol",
+  "provider": "gms",
+  "key_present": true,
+  "root": "C:\\SSAFY\\pennant_race_ai_core_2",
+  "python": "C:\\SSAFY\\pennant_race_ai_core_2\\.venv\\Scripts\\python.exe",
+  "index_counts": {
+    "pokemon_meta": 6260,
+    "pokemon_docs": 64
+  },
+  "tests": [
+    {
+      "name": "특성",
+      "success": true,
+      "mode": "실제 LLM",
+      "seconds": 5.266,
+      "answer": "9세대 기준 피카츄 일반형의 일반 특성은 정전기, 숨겨진 특성은 피뢰침이란다. [근거 1]",
+      "valid_citations": true,
+      "sources": [
+        {
+          "number": 1,
+          "title": "피카츄 · 일반형 · 9세대",
+          "url": "https://pokeapi.co/api/v2/pokemon/25/"
+        }
+      ],
+      "http_requests": [
+        {
+          "path": "/gmsapi/api.openai.com/v1/chat/completions",
+          "number": 1
+        }
+      ]
+    },
+    {
+      "name": "약점",
+      "success": true,
+      "mode": "로컬/캐시 (LLM 요청 없음)",
+      "seconds": 0.125,
+      "answer": "피카츄(전기)의 방어 상성: 약점 / 효과 굉장함: 땅 2배; 저항 / 효과 별로: 비행 0.5배, 강철 0.5배, 전기 0.5배; 무효 / 효과 없음: 없음. 나머지는 1배라네. [근거 1]\n\n9세대 기준. 특성·아이템·날씨·기술 고유 효과를 제외한 일반 타입 상성이네.",
+      "valid_citations": true,
+      "sources": [
+        {
+          "number": 1,
+          "title": "타입 상성 계산 · 피카츄",
+          "url": "https://pokeapi.co/docs/v2/#types"
+        }
+      ],
+      "http_requests": []
+    },
+    {
+      "name": "진화",
+      "success": true,
+      "mode": "실제 LLM",
+      "seconds": 6.031,
+      "answer": "피카츄가 진화하면 라이츄가 된단다. [근거 1]",
+      "valid_citations": true,
+      "sources": [
+        {
+          "number": 1,
+          "title": "피카츄 종·진화 정보",
+          "url": "https://pokeapi.co/api/v2/evolution-chain/10/"
+        }
+      ],
+      "http_requests": [
+        {
+          "path": "/gmsapi/api.openai.com/v1/chat/completions",
+          "number": 2
+        }
+      ]
+    },
+    {
+      "name": "기술 검색",
+      "success": true,
+      "mode": "로컬/캐시 (LLM 요청 없음)",
+      "seconds": 0.938,
+      "answer": "9세대 · scarlet-violet / champions · 모든 습득 방법 기준이라네. 총 247마리, 1페이지를 보여 주겠네.\n\n이상해씨: 몸통박치기(노말 / 위력 40 / 명중 100): scarlet-violet · 레벨업 · 레벨 1 [근거 1]\n\n이상해풀: 몸통박치기(노말 / 위력 40 / 명중 100): scarlet-violet · 레벨업 · 레벨 1 [근거 2]\n\n이상해꽃: 몸통박치기(노말 / 위력 40 / 명중 100): scarlet-violet · 레벨업 · 레벨 1 [근거 3]\n\n꼬부기: 몸통박치기(노말 / 위력 40 / 명중 100): scarlet-violet · 레벨업 · 레벨 1 [근거 4]\n\n어니부기: 몸통박치기(노말 / 위력 40 / 명중 100): scarlet-violet · 레벨업 · 레벨 1 [근거 5]\n\n거북왕: 몸통박치기(노말 / 위력 40 / 명중 100): scarlet-violet · 레벨업 · 레벨 1 [근거 6]\n\n현재 캐시에 있는 버전별 기록의 합집합이네. 레벨 0은 일반적인 0레벨 습득을 뜻하지 않으며, 전송·이벤트와 기술 사용 가능 여부는 별도 확인이 필요하네.",
+      "valid_citations": true,
+      "sources": [
+        {
+          "number": 1,
+          "title": "기술 습득 기록 · 이상해씨",
+          "url": "https://pokeapi.co/api/v2/pokemon/1/"
+        },
+        {
+          "number": 2,
+          "title": "기술 습득 기록 · 이상해풀",
+          "url": "https://pokeapi.co/api/v2/pokemon/2/"
+        },
+        {
+          "number": 3,
+          "title": "기술 습득 기록 · 이상해꽃",
+          "url": "https://pokeapi.co/api/v2/pokemon/3/"
+        },
+        {
+          "number": 4,
+          "title": "기술 습득 기록 · 꼬부기",
+          "url": "https://pokeapi.co/api/v2/pokemon/7/"
+        },
+        {
+          "number": 5,
+          "title": "기술 습득 기록 · 어니부기",
+          "url": "https://pokeapi.co/api/v2/pokemon/8/"
+        },
+        {
+          "number": 6,
+          "title": "기술 습득 기록 · 거북왕",
+          "url": "https://pokeapi.co/api/v2/pokemon/9/"
+        }
+      ],
+      "http_requests": []
+    },
+    {
+      "name": "세대 비교",
+      "success": true,
+      "mode": "실제 LLM",
+      "seconds": 5.062,
+      "answer": "팬텀 일반형의 일반 특성은 6세대의 부유에서 7세대의 저주받은바디로 바뀌었네. [근거 2][근거 1]\n\n흠, 지금 가진 근거만으로는 질문한 내용을 확인하기 어렵구나.\n\n변경 이유는 검색된 외부 문서에서 찾지 못했구나. 근거 없이 추측하지는 않겠네.",
+      "valid_citations": true,
+      "sources": [
+        {
+          "number": 1,
+          "title": "팬텀 (gengar) · 7세대",
+          "url": "https://pokeapi.co/api/v2/pokemon/94/"
+        },
+        {
+          "number": 2,
+          "title": "팬텀 (gengar) · 6세대",
+          "url": "https://pokeapi.co/api/v2/pokemon/94/"
+        }
+      ],
+      "http_requests": [
+        {
+          "path": "/gmsapi/api.openai.com/v1/chat/completions",
+          "number": 3
+        }
+      ]
+    },
+    {
+      "name": "근거 없는 질문",
+      "success": true,
+      "mode": "실제 LLM",
+      "seconds": 2.016,
+      "answer": "흠, 지금 가진 근거만으로는 질문한 내용을 확인하기 어렵구나.",
+      "valid_citations": true,
+      "sources": [],
+      "http_requests": [
+        {
+          "path": "/gmsapi/api.openai.com/v1/chat/completions",
+          "number": 4
+        }
+      ]
+    }
+  ],
+  "top_k": [
+    {
+      "k": 1,
+      "seconds": 0.0,
+      "sources": 2,
+      "unique": true
+    },
+    {
+      "k": 3,
+      "seconds": 0.016,
+      "sources": 4,
+      "unique": true
+    },
+    {
+      "k": 5,
+      "seconds": 0.0,
+      "sources": 6,
+      "unique": true
+    }
+  ],
+  "paid_http_requests": [
+    {
+      "path": "/gmsapi/api.openai.com/v1/chat/completions",
+      "number": 1
+    },
+    {
+      "path": "/gmsapi/api.openai.com/v1/chat/completions",
+      "number": 2
+    },
+    {
+      "path": "/gmsapi/api.openai.com/v1/chat/completions",
+      "number": 3
+    },
+    {
+      "path": "/gmsapi/api.openai.com/v1/chat/completions",
+      "number": 4
+    }
+  ],
+  "protected_files_unchanged": true,
+  "http_limit": 5
+}

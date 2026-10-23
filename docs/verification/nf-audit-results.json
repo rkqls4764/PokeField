@@ -1,0 +1,94 @@
+{
+  "wiki_contact_configured": false,
+  "protected_files_unchanged": true,
+  "security": {
+    "files_scanned": 95,
+    "exact_configured_secret_files": [],
+    "secret_pattern_files": [],
+    "env_ignored": true,
+    "no_values_emitted": true,
+    "final_zip_not_available": true
+  },
+  "wiki_documents": {
+    "count": 15,
+    "missing_url_or_license": []
+  },
+  "performance": {
+    "fresh_local": {
+      "weakness": {
+        "seconds": [
+          0.141,
+          0.125,
+          0.141
+        ],
+        "median": 0.141,
+        "mode": "local Python",
+        "cached": null
+      },
+      "move_search": {
+        "seconds": [
+          0.781,
+          0.312,
+          0.328
+        ],
+        "median": 0.328,
+        "mode": "local Python",
+        "cached": null
+      },
+      "comparison_cache": {
+        "seconds": [
+          0.016,
+          0.0,
+          0.016
+        ],
+        "median": 0.016,
+        "mode": "response cache",
+        "cached": true
+      }
+    },
+    "real_llm_measurements_20261023": [
+      {
+        "question": "특성",
+        "seconds": 5.266,
+        "mode": "실제 LLM"
+      },
+      {
+        "question": "약점",
+        "seconds": 0.125,
+        "mode": "로컬/캐시 (LLM 요청 없음)"
+      },
+      {
+        "question": "진화",
+        "seconds": 6.031,
+        "mode": "실제 LLM"
+      },
+      {
+        "question": "기술 검색",
+        "seconds": 0.938,
+        "mode": "로컬/캐시 (LLM 요청 없음)"
+      },
+      {
+        "question": "세대 비교",
+        "seconds": 5.062,
+        "mode": "실제 LLM"
+      },
+      {
+        "question": "근거 없는 질문",
+        "seconds": 2.016,
+        "mode": "실제 LLM"
+      }
+    ],
+    "new_paid_api_calls": 0,
+    "evaluation": "Local search <1s and observed single-user live answers 2-7s appear usable; no defined SLA/concurrency/p95 acceptance. No performance refactor warranted from this sample."
+  },
+  "architecture": {
+    "catalog.py": true,
+    "document_service.py": true,
+    "vector_store.py": true,
+    "rag.py": true,
+    "ui_rag.py": true,
+    "natural_search.py": true,
+    "storage.py": true,
+    "settings.py": true
+  }
+}

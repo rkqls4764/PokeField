@@ -38,9 +38,13 @@ class DocumentService:
         params={'format':'json','formatversion':2,'maxlag':5,**params}
         key='wiki:'+digest(params); old=self.cache.get(key)
         if old is not None: return old
-        ua='PokemonLab/1.0'+(f' ({self.settings.wiki_contact})' if self.settings.wiki_contact else '')
-        try: ua.encode('ascii')
-        except UnicodeEncodeError: raise ServiceError('WIKI_CONTACT에는 영문 이메일 또는 URL을 사용하세요.') from None
+        contact=self.settings.wiki_contact.strip()
+        # Cached data above remains usable without making a non-compliant new request.
+        if not contact:
+            raise ServiceError('Wikipedia 신규 수집에는 운영자 연락처가 필요합니다. 환경변수 또는 .env의 WIKI_CONTACT에 실제 영문 이메일·연락 가능한 URL·위키 사용자 식별자를 설정하세요. 기존 캐시는 계속 사용할 수 있습니다.',stage='wiki_contact',category='configuration')
+        if any(ord(c)<32 or ord(c)>126 for c in contact):
+            raise ServiceError('WIKI_CONTACT에는 줄바꿈 없이 영문 이메일·URL·위키 사용자 식별자를 설정하세요.',stage='wiki_contact',category='configuration')
+        ua=f'PokemonLab/1.0 ({contact})'
         for attempt in range(3):
             try:
                 with self.lock:

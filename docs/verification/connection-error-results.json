@@ -1,0 +1,12 @@
+{
+  "global": {
+    "actual_local_connection_failure": true,
+    "safe_notice": true,
+    "retry_button": true
+  },
+  "selected": {
+    "actual_local_connection_failure": true,
+    "safe_notice": true,
+    "retry_button": true
+  }
+}

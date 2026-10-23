@@ -1,0 +1,196 @@
+{
+  "checked_on": "2026-10-23",
+  "assets": [
+    {
+      "path": "static/regions/ball.jpg",
+      "sha256": "9cfcc52e3a8f53e261da957bca8479bed876626fedc1fdf4d464daed03a41467",
+      "supplied_filename": "몬스터볼.jpg",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\몬스터볼.jpg"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/cave.png",
+      "sha256": "1f0d8b3850af70c31577c855ffa2d63e7f2dd2716d1bd96755b1436ab987bf5f",
+      "supplied_filename": "배경_동굴.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_동굴.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/city.png",
+      "sha256": "20e98adc2371a7f7740039c4f21ad79aa149a19d3ce157011289a00fb4550aa5",
+      "supplied_filename": "배경_도시.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_도시.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/desert.png",
+      "sha256": "12a5916490bca129c1d2311b49128d92eedd64100ef493301e4d539e3e055cc2",
+      "supplied_filename": "배경_사막.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_사막.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/electric.png",
+      "sha256": "d8796661b7ba8fa8b4eede34cf28c8d2ec81753c5d467d1d7b724e2e72d454b8",
+      "supplied_filename": "배경_전기.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_전기.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/grassland.png",
+      "sha256": "6eaf2dfbdfd533f91429cbf11f2766d797d8f80ddf09e7c0e7094e66ec7a49b8",
+      "supplied_filename": "배경_초원.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_초원.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/professor.jpg",
+      "sha256": "7c36de7e8beba70d585e99c239b578911975418c96747edee06aa2165fddf6a9",
+      "supplied_filename": "오박사.jpg",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\오박사.jpg"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/sea.png",
+      "sha256": "ce60e92cc7a5ef15c50b61d855947263f7fe3183a983e347665e39cbc6ecefd6",
+      "supplied_filename": "배경_바다.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_바다.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/sky.png",
+      "sha256": "969388ed3fff53822a1ac793b3960a712930bf27f30b05c63e5f3fc2d804fb04",
+      "supplied_filename": "배경_하늘.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_하늘.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/snow.png",
+      "sha256": "caaa505553a2b299f9dc11b96de4394ba4e51b1345150b7bcfda545672a28ce6",
+      "supplied_filename": "배경_눈.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_눈.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/regions/volcano.png",
+      "sha256": "2dd7ff87102df033ec2290586826e170b22597fd316cfd244ed7c77ead966bd4",
+      "supplied_filename": "배경_화산.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Downloads\\배경_화산.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/rotom/closed.png",
+      "sha256": "8d3ee6fdfd1918e387d69697030cda69473997c59243d7f408786f9b4d362b12",
+      "supplied_filename": "도감_닫힘.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Desktop\\도감_닫힘.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "static/rotom/open.png",
+      "sha256": "cc9f51e8aee3ec96d50618ae139f5d64e383d195a64db06d3bace8d919cd08a5",
+      "supplied_filename": "도감_열림.png",
+      "same_bytes_as_user_file": [
+        "C:\\Users\\SSAFY\\Desktop\\도감_열림.png"
+      ],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "rotom-landscape.png",
+      "sha256": "0092d87b21c9160fcf75620560051d42608974b90ab41fa04dc9c4a7cd36a92d",
+      "supplied_filename": null,
+      "same_bytes_as_user_file": [],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    },
+    {
+      "path": "rotom-mobile.png",
+      "sha256": "85bf9cf89c67199c07772f6a469068a2e038c05f536de9d08606216a5cd107c7",
+      "supplied_filename": null,
+      "same_bytes_as_user_file": [],
+      "original_publisher_url": null,
+      "author": null,
+      "license": null,
+      "rights_status": "미확인",
+      "note": "사용자 전달 경로는 이용 허락 증빙이 아님"
+    }
+  ]
+}

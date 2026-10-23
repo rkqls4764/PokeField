@@ -1,0 +1,156 @@
+{
+  "checked_on": "2026-10-23",
+  "transformation": "原文API extract → chunks → RAG generated summary; authors accessible through source/history URL",
+  "documents": [
+    {
+      "title": "이브이",
+      "source_url": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%B8%8C%EC%9D%B4",
+      "collected_at": "2026-10-21T06:59:40.172368+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 42416198,
+      "revision_timestamp": "2026-09-01T08:27:59Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EB%B8%8C%EC%9D%B4?action=history"
+    },
+    {
+      "title": "뮤츠",
+      "source_url": "https://ko.wikipedia.org/wiki/%EB%AE%A4%EC%B8%A0",
+      "collected_at": "2026-10-21T08:51:51.821020+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 42264175,
+      "revision_timestamp": "2026-08-07T16:43:12Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EB%AE%A4%EC%B8%A0?action=history"
+    },
+    {
+      "title": "이상해씨",
+      "source_url": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%83%81%ED%95%B4%EC%94%A8",
+      "collected_at": "2026-10-21T07:00:17.105781+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 41979851,
+      "revision_timestamp": "2026-06-22T08:53:51Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%83%81%ED%95%B4%EC%94%A8?action=history"
+    },
+    {
+      "title": "이상해풀",
+      "source_url": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%83%81%ED%95%B4%ED%92%80",
+      "collected_at": "2026-10-21T07:00:23.367842+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 41979853,
+      "revision_timestamp": "2026-06-22T08:53:55Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EC%9D%B4%EC%83%81%ED%95%B4%ED%92%80?action=history"
+    },
+    {
+      "title": "피카츄",
+      "source_url": "https://ko.wikipedia.org/wiki/%ED%94%BC%EC%B9%B4%EC%B8%84",
+      "collected_at": "2026-10-21T08:09:55.230783+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 42452774,
+      "revision_timestamp": "2026-09-08T03:59:33Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%ED%94%BC%EC%B9%B4%EC%B8%84?action=history"
+    },
+    {
+      "title": "삐삐",
+      "source_url": "https://ko.wikipedia.org/wiki/%EC%82%90%EC%82%90",
+      "collected_at": "2026-10-21T06:58:19.338768+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 40108464,
+      "revision_timestamp": "2025-06-21T21:42:49Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EC%82%90%EC%82%90?action=history"
+    },
+    {
+      "title": "푸린 (포켓몬)",
+      "source_url": "https://ko.wikipedia.org/wiki/%ED%91%B8%EB%A6%B0_(%ED%8F%AC%EC%BC%93%EB%AA%AC)",
+      "collected_at": "2026-10-21T07:01:57.621672+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 39542389,
+      "revision_timestamp": "2025-04-29T18:54:32Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%ED%91%B8%EB%A6%B0_(%ED%8F%AC%EC%BC%93%EB%AA%AC)?action=history"
+    },
+    {
+      "title": "푸린",
+      "source_url": "https://ko.wikipedia.org/wiki/%ED%91%B8%EB%A6%B0",
+      "collected_at": "2026-10-21T07:02:03.848155+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 33894123,
+      "revision_timestamp": "2022-12-31T16:20:29Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%ED%91%B8%EB%A6%B0?action=history"
+    },
+    {
+      "title": "파이리",
+      "source_url": "https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%B4%EB%A6%AC",
+      "collected_at": "2026-10-21T07:00:54.397544+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 39053772,
+      "revision_timestamp": "2025-04-05T01:20:22Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%ED%8C%8C%EC%9D%B4%EB%A6%AC?action=history"
+    },
+    {
+      "title": "리자드",
+      "source_url": "https://ko.wikipedia.org/wiki/%EB%A6%AC%EC%9E%90%EB%93%9C",
+      "collected_at": "2026-10-21T07:01:00.925311+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 39053773,
+      "revision_timestamp": "2025-04-05T01:20:27Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EB%A6%AC%EC%9E%90%EB%93%9C?action=history"
+    },
+    {
+      "title": "나옹",
+      "source_url": "https://ko.wikipedia.org/wiki/%EB%82%98%EC%98%B9",
+      "collected_at": "2026-10-21T07:02:28.617827+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 34782141,
+      "revision_timestamp": "2023-04-24T02:29:46Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EB%82%98%EC%98%B9?action=history"
+    },
+    {
+      "title": "나옹 (포켓몬)",
+      "source_url": "https://ko.wikipedia.org/wiki/%EB%82%98%EC%98%B9_(%ED%8F%AC%EC%BC%93%EB%AA%AC)",
+      "collected_at": "2026-10-21T07:02:35.063865+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 41933544,
+      "revision_timestamp": "2026-06-15T23:54:59Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EB%82%98%EC%98%B9_(%ED%8F%AC%EC%BC%93%EB%AA%AC)?action=history"
+    },
+    {
+      "title": "꼬부기",
+      "source_url": "https://ko.wikipedia.org/wiki/%EA%BC%AC%EB%B6%80%EA%B8%B0",
+      "collected_at": "2026-10-21T07:01:32.815746+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 41979864,
+      "revision_timestamp": "2026-06-22T08:54:30Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%EA%BC%AC%EB%B6%80%EA%B8%B0?action=history"
+    },
+    {
+      "title": "팬텀 (포켓몬)",
+      "source_url": "https://ko.wikipedia.org/wiki/%ED%8C%AC%ED%85%80_(%ED%8F%AC%EC%BC%93%EB%AA%AC)",
+      "collected_at": "2026-10-21T06:58:56.536721+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 39459333,
+      "revision_timestamp": "2025-04-26T00:21:34Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%ED%8C%AC%ED%85%80_(%ED%8F%AC%EC%BC%93%EB%AA%AC)?action=history"
+    },
+    {
+      "title": "팬텀",
+      "source_url": "https://ko.wikipedia.org/wiki/%ED%8C%AC%ED%85%80",
+      "collected_at": "2026-10-21T06:59:02.714985+00:00",
+      "license": "Creative Commons Attribution-Share Alike 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0/deed.ko",
+      "revision_id": 38584680,
+      "revision_timestamp": "2025-01-26T06:58:14Z",
+      "attribution_history_url": "https://ko.wikipedia.org/wiki/%ED%8C%AC%ED%85%80?action=history"
+    }
+  ]
+}

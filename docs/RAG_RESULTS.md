@@ -1,3 +1,7 @@
+# PokéField 과거 RAG 검증 기록
+
+> 이 문서는 당시 실행 결과를 보존한 과거 기록이다. 최신 판정은 [현재 검증 요약](VERIFICATION_SUMMARY.md)과 [요구사항 현황](requirements.md)을 따른다. 아래 모델·테스트 수·미구현 설명은 현재 설정을 뜻하지 않는다.
+
 # Pokémon Lab 구현 및 검증 결과
 
 작업 경로: `C:\SSAFY\pennant_race_ai_core_2`

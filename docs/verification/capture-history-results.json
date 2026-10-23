@@ -1,0 +1,17 @@
+{
+  "mode": "real browser, real local game/SQLite, FakeLLM available but local type answers only",
+  "checks": [
+    {
+      "captureToDex": true,
+      "captured": "#0763 달코퀸",
+      "number": "#0763",
+      "seconds": 7.649
+    },
+    {
+      "globalSelectedHistorySeparated": true
+    }
+  ],
+  "consoleErrors": [],
+  "success": true,
+  "seconds": 28.111
+}
