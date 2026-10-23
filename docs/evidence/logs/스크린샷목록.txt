@@ -1,0 +1,28 @@
+# 제출 스크린샷 목록
+
+원본 PNG를 편집/합성하지 않았다. 현재 UI는 최신 소스와 정적 자산을 사용해 재캡처했다. 생성 화면에는 FakeLLM을 사용했으며 실제 유료 응답인 것처럼 표시하지 않는다.
+
+| 파일 | 증명 대상 | 실행 종류 | 제한 |
+|---|---|---|---|
+| [01-field-desktop-current.png](01-field-desktop-current.png) | 현재 PC 필드·제목·수집 수 | 실제 UI, LLM 호출 없음 | 화면 구성 증거 |
+| [02-dex-current.png](02-dex-current.png) | 현재 로토무 도감·목록·상세 | 실제 UI/JSON | 미수집 포켓몬 표시 포함 |
+| [03-progress-FakeLLM-current.png](03-progress-FakeLLM-current.png) | 답변 생성 스피너 | FakeLLM | 실제 유료 LLM 지연/토큰 증거 아님 |
+| [04-citations-FakeLLM-current.png](04-citations-FakeLLM-current.png) | 답변 번호와 메타데이터 근거 | FakeLLM | 번호·레이아웃 증거 |
+| [04b-external-citations-FakeLLM-current.png](04b-external-citations-FakeLLM-current.png) | 외부 문서 제목/출처 링크 | FakeLLM + 저장 문서 재생 | 실제 생성의 사실 정확성 증거 아님 |
+| [05-mobile-FakeLLM-current.png](05-mobile-FakeLLM-current.png) | 모바일 크기 채팅 | FakeLLM/Chrome 390×844 | 실제 모바일 기기 아님 |
+| [06-empty-index-current.png](06-empty-index-current.png) | 색인 누락 사전 안내 | 격리 빈 색인 상태 | 운영 색인을 삭제하지 않음 |
+| [06-missing-key-current.png](06-missing-key-current.png) | API 키 누락 사전 안내 | 격리 설정/실제 UI | 키 값 없이 안내 확인 |
+| [07-no-evidence-FakeLLM-current.png](07-no-evidence-FakeLLM-current.png) | 무근거/무인용 안내 | FakeLLM | 실제 거절의 근거는 별도 real-llm-final.json |
+| [08-실제실행로그시각화-UI아님.png](08-실제실행로그시각화-UI아님.png) | 데이터·LangGraph·실제 LLM 응답·Top-k·청크 비교 | 실제 로그 시각화, UI 아님 | 원래 실행날짜/모드 보존; 청크 실험 FakeEmbeddings |
+| [capture.png](capture.png) | 포획 저장 팝업 | 실제 JS/임시 SQLite | 정적 자산 정상인 현재 캡처 |
+| [captured-dex.png](captured-dex.png) | 포획한 #0851 도감 자동 선택 | 실제 JS/JSON/임시 SQLite | current-capture-history.json 대응 |
+| [game-mobile-chat.png](game-mobile-chat.png) | 기록 분리 후 선택형 모바일 채팅 | 실제 로컬 계산/Chrome 모의 화면 | FakeLLM 장착 래퍼지만 해당 답변은 LLM 미사용 |
+
+## 아직 없는 증빙
+
+- 현재 운영 연락처를 넣은 신규 Wikipedia HTTP 수집 성공/진행 화면: 연락처 공란, 임의 생성하지 않았으므로 없음. 저장 응답 재생과 모의/캐시 로그로 범위를 한정한다.
+- 실제 유료 LLM이 연결된 전체 브라우저 질문·세대 비교 시연 화면: 백엔드 실제4회 JSON은 있으나 UI는 FakeLLM 화면으로 구분한다.
+- 실기기 모바일 및 상호 평가 화면/서명: 미실행.
+- MMR·비RAG 대비5문항·다중 외부 문서 출처: 미구현/미선택.
+
+과거 실패 화면(누락 버튼·잘못된 키 안내), 정적 이미지가 빠진 도감 캡처, 디버깅 실패 캡처는 최신 화면 증거로 포함하지 않았다.

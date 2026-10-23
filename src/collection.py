@@ -52,3 +52,49 @@ def dex_rows(catalog,collection,generation,query='',type_name=None,ownership='�
         if ownership=='수집' and not caught or ownership=='미수집' and caught: continue
         result.append(row)
     return sorted(result,key=lambda r:r['species_id'])
+
+
+class BrowserCollection:
+    """Validated session mirror of browser events; never opens or inherits SQLite."""
+    def __init__(self,events=(),allowed_ids=None):
+        import re
+        if not isinstance(events,(list,tuple)) or len(events)>50000:
+            raise ValueError('Invalid browser collection')
+        self.events={}
+        for event in events:
+            if not isinstance(event,dict): raise ValueError('Invalid capture event')
+            pid=event.get('pokemon_id');eid=event.get('event_id');stamp=event.get('caught_at')
+            if type(pid) is not int or pid<=0 or (allowed_ids is not None and pid not in allowed_ids):
+                raise ValueError('Invalid Pokémon ID')
+            if not isinstance(eid,str) or not re.fullmatch(r'[A-Za-z0-9_-]{8,100}',eid):
+                raise ValueError('Invalid event ID')
+            if not isinstance(stamp,str) or len(stamp)>40: raise ValueError('Invalid capture time')
+            try: instant=datetime.fromisoformat(stamp)
+            except ValueError: raise ValueError('Invalid capture time') from None
+            if instant.tzinfo is None: raise ValueError('Capture time must include timezone')
+            clean={'event_id':eid,'pokemon_id':pid,'caught_at':stamp}
+            if eid in self.events and self.events[eid]!=clean: raise ValueError('Capture event conflict')
+            self.events[eid]=clean
+    @property
+    def signature(self):
+        return '|'.join(sorted(f"{e['event_id']},{e['pokemon_id']},{e['caught_at']}" for e in self.events.values()))
+    def all(self):
+        records={}
+        for event in self.events.values():
+            pid=event['pokemon_id'];stamp=event['caught_at'];instant=datetime.fromisoformat(stamp)
+            if pid not in records: records[pid]={'pokemon_id':pid,'first_caught':stamp,'last_caught':stamp,'catch_count':0}
+            row=records[pid];row['catch_count']+=1
+            if instant<datetime.fromisoformat(row['first_caught']): row['first_caught']=stamp
+            if instant>datetime.fromisoformat(row['last_caught']): row['last_caught']=stamp
+        return records
+    def catch(self,pokemon_id,event_id,allowed_ids):
+        if type(pokemon_id) is not int or pokemon_id not in allowed_ids: raise ValueError('Invalid Pokémon ID')
+        if not isinstance(event_id,str) or not 8<=len(event_id)<=100: raise ValueError('Invalid event ID')
+        previous=self.events.get(event_id)
+        if not previous and len(self.events)>=50000: raise ValueError('Browser collection too large')
+        if previous and previous['pokemon_id']!=pokemon_id: raise ValueError('Capture event conflict')
+        event=previous or {'event_id':event_id,'pokemon_id':pokemon_id,'caught_at':datetime.now(timezone.utc).isoformat()}
+        # Reuse the same strict importer for newly generated and restored events.
+        candidate=BrowserCollection([event],allowed_ids)
+        self.events.update(candidate.events)
+        return self.all()[pokemon_id]

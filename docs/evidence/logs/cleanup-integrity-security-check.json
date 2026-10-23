@@ -1,0 +1,47 @@
+{
+  "protected_data_db_env_models_prompts_images_unchanged": true,
+  "changed_protected_paths": [],
+  "scanned_text_files": 156,
+  "active_key_hits": [],
+  "suspicious_key_pattern_files": [],
+  "email_review_files": [],
+  "env_tracked": false,
+  "pyc_remaining_outside_venv": [],
+  "essential_count": 95,
+  "conditional_count": 7273,
+  "optional_held_count": 9,
+  "excluded_file_count": 595,
+  "external_evidence_count": 72,
+  "git_status_available": false,
+  "no_zip_created": true,
+  "no_git_commit": true,
+  "conditional_text_and_index_files_scanned": 4572,
+  "conditional_active_key_matches": [],
+  "conditional_key_pattern_matches": [],
+  "ast_identical_except_unused_import": true,
+  "browser_component_tests": {
+    "refresh": 0,
+    "hunt": 0,
+    "regions": 0
+  },
+  "before": {
+    "testsRun": 155,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "paid_api_forbidden": true,
+    "default_runtime_isolated": true
+  },
+  "after": {
+    "testsRun": 155,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "paid_api_forbidden": true,
+    "default_runtime_isolated": true
+  },
+  "only_expected_source_changed_since_evidence": true,
+  "changed_code_paths_since_evidence": [
+    "C:\\SSAFY\\pennant_race_ai_core_2\\src\\vector_store.py"
+  ]
+}

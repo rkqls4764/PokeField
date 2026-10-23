@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-23",
+  "mode": "current actual UI; FakeLLM for presentation only; no paid API",
+  "screens": [
+    "01-field-desktop-current.png",
+    "02-dex-current.png",
+    "04b-external-citations-FakeLLM-current.png",
+    "03-progress-FakeLLM-current.png",
+    "04-citations-FakeLLM-current.png",
+    "05-mobile-FakeLLM-current.png",
+    "06-missing-key-current.png",
+    "06-empty-index-current.png"
+  ],
+  "errors": [],
+  "success": true
+}

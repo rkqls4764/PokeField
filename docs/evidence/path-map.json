@@ -1,0 +1,254 @@
+[
+  {
+    "checklist_item": 1,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 2,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 3,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 4,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 5,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 6,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 7,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 8,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/screenshots/04b-external-citations-FakeLLM-current.png",
+    "relative_from_docs": "evidence/screenshots/04b-external-citations-FakeLLM-current.png",
+    "exists": true
+  },
+  {
+    "checklist_item": 9,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/final_service_20261023/live-results.json",
+    "relative_from_docs": "evidence/logs/gms-live-results-20261023.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 9,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/submission_evidence_work/screenshots/07-no-evidence-FakeLLM-current.png",
+    "relative_from_docs": "evidence/screenshots/07-no-evidence-FakeLLM-current.png",
+    "exists": true
+  },
+  {
+    "checklist_item": 10,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/game-results.json",
+    "relative_from_docs": "evidence/logs/game-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 10,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/screenshots/game-mobile-chat.png",
+    "relative_from_docs": "evidence/screenshots/game-mobile-chat.png",
+    "exists": true
+  },
+  {
+    "checklist_item": 11,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-tests.log",
+    "relative_from_docs": "evidence/logs/current-tests.log",
+    "exists": true
+  },
+  {
+    "checklist_item": 11,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/browser-results.json",
+    "relative_from_docs": "evidence/logs/browser-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 12,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/final_service_20261023/live-results.json",
+    "relative_from_docs": "evidence/logs/gms-live-results-20261023.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 12,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-tests.log",
+    "relative_from_docs": "evidence/logs/current-tests.log",
+    "exists": true
+  },
+  {
+    "checklist_item": 13,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/screenshots/03-progress-FakeLLM-current.png",
+    "relative_from_docs": "evidence/screenshots/03-progress-FakeLLM-current.png",
+    "exists": true
+  },
+  {
+    "checklist_item": 13,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/screenshots/06-missing-key-current.png",
+    "relative_from_docs": "evidence/screenshots/06-missing-key-current.png",
+    "exists": true
+  },
+  {
+    "checklist_item": 13,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/screenshots/06-empty-index-current.png",
+    "relative_from_docs": "evidence/screenshots/06-empty-index-current.png",
+    "exists": true
+  },
+  {
+    "checklist_item": 14,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/README.md",
+    "relative_from_docs": "../README.md",
+    "exists": true
+  },
+  {
+    "checklist_item": 15,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/src/ui_rag.py",
+    "relative_from_docs": "../src/ui_rag.py",
+    "exists": true
+  },
+  {
+    "checklist_item": 16,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 17,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/docs/requirements.md",
+    "relative_from_docs": "requirements.md",
+    "exists": true
+  },
+  {
+    "checklist_item": 18,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/docs/VERIFICATION_SUMMARY.md",
+    "relative_from_docs": "VERIFICATION_SUMMARY.md",
+    "exists": true
+  },
+  {
+    "checklist_item": 19,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 20,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 20,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/nf_stage/audit-results.json",
+    "relative_from_docs": "evidence/logs/nf-audit-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 21,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-tests.log",
+    "relative_from_docs": "evidence/logs/current-tests.log",
+    "exists": true
+  },
+  {
+    "checklist_item": 21,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/cleanup_stage/integrity-security-check.json",
+    "relative_from_docs": "evidence/logs/cleanup-integrity-security-check.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 22,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/src/",
+    "relative_from_docs": "../src",
+    "exists": true
+  },
+  {
+    "checklist_item": 22,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-backend-results.json",
+    "relative_from_docs": "evidence/logs/current-backend-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 23,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-tests.log",
+    "relative_from_docs": "evidence/logs/current-tests.log",
+    "exists": true
+  },
+  {
+    "checklist_item": 23,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/src/document_service.py",
+    "relative_from_docs": "../src/document_service.py",
+    "exists": true
+  },
+  {
+    "checklist_item": 24,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/docs/SOURCES_AND_LICENSES.md",
+    "relative_from_docs": "SOURCES_AND_LICENSES.md",
+    "exists": true
+  },
+  {
+    "checklist_item": 24,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/docs/wikipedia_sources.json",
+    "relative_from_docs": "wikipedia_sources.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 24,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/docs/asset_provenance.json",
+    "relative_from_docs": "asset_provenance.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 25,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/current-tests.log",
+    "relative_from_docs": "evidence/logs/current-tests.log",
+    "exists": true
+  },
+  {
+    "checklist_item": 25,
+    "original_h_path": "C:/SSAFY/pennant_race_ai_core_2/docs/requirements.md",
+    "relative_from_docs": "requirements.md",
+    "exists": true
+  },
+  {
+    "checklist_item": 26,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/Pokefield_제출증빙_20261023/04_스크린샷/스크린샷목록.md",
+    "relative_from_docs": "evidence/logs/스크린샷목록.txt",
+    "exists": true
+  },
+  {
+    "checklist_item": 26,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/checklist_xlsx_work/capture-results.json",
+    "relative_from_docs": "evidence/logs/capture-results.json",
+    "exists": true
+  },
+  {
+    "checklist_item": 27,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/Pokefield_제출증빙_20261023/00_증빙안내.md",
+    "relative_from_docs": "evidence/logs/기존증빙안내.txt",
+    "exists": true
+  },
+  {
+    "checklist_item": 27,
+    "original_h_path": "C:/Users/SSAFY/Documents/Codex/cleanup_stage/제출파일_전체목록.json",
+    "relative_from_docs": "evidence/logs/기존제출파일목록.json",
+    "exists": true
+  }
+]

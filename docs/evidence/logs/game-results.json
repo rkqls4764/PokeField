@@ -1,0 +1,17 @@
+{
+  "mode": "real browser, real local game/SQLite, FakeLLM available but local type answers only",
+  "checks": [
+    {
+      "captureToDex": true,
+      "captured": "#0521 켄호로우",
+      "number": "#0521",
+      "seconds": 7.059
+    },
+    {
+      "globalSelectedHistorySeparated": true
+    }
+  ],
+  "consoleErrors": [],
+  "success": true,
+  "seconds": 26.772
+}

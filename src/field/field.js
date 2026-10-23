@@ -1,4 +1,4 @@
-// Python supplies verified region pools and commits captures; JS owns animation only.
+// Python validates region captures; browser storage owns personal records. JS owns animation.
 export default function(component) {
  const {parentElement:root,data,setTriggerValue}=component;root.__pokemonLabCleanup?.();
  const $=s=>root.querySelector(s),field=$('#field'),creatures=$('#creatures'),ball=$('#throw'),projectile=$('#projectile'),aim=$('#aim'),notice=$('#notice'),background=$('#map-background');
@@ -10,15 +10,67 @@ export default function(component) {
  let target=saved.target||null,appliedTarget=saved.appliedTarget||null;
  if(!data.target||!['requested','active'].includes(data.target.status))target=null;
  let pending=saved.pending||null,popup=saved.popup||null,dexOpen=!!saved.dexOpen,nextSpawn=0;
+
+ const validCaptureIds=new Set(data.collection?.allowed_ids||[]);
+ const browserCollection=!!data.collection?.enabled,eventPrefix='pokefield:capture:v1:';
+ let collectionReady=!browserCollection,collectionError='',localEvents=[];
+ // Do not replay a pending SQLite-era capture or its success popup as personal data.
+ if(browserCollection&&saved.captureStoreVersion!==1){pending=null;popup=null;captureToast=null;for(const a of actors)if(a.phase==='capturing'){a.phase='idle';a.vx=0;a.vy=0;a.turn=.5}}
+
+ function readCollection(probe=true){
+  const store=window.localStorage,events=[];
+  // Probe writes too: browsers may allow reads but block persistence.
+  if(probe){const key='pokefield:storage-probe:'+crypto.randomUUID();store.setItem(key,'1');store.removeItem(key)}
+  for(let i=0;i<store.length;i++){
+   const key=store.key(i);if(!key?.startsWith(eventPrefix))continue;
+   const e=JSON.parse(store.getItem(key));
+   if(!e||e.version!==1||!Number.isInteger(e.pokemon_id)||e.pokemon_id<=0||(validCaptureIds.size&&!validCaptureIds.has(e.pokemon_id))||!(/^[A-Za-z0-9_-]{8,100}$/).test(e.event_id)||key!==eventPrefix+e.event_id||typeof e.caught_at!=='string'||e.caught_at.length>40||!/(Z|[+-]\d{2}:\d{2})$/.test(e.caught_at)||!Number.isFinite(Date.parse(e.caught_at)))throw Error('Invalid browser capture');
+   events.push({event_id:e.event_id,pokemon_id:e.pokemon_id,caught_at:e.caught_at});
+  }
+  if(events.length>50000)throw Error('Browser collection too large');
+  return events;
+ }
+ function collectionSignature(events){return events.map(e=>`${e.event_id},${e.pokemon_id},${e.caught_at}`).sort().join('|')}
+ function showCollection(){
+  if(!browserCollection)return;
+  const count=new Set(localEvents.map(e=>e.pokemon_id)).size;
+  $('#progress-count').textContent=`${count} / ${data.total}`;$('#progress-bar').value=count;
+  if(!collectionReady){notice.dataset.kind='storage-error';notice.textContent=collectionError||'이 브라우저의 포획 기록을 불러오고 있어요…'}
+ }
+ function refreshCollection(){
+  if(!browserCollection)return;
+  try{
+   localEvents=readCollection();collectionReady=true;collectionError='';
+   if(collectionSignature(localEvents)!==data.collection.signature){
+    setTriggerValue('collection',{status:'ready',events:localEvents,nonce:crypto.randomUUID()});
+   }
+  }catch(_){
+   collectionReady=false;collectionError='브라우저 저장소를 사용할 수 없거나 기록을 읽지 못했어요. 사이트 저장소 허용을 확인해 주세요. 기존 기록은 덮어쓰지 않았어요.';
+   if(data.collection.signature!==null)setTriggerValue('collection',{status:'unavailable',nonce:crypto.randomUUID()});
+  }
+  showCollection();
+ }
+ function persistCapture(ack){
+  const e=ack.persist_event;
+  if(!collectionReady||!e||e.event_id!==pending.event_id||e.pokemon_id!==pending.pokemon_id)throw Error('Capture was not validated');
+  // One atomic key per event avoids lost increments when two tabs capture concurrently.
+  const store=window.localStorage,key=eventPrefix+e.event_id,previous=store.getItem(key),value={version:1,...e};
+  if(previous){const old=JSON.parse(previous);if(old.pokemon_id!==e.pokemon_id||old.caught_at!==e.caught_at)throw Error('Capture event conflict')}
+  else store.setItem(key,JSON.stringify(value));
+  localEvents=readCollection(false);
+  const events=localEvents.filter(v=>v.pokemon_id===e.pokemon_id).sort((a,b)=>Date.parse(a.caught_at)-Date.parse(b.caught_at));
+  showCollection();
+  return {pokemon_id:e.pokemon_id,catch_count:events.length,first_caught:events[0].caught_at,last_caught:events[events.length-1].caught_at};
+ }
  function current(){return regions[regionIndex]}
  function randomCount(){return Math.min(3+Math.floor(Math.random()*8),regions[regionIndex].pool_ids.length)}
- function save(){try{sessionStorage.setItem(storageKey,JSON.stringify({regionIndex,targetCount,actors:actors.map(({el,...a})=>a),pending,popup,dexOpen,target,appliedTarget,captureToast}))}catch(_){} }
+ function save(){try{sessionStorage.setItem(storageKey,JSON.stringify({regionIndex,targetCount,actors:actors.map(({el,...a})=>a),pending,popup,dexOpen,target,appliedTarget,captureToast,captureStoreVersion:browserCollection?1:0}))}catch(_){} }
  function bounds(){const f=field.getBoundingClientRect(),h=$('header').getBoundingClientRect(),footer=$('footer').getBoundingClientRect(),style=getComputedStyle(field),size=parseFloat(style.getPropertyValue('--pokemon-size'))||(f.width<=600?84:108),height=parseFloat(style.getPropertyValue('--pokemon-height'))||(f.width<=600?106:130),imageSize=parseFloat(style.getPropertyValue('--pokemon-image-size'))||(f.width<=600?82:104);return {w:f.width,h:f.height,size,height,imageSize,left:62,top:Math.max(12,h.bottom-f.top+20),right:Math.max(62,f.width-size-62),bottom:Math.max(h.bottom-f.top+20,footer.top-f.top-height-12)}}
- function updateControls(){const locked=!!(pending||popup||swap||flight||data.panel||rotom?.isLocked());$('#region-prev').disabled=locked;$('#region-next').disabled=locked;ball.disabled=locked;$('#professor').disabled=!!(pending||popup||swap||rotom?.isLocked());$('#dex').disabled=!!(pending||popup||swap||rotom?.isLocked())}
+ function updateControls(){const locked=!!(pending||popup||swap||flight||data.panel||rotom?.isLocked()||!collectionReady);$('#region-prev').disabled=locked;$('#region-next').disabled=locked;ball.disabled=locked;$('#professor').disabled=!!(pending||popup||swap||rotom?.isLocked());$('#dex').disabled=!!(pending||popup||swap||rotom?.isLocked())}
  function showRegion(){notice.dataset.kind='info';background.style.backgroundImage=`url("${new URL(current().background,document.baseURI).href}")`;$('#region-name').textContent=current().name;field.dataset.region=current().id;notice.textContent=current().pool_ids.length?`${current().name}에서 새로운 포켓몬을 만나 보세요!`:'이 지역에 확인된 출현 후보가 없어요.'}
  $('#progress-count').textContent=`${data.count} / ${data.total}`;$('#progress-bar').max=data.total;$('#progress-bar').value=data.count;
  for(const id of ['professor','dex','throw'])$(`#${id} .art`).innerHTML=data.assets[id==='throw'?'ball':id];
- projectile.innerHTML=data.assets.ball;projectile.style.display='none';projectile.classList.remove('shake');showRegion();
+ projectile.innerHTML=data.assets.ball;projectile.style.display='none';projectile.classList.remove('shake');showRegion();refreshCollection();
  function restoreCaptureToast(){
   const toast=$('#capture-toast');
   for(const timer of [toastTimer,toastHideTimer]){clearTimeout(timer);timers.delete(timer)}
@@ -42,7 +94,9 @@ export default function(component) {
  creatures.replaceChildren();actors.forEach(mount);
  function stars(point){const host=$('#particles'),b=bounds();for(let i=0;i<24;i++){const p=document.createElement('span');p.className='spark';p.textContent=i%3?'✦':'★';const angle=i/24*Math.PI*2,distance=45+Math.random()*70;p.style.left=`${point.x*b.w}px`;p.style.top=`${point.y*b.h}px`;p.style.setProperty('--dx',`${Math.cos(angle)*distance}px`);p.style.setProperty('--dy',`${Math.sin(angle)*distance}px`);p.style.color=['#ffd45a','#fff1b8','#fff'][i%3];host.append(p);later(()=>p.remove(),1100)}}
  function renderPopup(){const el=$('#capture-popup');el.hidden=!popup;if(!popup)return;const p=popup.detail||byId.get(popup.record.pokemon_id),record=popup.record;$('#capture-message').textContent=record.catch_count===1?'새로운 포켓몬을 수집했어요!':'포켓몬을 다시 포획했어요!';$('#capture-image').src=p.image||byId.get(p.id)?.image||'';$('#capture-name').textContent=`#${String(p.number).padStart(4,'0')} ${p.name}`;$('#capture-types').textContent=`${p.types.join(' / ')} · ${p.generation}세대`;$('#capture-stats').style.display='none';$('#capture-record').textContent=`수집 완료 · 누적 포획 ${record.catch_count}회`;updateControls()}
- if(pending&&data.ack?.event_id===pending.event_id){const a=actors.find(a=>a.id===pending.pokemon_id);if(data.ack.ok){if(target?.pokemon_id===pending.pokemon_id){const completed=target;target=null;tracking('captured',completed)}if(a){a.phase='captured';remove(a)}popup={detail:{...(data.ack.detail||byId.get(pending.pokemon_id)),image:byId.get(pending.pokemon_id)?.image},record:data.ack.record,point:pending.point};if(notice.dataset.kind==='capture-progress'){notice.textContent='';notice.dataset.kind='info'}showCaptureToast(`${popup.detail.name} 수집 기록 저장 완료!`);const point=popup.point;later(()=>stars(point),20);nextSpawn=.5}else{if(a){a.phase='wandering';a.motion=null;a.el.classList.remove('catching')}notice.textContent='기록을 저장하지 못했어요. 다시 시도해 주세요.'}pending=null;save()}
+ if(pending&&data.ack?.event_id===pending.event_id){const a=actors.find(a=>a.id===pending.pokemon_id);let committed=data.ack.ok,record=data.ack.record;
+ if(committed&&browserCollection){try{record=persistCapture(data.ack)}catch(_){committed=false;collectionReady=false;collectionError='포획 기록을 브라우저에 저장하지 못했어요. 저장 공간과 사이트 저장소 허용을 확인한 뒤 다시 도전해 주세요.'}}
+ if(committed){if(target?.pokemon_id===pending.pokemon_id){const completed=target;target=null;tracking('captured',completed)}if(a){a.phase='captured';remove(a)}popup={detail:{...(data.ack.detail||byId.get(pending.pokemon_id)),image:byId.get(pending.pokemon_id)?.image},record,point:pending.point};if(notice.dataset.kind==='capture-progress'){notice.textContent='';notice.dataset.kind='info'}showCaptureToast(`${popup.detail.name} 수집 기록 저장 완료!`);const point=popup.point;later(()=>stars(point),20);nextSpawn=.5}else{if(a){a.phase='wandering';a.motion=null;a.el.classList.remove('catching')}notice.textContent=collectionError||'기록을 저장하지 못했어요. 다시 시도해 주세요.'}pending=null;save();if(browserCollection){if(committed)setTriggerValue('collection',{status:'ready',events:localEvents,nonce:crypto.randomUUID()});else showCollection()}}
  if(pending){const a=actors.find(a=>a.id===pending.pokemon_id);if(a)a.phase='capturing';notice.dataset.kind='capture-progress';notice.textContent='포획 기록을 저장하고 있어요…';later(()=>setTriggerValue('capture',pending),500)}
  renderPopup();$('#capture-confirm').onclick=()=>{popup=null;renderPopup();save();updateControls()};
  const rotomOptions={root,data:data.rotom,onRequest:request=>setTriggerValue('rotom',request),onTools:action=>setTriggerValue('action',{...action,region:current().id}),onLockChange:updateControls};
@@ -75,7 +129,7 @@ export default function(component) {
  $('#region-prev').onclick=()=>changeRegion(-1);$('#region-next').onclick=()=>changeRegion(1);
  function point(e){const r=field.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}}
  function ballStart(){const f=field.getBoundingClientRect(),b=ball.querySelector('.art').getBoundingClientRect();return{x:b.left+b.width/2-f.left,y:b.top+b.height/2-f.top}}
- function throwTo(x,y){if(flight||pending||popup||swap||data.panel||rotom?.isLocked())return;const p=ballStart();flight={sx:p.x,sy:p.y,tx:x,ty:y,t:0,previous:p};projectile.style.display='block';projectile.classList.remove('shake');notice.textContent='몬스터볼이 날아가요!';updateControls()}
+ function throwTo(x,y){if(!collectionReady||flight||pending||popup||swap||data.panel||rotom?.isLocked())return;const p=ballStart();flight={sx:p.x,sy:p.y,tx:x,ty:y,t:0,previous:p};projectile.style.display='block';projectile.classList.remove('shake');notice.textContent='몬스터볼이 날아가요!';updateControls()}
  function hitSegment(from,to,rect){const dx=to.x-from.x,dy=to.y-from.y;let lo=0,hi=1;for(const[p,q]of[[-dx,from.x-rect.left],[dx,rect.right-from.x],[-dy,from.y-rect.top],[dy,rect.bottom-from.y]]){if(p===0){if(q<0)return false}else{const t=q/p;if(p<0)lo=Math.max(lo,t);else hi=Math.min(hi,t);if(lo>hi)return false}}return true}
  function capture(a,p){flight=null;a.phase='capturing';a.motion=null;a.el.classList.add('catching');projectile.classList.add('shake');notice.dataset.kind='capture-progress';notice.textContent=`${byId.get(a.id).name} 포획 중…`;const b=bounds();pending={pokemon_id:a.id,event_id:crypto.randomUUID(),region:current().id,target_request_id:target?.pokemon_id===a.id?target.request_id:null,point:{x:p.x/b.w,y:p.y/b.h}};save();updateControls();later(()=>{notice.dataset.kind='capture-progress';notice.textContent='포획 기록을 저장하고 있어요…';setTriggerValue('capture',pending)},1000)}
  ball.onpointerdown=e=>{if(flight||pending||popup||swap||data.panel||rotom?.isLocked())return;e.preventDefault();ball.setPointerCapture(e.pointerId);drag=e.pointerId;aim.style.display='block'};
@@ -92,6 +146,6 @@ export default function(component) {
   if(now-lastSave>500){save();lastSave=now}frame=requestAnimationFrame(animate)
  }
  updateControls();frame=requestAnimationFrame(animate);
- const visibility=()=>save(),resize=()=>{if(flight){flight=null;projectile.style.display='none';notice.textContent='화면 크기가 바뀌었어요. 다시 조준해 주세요.';updateControls()}save()};window.addEventListener('pagehide',visibility);window.addEventListener('resize',resize);
- const cleanup=()=>{if(stopped)return;stopped=true;cancelAnimationFrame(frame);for(const t of timers)clearTimeout(t);timers.clear();$('#particles').replaceChildren();save();window.removeEventListener('pagehide',visibility);window.removeEventListener('resize',resize)};root.__pokemonLabCleanup=cleanup;return()=>{cleanup();if(root.__pokemonLabCleanup===cleanup){delete root.__pokemonLabCleanup;root.__rotomController?.cleanup();delete root.__rotomController}}
+ const visibility=()=>save(),resize=()=>{if(flight){flight=null;projectile.style.display='none';notice.textContent='화면 크기가 바뀌었어요. 다시 조준해 주세요.';updateControls()}save()};const storageChange=e=>{if(e.key===null||e.key?.startsWith(eventPrefix)){refreshCollection();updateControls()}},focusCollection=()=>{refreshCollection();updateControls()};window.addEventListener('storage',storageChange);window.addEventListener('focus',focusCollection);window.addEventListener('pagehide',visibility);window.addEventListener('resize',resize);
+ const cleanup=()=>{if(stopped)return;stopped=true;cancelAnimationFrame(frame);for(const t of timers)clearTimeout(t);timers.clear();$('#particles').replaceChildren();save();window.removeEventListener('pagehide',visibility);window.removeEventListener('resize',resize);window.removeEventListener('storage',storageChange);window.removeEventListener('focus',focusCollection)};root.__pokemonLabCleanup=cleanup;return()=>{cleanup();if(root.__pokemonLabCleanup===cleanup){delete root.__pokemonLabCleanup;root.__rotomController?.cleanup();delete root.__rotomController}}
 }

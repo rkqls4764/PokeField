@@ -8,7 +8,7 @@ from io import BytesIO
 from pathlib import Path
 import streamlit as st
 from PIL import Image
-from .collection import Collection,dex_rows
+from .collection import Collection,BrowserCollection,dex_rows
 from .catalog import TYPE_KO,STAT_KO
 from .regions import REGIONS,region_candidates,capture_fact,target_regions
 from .rotom_data import query_dex,DISPLAY
@@ -39,13 +39,46 @@ def field_component():
     from streamlit.components.v2 import component
     return component('pokemon_lab_field',html=(ASSETS/'field.html').read_text(encoding='utf-8'),css='/* PokéField */\n'+(ASSETS/'field.css').read_text(encoding='utf-8')+'\n'+(ASSETS/'rotom.css').read_text(encoding='utf-8'),js=(ASSETS/'rotom.js').read_text(encoding='utf-8')+'\n'+(ASSETS/'field.js').read_text(encoding='utf-8'))
 
-def request_rotom():
+def current_collection():
+    if st.session_state.get('collection_backend')=='browser':
+        return BrowserCollection(st.session_state.get('browser_capture_events',[]))
+    # Retained for explicit offline SQLite consumers/tests; render_field never selects it.
+    return Collection(st.session_state['collection_path'])
+
+
+def finish_capture_target(event):
+    target=st.session_state.get('hunt_target')
+    if target and target['pokemon_id']==event['pokemon_id'] and target['region']==event.get('region') and (not event.get('target_request_id') or event['target_request_id']==target['request_id']):
+        set_target(dict(target,status='captured'))
+
+
+def sync_browser_collection():
+    event=st.session_state.get('pokemon_field',{}).get('collection')
+    if not isinstance(event,dict): return
+    try:
+        if event.get('status')!='ready': raise ValueError('Browser storage unavailable')
+        catalog=st.session_state['_rotom_catalog']
+        allowed={pid for pid,v in catalog.varieties.items() if v['is_default']}
+        collection=BrowserCollection(event.get('events'),allowed)
+        st.session_state['browser_capture_events']=list(collection.events.values())
+        st.session_state['browser_collection_ready']=True
+        ack=st.session_state.get('capture_ack') or {}
+        if ack.get('ok') and ack.get('event_id') in collection.events:
+            finish_capture_target(ack['capture_event'])
+        if st.session_state.get('_rotom_request'): request_rotom(st.session_state['_rotom_request'])
+    except (ValueError,KeyError,TypeError):
+        st.session_state['browser_collection_ready']=False
+        logger.warning('Browser collection sync rejected (storage or invalid data)')
+
+
+def request_rotom(request=None):
     state=st.session_state.get('pokemon_field',{})
-    request=state.get('rotom') if hasattr(state,'get') else None
+    request=request if request is not None else state.get('rotom') if hasattr(state,'get') else None
     if not isinstance(request,dict): return
     try:
         catalog=st.session_state['_rotom_catalog'];directory=Path(st.session_state['_rotom_images'])
-        records=Collection(st.session_state['collection_path']).all()
+        st.session_state['_rotom_request']=dict(request)
+        records=current_collection().all()
         st.session_state['rotom_response']=query_dex(catalog,records,request,lambda pid:image_uri(str(directory/'official'/f'{pid}.png')))
     except Exception as exc:
         logger.error('Rotom query failed: %s',type(exc).__name__)
@@ -76,15 +109,20 @@ def record_capture():
     if not event: return
     ack={'event_id':event.get('event_id'),'ok':False}
     try:
-        collection=Collection(st.session_state['collection_path'])
+        collection=current_collection()
+        browser=st.session_state.get('collection_backend')=='browser'
+        if browser and not st.session_state.get('browser_collection_ready'): raise ValueError('Browser collection is not ready')
         regions=st.session_state.get('field_region_ids')
         allowed=set(regions.get(event.get('region'),[])) if regions else set(st.session_state['field_pool_ids'])
         record=collection.catch(event.get('pokemon_id'),event.get('event_id'),allowed)
         ack['ok']=True
         ack['record']=record
         ack['detail']=st.session_state.get('field_facts',{}).get(event['pokemon_id'])
-        target=st.session_state.get('hunt_target')
-        if target and target['pokemon_id']==event['pokemon_id'] and target['region']==event.get('region') and (not event.get('target_request_id') or event['target_request_id']==target['request_id']): set_target(dict(target,status='captured'))
+        if browser:
+            # Proposal only: success UI and target completion wait for browser persistence.
+            ack['persist_event']=collection.events[event['event_id']]
+            ack['capture_event']=dict(event)
+        else: finish_capture_target(event)
     except Exception as exc:
         logger.error('Capture persistence failure: %s',type(exc).__name__)
     st.session_state['capture_ack']=ack
@@ -119,9 +157,9 @@ def update_tracking():
 
 
 def render_field(settings,catalog,image_dir):
-    collection_path=settings.runtime_dir/'collection.sqlite3'
-    st.session_state['collection_path']=str(collection_path)
-    collection=Collection(collection_path); records=collection.all()
+    st.session_state['collection_backend']='browser'
+    st.session_state.setdefault('browser_capture_events',[])
+    collection=current_collection(); records=collection.all()
     st.session_state['_rotom_catalog']=catalog
     st.session_state['_rotom_images']=str(image_dir)
     allowed=[pid for pid,v in catalog.varieties.items() if v['is_default'] and catalog.records_for(pid)]
@@ -147,7 +185,7 @@ def render_field(settings,catalog,image_dir):
     </style>''',unsafe_allow_html=True)
     assets={'professor':'<img class="professor-photo" src="app/static/regions/professor.jpg" alt="오박사" draggable="false">','ball':'<img class="ball-photo" src="app/static/regions/ball.jpg" alt="몬스터볼" draggable="false">','dex':'<img src="app/static/rotom/closed.png" alt="닫힌 로토무 도감" draggable="false">'}
     rotom={'response':st.session_state.get('rotom_response'),'generations':catalog.generations,'types':TYPE_KO,'display':DISPLAY}
-    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets,'rotom':rotom,'target':st.session_state.get('hunt_target')},on_capture_change=record_capture,on_action_change=open_panel,on_rotom_change=request_rotom,on_tracking_change=update_tracking,height='content')
+    field_component()(key='pokemon_field',data={'pool':pool,'regions':regions,'count':len(records),'total':len(allowed),'ack':st.session_state.get('capture_ack'),'panel':st.session_state.get('lab_panel'),'assets':assets,'rotom':rotom,'target':st.session_state.get('hunt_target'),'collection':{'enabled':True,'allowed_ids':allowed,'signature':collection.signature if st.session_state.get('browser_collection_ready') else None}},on_collection_change=sync_browser_collection,on_capture_change=record_capture,on_action_change=open_panel,on_rotom_change=request_rotom,on_tracking_change=update_tracking,height='content')
     if st.session_state.get('lab_panel'): render_panel(settings,catalog,image_dir,collection)
     return records
 

@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "부유 특성을 가진 포켓몬 찾아줘 → selected chat tab → cited local answer",
+    "몸통박치기를 배우는 포켓몬 알려줘 → selected chat tab → cited local answer",
+    "몸통박치기를 배우는 포켓몬 알려줘. → selected chat tab → cited local answer"
+  ],
+  "errors": [],
+  "realBrowser": true,
+  "model": "FakeLLM",
+  "paidCalls": 0
+}
