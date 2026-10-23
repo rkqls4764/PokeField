@@ -161,7 +161,7 @@ LangGraph의 `retrieve`와 `generate` 노드를 분리하여 검색과 답변 �
 
 청크 크기, 중복 길이, Top-k는 설정으로 관리하며, Top-k는 사용자 화면에서도 변경할 수 있는 기능입니다.
 
-자세한 구현 내용은 [RAG 파이프라인 설계서](docs/architecture.md)에 정리되어 있습니다.
+자세한 구현 내용은 [RAG 파이프라인 설계서](docs/pdf/architecture.pdf)에 정리되어 있습니다.
 
 ---
 
@@ -276,7 +276,7 @@ API 키는 GitHub에 업로드하지 않고 환경변수로 관리하는 방식�
 
 > 필수 요구사항 F2001~F2012는 검증 및 재검증을 통해 모두 통과한 상태입니다. 다만 실제 외부 LLM을 사용하는 전체 사용자 흐름과 모바일 실기기 환경까지 모두 검증한 결과는 아닙니다.
 
-테스트 결과는 [검증 결과 문서](docs/VERIFICATION_SUMMARY.md)에 정리되어 있습니다.
+테스트 결과는 [검증 결과 문서](docs/pdf/VERIFICATION_SUMMARY.pdf)에 정리되어 있습니다.
 
 ---
 
@@ -296,9 +296,9 @@ API 키는 GitHub에 업로드하지 않고 환경변수로 관리하는 방식�
 
 ## 📚 관련 문서
 
-- [요구사항 정의서](docs/requirements.md)
-- [RAG 파이프라인 설계서](docs/architecture.md)
-- [RAG 구현 및 색인 안내](docs/RAG_IMPLEMENTATION.md)
-- [프로젝트 검증 결과](docs/VERIFICATION_SUMMARY.md)
-- [비기능 요구사항 검증](docs/NF_VERIFICATION.md)
-- [데이터 출처 및 이용 조건](docs/SOURCES_AND_LICENSES.md)
+- [요구사항 정의서](docs/pdf/requirements.pdf)
+- [RAG 파이프라인 설계서](docs/pdf/architecture.pdf)
+- [RAG 구현 및 색인 안내](docs/pdf/RAG_IMPLEMENTATION.pdf)
+- [프로젝트 검증 결과](docs/pdf/VERIFICATION_SUMMARY.pdf)
+- [비기능 요구사항 검증](docs/pdf/NF_VERIFICATION.pdf)
+- [데이터 출처 및 이용 조건](docs/pdf/SOURCES_AND_LICENSES.pdf)
